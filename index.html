@@ -3,705 +3,297 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GreenBasket India — Farm Fresh Vegetables &amp; Fruits, Delivered</title>
-<meta name="description" content="Pre-order farm fresh vegetables and fruits in Hanumangarh. Order directly on WhatsApp — picked fresh, delivered on time.">
+<title>Green Basket | Order Today, Fresh Tomorrow</title>
+<meta name="description" content="Green Basket - Pre-order farm fresh fruits and vegetables online. Order today, get fresh delivery tomorrow morning.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧺</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-/* ===== Tokens ===== */
-:root {
-  --bg: #FBF8F1;
-  --card: #FFFFFF;
-  --ink: #22281D;
-  --ink-soft: #565C4E;
-  --forest: #1F4D2C;
-  --leaf: #4C9A2A;
-  --turmeric: #E8A23B;
-  --clay: #A85C32;
-  --line: #E6E0D1;
-  --radius-sm: 4px;
-  --radius-md: 10px;
-  --shadow-card: 0 1px 0 rgba(34,40,29,0.06), 0 8px 20px -14px rgba(34,40,29,0.35);
-  --max-width: 1180px;
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Work Sans', -apple-system, sans-serif;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3, h4 {
-  font-family: 'Fraunces', Georgia, serif;
-  color: var(--forest);
-  margin: 0 0 0.4em;
-  line-height: 1.15;
-}
-
-a { color: inherit; text-decoration: none; }
-p { margin: 0 0 1em; color: var(--ink-soft); }
-img, svg { max-width: 100%; display: block; }
-
-.wrap {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* ===== Buttons ===== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 24px;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: 0.95rem;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: transform 0.15s ease, background 0.15s ease;
-  white-space: nowrap;
-}
-.btn:hover { transform: translateY(-1px); }
-
-.btn-primary { background: var(--leaf); color: #fff; }
-.btn-primary:hover { background: #3f8420; }
-
-.btn-outline { background: transparent; color: var(--forest); border-color: var(--forest); }
-.btn-outline:hover { background: var(--forest); color: #fff; }
-
-.btn-whatsapp { background: #1F4D2C; color: #fff; padding: 10px 18px; font-size: 0.88rem; }
-.btn-whatsapp:hover { background: #163a20; }
-
-.btn-order {
-  width: 100%;
-  justify-content: center;
-  background: var(--forest);
-  color: #fff;
-  font-size: 0.85rem;
-  padding: 10px 14px;
-  margin-top: 12px;
-}
-.btn-order:hover { background: var(--leaf); }
-
-/* ===== Topbar ===== */
-.topbar {
-  background: var(--forest);
-  color: #EFE9D8;
-  text-align: center;
-  font-size: 0.82rem;
-  padding: 8px 16px;
-}
-.topbar p { margin: 0; color: #EFE9D8; }
-
-/* ===== Header ===== */
-.site-header {
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-.header-inner {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding-top: 14px;
-  padding-bottom: 14px;
-}
-.logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.logo-text {
-  font-family: 'Fraunces', serif;
-  font-weight: 600;
-  font-size: 1.25rem;
-  color: var(--forest);
-}
-.logo-text em { font-style: normal; color: var(--leaf); }
-
-.main-nav { display: flex; gap: 28px; margin-left: 12px; flex: 1; }
-.main-nav a {
-  font-size: 0.92rem;
-  font-weight: 500;
-  color: var(--ink);
-  position: relative;
-  padding: 4px 0;
-}
-.main-nav a:hover { color: var(--leaf); }
-
-.header-actions { display: flex; align-items: center; gap: 14px; }
-.deliver-chip {
-  font-size: 0.82rem;
-  color: var(--ink-soft);
-  background: var(--card);
-  border: 1px solid var(--line);
-  padding: 7px 12px;
-  border-radius: 20px;
-  white-space: nowrap;
-}
-
-.nav-toggle {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-}
-.nav-toggle span { width: 22px; height: 2px; background: var(--forest); border-radius: 2px; }
-
-/* ===== Hero ===== */
-.hero { padding: 64px 0 40px; overflow: hidden; }
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 48px;
-  align-items: center;
-}
-.hero-kicker {
-  color: var(--leaf);
-  font-weight: 600;
-  font-size: 0.92rem;
-  margin-bottom: 14px;
-}
-.hero-copy h1 {
-  font-size: clamp(2.4rem, 4.4vw, 3.4rem);
-  letter-spacing: -0.01em;
-}
-.hero-copy h1 .accent { color: var(--leaf); }
-.hero-sub {
-  max-width: 46ch;
-  font-size: 1.05rem;
-  margin-top: 18px;
-}
-.hero-cta { display: flex; gap: 14px; margin: 26px 0 40px; flex-wrap: wrap; }
-
-.hero-steps { display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
-.step { display: flex; flex-direction: column; gap: 8px; max-width: 150px; }
-.step p { font-size: 0.82rem; margin: 0; color: var(--ink-soft); }
-.step-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px; height: 26px;
-  background: var(--forest);
-  color: #fff;
-  border-radius: 50%;
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-.step-arrow { color: var(--clay); font-size: 1.1rem; padding-top: 2px; }
-
-.hero-art { position: relative; }
-.crate-illustration { width: 100%; height: auto; }
-.price-tag-float {
-  position: absolute;
-  top: -6px;
-  right: 6px;
-  background: var(--turmeric);
-  color: var(--forest);
-  padding: 10px 16px;
-  border-radius: var(--radius-sm);
-  text-align: center;
-  transform: rotate(4deg);
-  box-shadow: var(--shadow-card);
-  z-index: 2;
-}
-.tag-pct { display: block; font-family: 'Fraunces', serif; font-weight: 700; font-size: 1rem; }
-.tag-label { display: block; font-size: 0.7rem; font-weight: 600; }
-
-/* ===== Trust strip ===== */
-.trust-strip { background: var(--forest); padding: 22px 0; }
-.trust-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-.trust-item { color: #EFE9D8; text-align: left; }
-.trust-item strong { display: block; font-family: 'Fraunces', serif; font-size: 1rem; margin-bottom: 3px; color: #fff; }
-.trust-item span { font-size: 0.82rem; color: #C9D6C4; }
-
-/* ===== Sections ===== */
-.section { padding: 72px 0; }
-.section-alt { background: #F3EFE3; }
-.section-head { max-width: 60ch; margin-bottom: 36px; }
-.section-head h2 { font-size: 1.9rem; }
-.section-head-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-/* Categories - crate cards */
-.crate-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
-}
-.crate-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-bottom: 5px solid var(--clay);
-  border-radius: var(--radius-sm);
-  padding: 26px 14px;
-  text-align: center;
-  transition: transform 0.18s ease, border-color 0.18s ease;
-}
-.crate-card:hover { transform: translateY(-4px); border-bottom-color: var(--leaf); }
-.crate-icon { font-size: 2rem; margin-bottom: 10px; }
-.crate-card h3 { font-size: 0.92rem; margin: 0; }
-
-/* Countdown */
-.countdown { text-align: right; }
-.countdown span { display: block; font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 4px; }
-.countdown-timer {
-  font-family: 'Fraunces', serif;
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: var(--forest);
-  background: var(--card);
-  border: 1px solid var(--line);
-  padding: 6px 14px;
-  border-radius: var(--radius-sm);
-  display: inline-block;
-}
-
-/* Product cards */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
-}
-.product-card {
-  position: relative;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 20px 16px 16px;
-  text-align: center;
-  box-shadow: var(--shadow-card);
-}
-.tag-corner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: var(--turmeric);
-  color: var(--forest);
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 4px 10px 4px 8px;
-  clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
-}
-.product-emoji { font-size: 2.4rem; margin: 10px 0 8px; }
-.product-card h3 { font-size: 1rem; margin-bottom: 2px; }
-.product-unit { font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 8px; }
-.product-price { display: flex; justify-content: center; align-items: baseline; gap: 8px; }
-.price-now { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.25rem; color: var(--forest); }
-.price-old { font-size: 0.85rem; color: #9A9484; text-decoration: line-through; }
-
-/* Why us */
-.why-us { padding: 72px 0; background: var(--forest); color: #EFE9D8; }
-.why-grid {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 48px;
-}
-.why-copy h2 { color: #fff; font-size: 1.9rem; }
-.why-copy p { color: #C9D6C4; max-width: 42ch; }
-.why-points { display: grid; gap: 22px; }
-.why-point h4 { font-family: 'Fraunces', serif; color: var(--turmeric); font-size: 1.05rem; margin-bottom: 6px; }
-.why-point p { color: #C9D6C4; font-size: 0.92rem; margin: 0; }
-
-/* Footer */
-.site-footer { background: #17301F; color: #C9D6C4; padding: 56px 0 0; }
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 40px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-.footer-tag { font-size: 0.88rem; margin-top: 14px; max-width: 32ch; }
-.site-footer h4 { color: #fff; font-size: 0.95rem; margin-bottom: 14px; }
-.site-footer p { margin-bottom: 8px; font-size: 0.88rem; }
-.site-footer a:hover { color: var(--turmeric); }
-.logo-footer .logo-text { color: #fff; }
-.footer-bottom { padding: 20px 24px; text-align: center; }
-.footer-bottom p { font-size: 0.78rem; color: #8CA085; margin: 0; }
-
-/* Floating WhatsApp */
-.whatsapp-float {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 56px;
-  height: 56px;
-  background: #25D366;
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  z-index: 60;
-  transition: transform 0.15s ease;
-}
-.whatsapp-float:hover { transform: scale(1.08); }
-
-/* ===== Responsive ===== */
-@media (max-width: 980px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-art { order: -1; max-width: 380px; margin: 0 auto; }
-  .crate-grid { grid-template-columns: repeat(3, 1fr); }
-  .product-grid { grid-template-columns: repeat(3, 1fr); }
-  .trust-grid { grid-template-columns: repeat(2, 1fr); }
-  .why-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-}
-
-@media (max-width: 760px) {
-  .main-nav, .deliver-chip { display: none; }
-  .nav-toggle { display: flex; }
-  .main-nav.open {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--line);
-    padding: 16px 24px;
-    gap: 14px;
-  }
-  .crate-grid { grid-template-columns: repeat(2, 1fr); }
-  .product-grid { grid-template-columns: repeat(2, 1fr); }
-  .trust-grid { grid-template-columns: 1fr; }
-  .section-head-row { align-items: flex-start; }
-  .countdown { text-align: left; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; scroll-behavior: auto !important; }
-}
-
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Announcement bar -->
+<!-- ===== TOP BAR ===== -->
 <div class="topbar">
-  <p>🌿 Pre-order today, we pick it fresh tomorrow morning</p>
+  <div class="container topbar__inner">
+    <p class="topbar__msg">🌿 Pre-Order Today &amp; Get Farm Fresh Delivery Tomorrow Morning</p>
+    <a class="topbar__app" href="#download" >Chat on WhatsApp to Order &nbsp;•&nbsp; Get 5% OFF</a>
+  </div>
 </div>
 
-<!-- Header -->
-<header class="site-header">
-  <div class="wrap header-inner">
-    <a href="#home" class="logo">
-      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 15C4 15 6 6 17 6C28 6 30 15 30 15" stroke="#1F4D2C" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M6 15H28L25.5 29C25.3 30 24.4 30.7 23.4 30.7H10.6C9.6 30.7 8.7 30 8.5 29L6 15Z" fill="#4C9A2A" stroke="#1F4D2C" stroke-width="2"/>
-        <path d="M17 6C17 6 14 3 11 4.5" stroke="#4C9A2A" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <span class="logo-text">GreenBasket<em>India</em></span>
+<!-- ===== HEADER ===== -->
+<header class="header" id="top">
+  <div class="container header__inner">
+    <a href="#top" class="brand">
+      <span class="brand__mark">🧺</span>
+      <span class="brand__text">
+        <strong>Green Basket</strong>
+        <em>Order Today, Fresh Tomorrow</em>
+      </span>
     </a>
 
-    <nav class="main-nav" id="mainNav">
-      <a href="#home">Home</a>
+    <nav class="nav" id="nav">
+      <a href="#top" class="active">Home</a>
+      <a href="#deals">Shop</a>
       <a href="#categories">Categories</a>
-      <a href="#deals">Fresh Deals</a>
-      <a href="#why-us">Why Us</a>
+      <a href="#offers">Offers</a>
+      <a href="#trust">Our Story</a>
       <a href="#contact">Contact</a>
     </nav>
 
-    <div class="header-actions">
-      <span class="deliver-chip">📍 Delivering in Hanumangarh</span>
-      <a href="https://wa.me/919772821229?text=Hi%20GreenBasket%20India!%20I%27d%20like%20to%20place%20an%20order." class="btn btn-whatsapp" target="_blank" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38c1.44.79 3.06 1.2 4.72 1.2h.01c5.46 0 9.91-4.45 9.91-9.91C21.94 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.4 1.32-1.93 1.4-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.74-4.14-4.88-4.33-.14-.19-1.17-1.55-1.17-2.96s.73-2.1.99-2.39c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.19.72-.84.92-1.13.19-.29.39-.24.65-.14.27.1 1.68.79 1.97.94.29.14.48.21.55.33.07.12.07.71-.17 1.39z"/></svg>
-        Order on WhatsApp
+    <div class="header__actions">
+      <div class="deliver">
+        <span class="deliver__pin">📍</span>
+        <span class="deliver__text">Deliver to<br><strong id="cityLabel">Hanumangarh</strong></span>
+      </div>
+      <a href="#contact" class="icon-btn" aria-label="Account">👤</a>
+      <a href="https://wa.me/919772821229?text=Hi%20Green%20Basket%2C%20I%27d%20like%20to%20see%20my%20cart." class="icon-btn cart" aria-label="Cart">
+        🛒<span class="cart__count">2</span>
       </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
     </div>
-
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </header>
 
-<!-- Hero -->
-<section class="hero" id="home">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <p class="hero-kicker">Hanumangarh's own hyperlocal basket</p>
-      <h1>Order today,<br><span class="accent">fresh tomorrow.</span></h1>
-      <p class="hero-sub">We pick straight from nearby farms every morning &mdash; no cold storage, no middlemen. You tell us what you need on WhatsApp, we handle the rest.</p>
-      <div class="hero-cta">
-        <a href="https://wa.me/919772821229?text=Hi%20GreenBasket%20India!%20I%27d%20like%20to%20place%20an%20order." class="btn btn-primary" target="_blank" rel="noopener">Order on WhatsApp</a>
-        <a href="#deals" class="btn btn-outline">See today's produce</a>
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <h1>Order Today,<br><span>Fresh Tomorrow!</span></h1>
+      <p>Pre-order now &amp; enjoy farm fresh fruits and vegetables delivered straight to your doorstep.</p>
+
+      <div class="hero__badges">
+        <div class="badge"><span>🌾</span><div><strong>Farm Fresh</strong><small>Direct from Farms</small></div></div>
+        <div class="badge"><span>🏷️</span><div><strong>Best Price</strong><small>Better than Market</small></div></div>
+        <div class="badge"><span>⏱️</span><div><strong>On Time Delivery</strong><small>Always on Time</small></div></div>
       </div>
-      <div class="hero-steps">
-        <div class="step"><span class="step-num">1</span><p>You message us on WhatsApp</p></div>
-        <div class="step-arrow">&rarr;</div>
-        <div class="step"><span class="step-num">2</span><p>We pick it fresh that evening</p></div>
-        <div class="step-arrow">&rarr;</div>
-        <div class="step"><span class="step-num">3</span><p>Delivered to your door next morning</p></div>
+
+      <div class="hero__cta">
+        <a href="https://wa.me/919772821229?text=Hi%20Green%20Basket%2C%20I%27d%20like%20to%20Pre-Order%20fresh%20vegetables%20%26%20fruits." class="btn btn--primary" target="_blank" rel="noopener">Pre-Order Now →</a>
+        <a href="#deals" class="btn btn--outline">Shop Now</a>
+      </div>
+
+      <div class="hero__social">
+        <div class="avatars">
+          <img src="https://i.pravatar.cc/60?img=32" alt="">
+          <img src="https://i.pravatar.cc/60?img=47" alt="">
+          <img src="https://i.pravatar.cc/60?img=25" alt="">
+        </div>
+        <p>Loved by 10,000+ happy customers &nbsp; <strong>★ 4.8/5</strong></p>
       </div>
     </div>
 
-    <div class="hero-art">
-      <div class="price-tag-float">
-        <span class="tag-pct">Fresh</span>
-        <span class="tag-label">picked today</span>
+    <div class="hero__art">
+      <div class="preorder-seal">
+        <span>PRE-ORDER<br>&amp; SAVE MORE</span>
       </div>
-      <svg viewBox="0 0 420 420" class="crate-illustration" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="210" cy="360" rx="150" ry="20" fill="#1F4D2C" opacity="0.08"/>
-        <!-- crate -->
-        <rect x="70" y="250" width="280" height="110" rx="6" fill="#C97F4E"/>
-        <rect x="70" y="250" width="280" height="110" rx="6" fill="none" stroke="#A85C32" stroke-width="4"/>
-        <line x1="70" y1="285" x2="350" y2="285" stroke="#A85C32" stroke-width="3"/>
-        <line x1="70" y1="325" x2="350" y2="325" stroke="#A85C32" stroke-width="3"/>
-        <line x1="130" y1="250" x2="130" y2="360" stroke="#A85C32" stroke-width="3"/>
-        <line x1="210" y1="250" x2="210" y2="360" stroke="#A85C32" stroke-width="3"/>
-        <line x1="290" y1="250" x2="290" y2="360" stroke="#A85C32" stroke-width="3"/>
-        <!-- tomato -->
-        <circle cx="130" cy="230" r="42" fill="#D8432E"/>
-        <path d="M118 195c4-10 20-10 24 0" stroke="#1F4D2C" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <!-- capsicum -->
-        <path d="M230 195c-20 0-34 22-30 48 3 22 20 36 36 36s34-16 34-40c0-26-18-44-40-44z" fill="#4C9A2A"/>
-        <rect x="236" y="185" width="8" height="18" rx="3" fill="#1F4D2C"/>
-        <!-- carrot -->
-        <path d="M320 200l30 90-15 6-30-88z" fill="#E8A23B"/>
-        <path d="M318 196l6 8-14 3-4-9z" fill="#4C9A2A"/>
-        <!-- leafy green -->
-        <path d="M150 200c10-30 40-40 60-30-10 20-30 34-60 30z" fill="#2E7D32"/>
-        <path d="M170 210c20-24 52-24 66-6-16 16-42 22-66 6z" fill="#4C9A2A"/>
-      </svg>
+      <img class="hero__img" src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?auto=format&fit=crop&w=1200&q=80" alt="Fresh vegetables and fruits basket">
+      <div class="steps-card">
+        <div class="step"><span>📱</span><small>You Order<br>Today</small></div>
+        <div class="arrow">→</div>
+        <div class="step"><span>👨‍🌾</span><small>We Pick<br>Fresh</small></div>
+        <div class="arrow">→</div>
+        <div class="step"><span>🛵</span><small>We Deliver<br>Tomorrow</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="perks-strip">
+    <div class="container perks-strip__inner">
+      <span>🚚 Free Delivery <em>on orders above ₹499</em></span>
+      <span>💰 5% Cashback <em>Refer &amp; Earn</em></span>
+      <span>✅ 100% Quality Guaranteed</span>
+      <span>💳 Safe &amp; Secure Payments</span>
     </div>
   </div>
 </section>
 
-<!-- Trust strip -->
-<div class="trust-strip">
-  <div class="wrap trust-grid">
-    <div class="trust-item"><strong>Farm to door</strong><span>Same day pick-up, next day delivery</span></div>
-    <div class="trust-item"><strong>Fair pricing</strong><span>No middleman markup</span></div>
-    <div class="trust-item"><strong>Order on WhatsApp</strong><span>No app, no signup needed</span></div>
-    <div class="trust-item"><strong>Hanumangarh local</strong><span>We know the area, we deliver it ourselves</span></div>
-  </div>
-</div>
-
-<!-- Categories -->
+<!-- ===== CATEGORIES ===== -->
 <section class="section" id="categories">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>What's in season</h2>
-      <p>A small, honest range &mdash; grown nearby, not flown in.</p>
-    </div>
-    <div class="crate-grid">
-      <div class="crate-card"><div class="crate-icon">🥬</div><h3>Vegetables</h3></div>
-      <div class="crate-card"><div class="crate-icon">🍎</div><h3>Fruits</h3></div>
-      <div class="crate-card"><div class="crate-icon">🥗</div><h3>Leafy Greens</h3></div>
-      <div class="crate-card"><div class="crate-icon">🌶️</div><h3>Herbs &amp; Spices</h3></div>
-      <div class="crate-card"><div class="crate-icon">🍆</div><h3>Exotic Vegetables</h3></div>
-      <div class="crate-card"><div class="crate-icon">🎋</div><h3>Seasonal Picks</h3></div>
-    </div>
-  </div>
-</section>
-
-<!-- Deals -->
-<section class="section section-alt" id="deals">
-  <div class="wrap">
-    <div class="section-head section-head-row">
+  <div class="container">
+    <div class="section__head">
       <div>
-        <h2>Today's fresh deals</h2>
-        <p>Prices update daily depending on the morning's pick.</p>
+        <h2>Shop by Category</h2>
+        <p>Explore a wide range of fresh &amp; healthy products</p>
       </div>
-      <div class="countdown">
-        <span>Today's list refreshes in</span>
-        <div class="countdown-timer" id="countdownTimer">08:34:22</div>
-      </div>
+      <a href="#deals" class="link-btn">View All Categories →</a>
     </div>
 
-    <div class="product-grid" id="productGrid">
-      <!-- Products injected by JS from data, but written statically here for no-JS fallback -->
-      <article class="product-card" data-name="Tomato" data-unit="1 kg" data-price="20">
-        <span class="tag-corner">-33%</span>
-        <div class="product-emoji">🍅</div>
-        <h3>Tomato</h3>
-        <p class="product-unit">1 kg</p>
-        <div class="product-price"><span class="price-now">₹20</span><span class="price-old">₹30</span></div>
-        <button class="btn btn-order" data-wa>Order on WhatsApp</button>
-      </article>
-
-      <article class="product-card" data-name="Potato" data-unit="1 kg" data-price="18">
-        <span class="tag-corner">-28%</span>
-        <div class="product-emoji">🥔</div>
-        <h3>Potato</h3>
-        <p class="product-unit">1 kg</p>
-        <div class="product-price"><span class="price-now">₹18</span><span class="price-old">₹25</span></div>
-        <button class="btn btn-order" data-wa>Order on WhatsApp</button>
-      </article>
-
-      <article class="product-card" data-name="Cucumber" data-unit="1 kg" data-price="16">
-        <span class="tag-corner">-27%</span>
-        <div class="product-emoji">🥒</div>
-        <h3>Cucumber</h3>
-        <p class="product-unit">1 kg</p>
-        <div class="product-price"><span class="price-now">₹16</span><span class="price-old">₹22</span></div>
-        <button class="btn btn-order" data-wa>Order on WhatsApp</button>
-      </article>
-
-      <article class="product-card" data-name="Green Capsicum" data-unit="1 kg" data-price="40">
-        <span class="tag-corner">-33%</span>
-        <div class="product-emoji">🫑</div>
-        <h3>Green Capsicum</h3>
-        <p class="product-unit">1 kg</p>
-        <div class="product-price"><span class="price-now">₹40</span><span class="price-old">₹60</span></div>
-        <button class="btn btn-order" data-wa>Order on WhatsApp</button>
-      </article>
-
-      <article class="product-card" data-name="Banana" data-unit="1 dozen" data-price="28">
-        <span class="tag-corner">-30%</span>
-        <div class="product-emoji">🍌</div>
-        <h3>Banana</h3>
-        <p class="product-unit">1 dozen</p>
-        <div class="product-price"><span class="price-now">₹28</span><span class="price-old">₹40</span></div>
-        <button class="btn btn-order" data-wa>Order on WhatsApp</button>
-      </article>
-
-      <article class="product-card" data-name="Apple" data-unit="1 kg" data-price="110">
-        <span class="tag-corner">-27%</span>
-        <div class="product-emoji">🍎</div>
-        <h3>Apple</h3>
-        <p class="product-unit">1 kg</p>
-        <div class="product-price"><span class="price-now">₹110</span><span class="price-old">₹150</span></div>
-        <button class="btn btn-order" data-wa>Order on WhatsApp</button>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- Why us -->
-<section class="why-us" id="why-us">
-  <div class="wrap why-grid">
-    <div class="why-copy">
-      <h2>Why Hanumangarh trusts GreenBasket</h2>
-      <p>We started this because the vegetables sitting for days at the local market weren't good enough for our own kitchens either. So we built the shortest possible route from farm to your door.</p>
-    </div>
-    <div class="why-points">
-      <div class="why-point"><h4>Picked, not stored</h4><p>Nothing sits in a warehouse. What we deliver was picked within a day.</p></div>
-      <div class="why-point"><h4>Real people, real number</h4><p>Message a person on WhatsApp, not a chatbot. We know our customers by name.</p></div>
-      <div class="why-point"><h4>Honest weight, honest price</h4><p>What you order is what you get weighed &mdash; no inflated MRPs to discount from.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- Contact / Footer -->
-<footer class="site-footer" id="contact">
-  <div class="wrap footer-grid">
-    <div>
-      <a href="#home" class="logo logo-footer">
-        <svg width="30" height="30" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 15C4 15 6 6 17 6C28 6 30 15 30 15" stroke="#F3EFE3" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M6 15H28L25.5 29C25.3 30 24.4 30.7 23.4 30.7H10.6C9.6 30.7 8.7 30 8.5 29L6 15Z" fill="#4C9A2A" stroke="#F3EFE3" stroke-width="2"/>
-        </svg>
-        <span class="logo-text">GreenBasket<em>India</em></span>
+    <div class="cat-grid">
+      <a class="cat-card" href="https://wa.me/919772821229?text=Hi%2C%20I%27d%20like%20to%20order%20Vegetables." target="_blank">
+        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80" alt="Vegetables">
+        <span>Vegetables</span>
       </a>
-      <p class="footer-tag">Farm fresh produce for Hanumangarh, one WhatsApp message at a time.</p>
-    </div>
-    <div>
-      <h4>Get in touch</h4>
-      <p><a href="https://wa.me/919772821229" target="_blank" rel="noopener">+91 97728 21229 (WhatsApp)</a></p>
-      <p>Hanumangarh, Rajasthan</p>
-    </div>
-    <div>
-      <h4>Explore</h4>
-      <p><a href="#categories">Categories</a></p>
-      <p><a href="#deals">Today's deals</a></p>
-      <p><a href="#why-us">Why us</a></p>
+      <a class="cat-card" href="https://wa.me/919772821229?text=Hi%2C%20I%27d%20like%20to%20order%20Fruits." target="_blank">
+        <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=400&q=80" alt="Fruits">
+        <span>Fruits</span>
+      </a>
+      <a class="cat-card" href="https://wa.me/919772821229?text=Hi%2C%20I%27d%20like%20to%20order%20Leafy%20Greens." target="_blank">
+        <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=400&q=80" alt="Leafy Greens">
+        <span>Leafy Greens</span>
+      </a>
+      <a class="cat-card" href="https://wa.me/919772821229?text=Hi%2C%20I%27d%20like%20to%20order%20Herbs%20%26%20Spices." target="_blank">
+        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80" alt="Herbs & Spices">
+        <span>Herbs &amp; Spices</span>
+      </a>
+      <a class="cat-card" href="https://wa.me/919772821229?text=Hi%2C%20I%27d%20like%20to%20order%20Exotic%20Vegetables." target="_blank">
+        <img src="https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=400&q=80" alt="Exotic Vegetables">
+        <span>Exotic Vegetables</span>
+      </a>
+      <a class="cat-card" href="https://wa.me/919772821229?text=Hi%2C%20I%27d%20like%20to%20see%20Seasonal%20Offers." target="_blank">
+        <img src="https://images.unsplash.com/photo-1610632380989-680fe40816c6?auto=format&fit=crop&w=400&q=80" alt="Seasonal Offers">
+        <span>Seasonal Offers <em>%</em></span>
+      </a>
     </div>
   </div>
-  <div class="wrap footer-bottom">
-    <p>&copy; <span id="year"></span> GreenBasket India. All produce, no promises we can't keep.</p>
+</section>
+
+<!-- ===== PROMO BANNERS ===== -->
+<section class="section section--tight" id="offers">
+  <div class="container promo-grid">
+    <div class="promo promo--dark1">
+      <h3>Invite &amp; Earn<br>Get 5% Cashback</h3>
+      <p>on every order of your friend</p>
+      <a href="https://wa.me/919772821229?text=Hi%2C%20I%27d%20like%20to%20know%20about%20the%20Invite%20%26%20Earn%20offer." class="btn btn--light" target="_blank">Invite Now</a>
+    </div>
+    <div class="promo promo--dark2">
+      <h3>Pre-Order &amp; Save More</h3>
+      <p>Lock in best prices &amp; get freshest delivery tomorrow morning.</p>
+      <a href="https://wa.me/919772821229?text=Hi%2C%20I%27d%20like%20to%20Pre-Order." class="btn btn--light" target="_blank">Pre-Order Now</a>
+    </div>
+    <div class="promo promo--pale">
+      <h3>Best Quality, Better Than Market</h3>
+      <p>We deliver the best quality products at affordable prices.</p>
+      <a href="#deals" class="btn btn--dark">Shop Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DEALS ===== -->
+<section class="section" id="deals">
+  <div class="container">
+    <div class="section__head">
+      <h2>Fresh Deals of the Day</h2>
+      <div class="deal-timer">
+        <span>Offer ends in</span>
+        <div class="timer" id="timer">
+          <div><b id="th">08</b><small>Hrs</small></div>
+          <div><b id="tm">34</b><small>Mins</small></div>
+          <div><b id="ts">22</b><small>Secs</small></div>
+        </div>
+        <a href="#deals" class="link-btn">View All →</a>
+      </div>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<!-- ===== TRUST STRIP ===== -->
+<section class="trust" id="trust">
+  <div class="container trust__inner">
+    <div class="trust__head">
+      <h2>Why Thousands<br>Trust Green Basket?</h2>
+    </div>
+    <div class="trust__grid">
+      <div><span>🌾</span><strong>Farm Fresh</strong><small>Direct from farms</small></div>
+      <div><span>🚫</span><strong>No Middlemen</strong><small>Better quality, better prices</small></div>
+      <div><span>🛡️</span><strong>Safe &amp; Hygienic</strong><small>Carefully packed for you</small></div>
+      <div><span>🚴</span><strong>On Time Delivery</strong><small>Fresh to your doorstep</small></div>
+      <div><span>💚</span><strong>Customer First</strong><small>Your satisfaction is our priority</small></div>
+    </div>
+    <div class="trust__rating">
+      <strong>10,000+</strong>
+      <span>Happy Customers</span>
+      <div class="stars">★★★★★</div>
+      <small>4.8/5 from 1,500+ Reviews</small>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER TOP: APP / PAYMENTS / DELIVERY / NEWSLETTER ===== -->
+<section class="section section--tight" id="download">
+  <div class="container foot-grid">
+    <div class="foot-card foot-card--app">
+      <h4>Download Our App</h4>
+      <p>For a better &amp; faster experience!</p>
+      <div class="foot-card__row">
+        <div class="qr">
+          <svg viewBox="0 0 100 100" width="72" height="72"><rect width="100" height="100" fill="#fff"/><g fill="#14361e"><rect x="6" y="6" width="24" height="24"/><rect x="70" y="6" width="24" height="24"/><rect x="6" y="70" width="24" height="24"/><rect x="14" y="14" width="8" height="8" fill="#fff"/><rect x="78" y="14" width="8" height="8" fill="#fff"/><rect x="14" y="78" width="8" height="8" fill="#fff"/><rect x="40" y="6" width="6" height="6"/><rect x="52" y="6" width="6" height="6"/><rect x="40" y="18" width="6" height="6"/><rect x="60" y="20" width="6" height="6"/><rect x="40" y="40" width="6" height="6"/><rect x="50" y="46" width="6" height="6"/><rect x="60" y="40" width="6" height="6"/><rect x="70" y="46" width="6" height="6"/><rect x="80" y="40" width="6" height="6"/><rect x="40" y="60" width="6" height="6"/><rect x="60" y="60" width="6" height="6"/><rect x="80" y="60" width="6" height="6"/><rect x="46" y="80" width="6" height="6"/><rect x="60" y="80" width="6" height="6"/><rect x="80" y="80" width="6" height="6"/></g></svg>
+        </div>
+        <div class="store-btns">
+          <span class="store-btn"> Google Play</span>
+          <span class="store-btn"> App Store</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-card">
+      <h4>Secure Payments</h4>
+      <p>Multiple payment options available</p>
+      <div class="pay-icons">
+        <span>UPI</span><span>VISA</span><span>Mastercard</span><span>RuPay</span><span>Paytm</span>
+      </div>
+    </div>
+
+    <div class="foot-card">
+      <h4>We Deliver In</h4>
+      <p>Hanumangarh &amp; Nearby Areas</p>
+      <button class="btn btn--outline btn--sm" id="pinBtn">Check Pin Code</button>
+    </div>
+
+    <div class="foot-card">
+      <h4>Stay Updated</h4>
+      <p>Get the best offers &amp; updates delivered to your inbox</p>
+      <form class="subscribe" id="subscribeForm">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="socials">
+        <a href="https://wa.me/919772821229" target="_blank" aria-label="WhatsApp">🟢</a>
+        <a href="#" aria-label="Instagram">📸</a>
+        <a href="#" aria-label="Facebook">📘</a>
+        <a href="#" aria-label="YouTube">▶️</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER BOTTOM ===== -->
+<footer class="footer" id="contact">
+  <div class="container footer__grid">
+    <div>
+      <span>📋</span>
+      <strong>Easy Pre-Order</strong>
+      <small>Simple &amp; hassle-free pre-order process</small>
+    </div>
+    <div>
+      <span>🚚</span>
+      <strong>Flexible Delivery</strong>
+      <small>Choose delivery time that suits you</small>
+    </div>
+    <div>
+      <span>🛡️</span>
+      <strong>Secure Payments</strong>
+      <small>100% safe &amp; secure payment options</small>
+    </div>
+    <div>
+      <span>🎧</span>
+      <strong>24/7 Support</strong>
+      <small>We're here to help you anytime</small>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <p>© <span id="year"></span> Green Basket. All rights reserved.</p>
+    <p>Order via WhatsApp: <a href="https://wa.me/919772821229">+91 97728 21229</a></p>
   </div>
 </footer>
 
-<!-- Floating WhatsApp -->
-<a href="https://wa.me/919772821229?text=Hi%20GreenBasket%20India!%20I%27d%20like%20to%20place%20an%20order." class="whatsapp-float" target="_blank" rel="noopener" aria-label="Order on WhatsApp">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38c1.44.79 3.06 1.2 4.72 1.2h.01c5.46 0 9.91-4.45 9.91-9.91C21.94 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.4 1.32-1.93 1.4-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.74-4.14-4.88-4.33-.14-.19-1.17-1.55-1.17-2.96s.73-2.1.99-2.39c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.19.72-.84.92-1.13.19-.29.39-.24.65-.14.27.1 1.68.79 1.97.94.29.14.48.21.55.33.07.12.07.71-.17 1.39z"/></svg>
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/919772821229?text=Hi%20Green%20Basket%2C%20I%20want%20to%20place%20an%20order." class="whatsapp-float" target="_blank" rel="noopener" aria-label="Order on WhatsApp">
+  💬
 </a>
 
-<script>
-// ===== Config =====
-const WHATSAPP_NUMBER = "919772821229"; // country code + number, no + or spaces
-
-// ===== Mobile nav toggle =====
-const navToggle = document.getElementById("navToggle");
-const mainNav = document.getElementById("mainNav");
-
-if (navToggle && mainNav) {
-  navToggle.addEventListener("click", () => {
-    mainNav.classList.toggle("open");
-  });
-
-  mainNav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => mainNav.classList.remove("open"));
-  });
-}
-
-// ===== Per-product WhatsApp order buttons =====
-document.querySelectorAll("[data-wa]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const card = button.closest(".product-card");
-    if (!card) return;
-
-    const name = card.dataset.name || "this item";
-    const unit = card.dataset.unit || "";
-    const price = card.dataset.price || "";
-
-    const message =
-      `Hi GreenBasket India! I'd like to order:\n` +
-      `${name} (${unit}) - ₹${price}\n\n` +
-      `Please confirm availability and delivery time.`;
-
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank", "noopener");
-  });
-});
-
-// ===== Fake "today's list refreshes in" countdown =====
-// Purely cosmetic — counts down to midnight, resets daily. No backend involved.
-function updateCountdown() {
-  const el = document.getElementById("countdownTimer");
-  if (!el) return;
-
-  const now = new Date();
-  const midnight = new Date(now);
-  midnight.setHours(24, 0, 0, 0);
-
-  const diff = midnight - now;
-  const hours = String(Math.floor(diff / 3600000)).padStart(2, "0");
-  const mins = String(Math.floor((diff % 3600000) / 60000)).padStart(2, "0");
-  const secs = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
-
-  el.textContent = `${hours}:${mins}:${secs}`;
-}
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-// ===== Footer year =====
-const yearEl = document.getElementById("year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-</script>
+<script src="script.js"></script>
 </body>
 </html>
