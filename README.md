@@ -1,46 +1,73 @@
-# GreenBasket India
+# 🧺 Green Basket
 
-Hyperlocal fresh vegetable & fruit ordering site for Hanumangarh, Rajasthan.
+Premium, fully responsive landing page for **Green Basket** — a fresh fruits & vegetables pre-order/delivery service. Pure HTML, CSS and JavaScript — no framework, no build step required.
 
-**Phase 1 (current):** Static website. No cart, no backend — customers order directly via WhatsApp. This validates real demand before any backend/admin system is built.
+## 🚀 Live Preview
 
-**Phase 2 (planned):** Firebase (Firestore + Hosting + Auth) backend with a no-code admin dashboard to manage products, prices, images, and categories without touching code.
+Open `index.html` directly in a browser, or host it for free on **GitHub Pages**:
 
-## Tech stack (Phase 1)
+1. Push this repo to GitHub.
+2. Go to **Settings → Pages**.
+3. Under "Build and deployment", select **Deploy from a branch**, branch `main`, folder `/ (root)`.
+4. Save — your site will be live at `https://<your-username>.github.io/<repo-name>/`
 
-- HTML5, CSS3 (no framework, no build step)
-- Vanilla JavaScript
-- Fonts: Fraunces + Work Sans (Google Fonts)
-
-## Project structure
+## 📁 Project Structure
 
 ```
-greenbasketindia/
-├── index.html
-├── assets/
-│   ├── css/style.css
-│   ├── js/main.js
-│   └── images/
+green-basket/
+├── index.html      # Page markup (header, hero, categories, deals, footer)
+├── style.css       # All styling (colors, layout, responsive design)
+├── script.js       # Product data, countdown timer, WhatsApp order links
 ├── .gitignore
 └── README.md
 ```
 
-## Running locally
+## ✨ Features
 
-No build step needed — just open `index.html` in a browser, or serve it locally:
+- Hero section with pre-order CTA and "how it works" steps
+- Shop by Category grid
+- Promo banners (cashback, pre-order, quality)
+- Fresh Deals of the Day with a live countdown timer
+- Trust/why-choose-us strip
+- App download, payments, delivery-check & newsletter footer blocks
+- Floating WhatsApp button + WhatsApp ordering on every product/CTA
+- Fully responsive (mobile, tablet, desktop)
 
-```bash
-npx serve .
+## 🛒 How Ordering Currently Works (No Backend Yet)
+
+There is **no app and no backend/database connected yet**. Every "Add to Cart", "Pre-Order Now", category card, and the floating button opens **WhatsApp** with a pre-filled message to:
+
+```
++91 97728 21229
 ```
 
-## Ordering flow (Phase 1)
+This lets you start taking real orders immediately while the app/backend is being built.
 
-Every "Order on WhatsApp" button opens a pre-filled WhatsApp message to the store number, including the product name, unit, and price where applicable. No customer data is stored anywhere in this phase.
+To change the WhatsApp number, edit the constant at the top of `script.js`:
 
-## Roadmap
+```js
+const WHATSAPP_NUMBER = "919772821229"; // country code + number, no + or spaces
+```
 
-- [x] Static homepage — hero, categories, live deals, WhatsApp ordering
-- [ ] Deploy to Firebase Hosting
-- [ ] Firestore-backed product catalog (replaces hardcoded product cards)
-- [ ] Admin dashboard (auth-protected) — manage products, prices, images, banners, orders
-- [ ] Firestore security rules — public read-only, admin-only writes
+## 🔌 Connecting a Real Backend Later
+
+When you're ready to add a real cart/order system, here's what to replace:
+
+| Feature | Current (frontend-only) | Replace with |
+|---|---|---|
+| Products | Hardcoded array in `script.js` | API call to your backend/database |
+| Add to Cart | Opens WhatsApp chat | Real cart state + checkout API |
+| Newsletter form | Browser `alert()` | POST request to your email/CRM API |
+| Pin code check | Opens WhatsApp chat | Serviceability API |
+
+Look for `TODO` comments in `script.js` — those mark the spots meant to be wired up later.
+
+## 🎨 Customizing
+
+- **Colors/fonts:** all defined as CSS variables at the top of `style.css` under `:root`
+- **Products:** edit the `products` array in `script.js`
+- **Images:** currently hotlinked from Unsplash for placeholder-quality photos — swap with your own product photography when ready
+
+## 📄 License
+
+All rights reserved — Green Basket.
