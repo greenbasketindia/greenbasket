@@ -1,73 +1,94 @@
-# 🧺 Green Basket
+# Green Basket 🥬
 
-Premium, fully responsive landing page for **Green Basket** — a fresh fruits & vegetables pre-order/delivery service. Pure HTML, CSS and JavaScript — no framework, no build step required.
+Premium fresh fruits & vegetables ordering website — **Phase 1: frontend only.**
 
-## 🚀 Live Preview
+Built with plain HTML, CSS and vanilla JavaScript. No frameworks, no backend, no database — just a clean, production-quality storefront that's ready to be wired to a real backend later.
 
-Open `index.html` directly in a browser, or host it for free on **GitHub Pages**:
-
-1. Push this repo to GitHub.
-2. Go to **Settings → Pages**.
-3. Under "Build and deployment", select **Deploy from a branch**, branch `main`, folder `/ (root)`.
-4. Save — your site will be live at `https://<your-username>.github.io/<repo-name>/`
-
-## 📁 Project Structure
+## Project structure
 
 ```
-green-basket/
-├── index.html      # Page markup (header, hero, categories, deals, footer)
-├── style.css       # All styling (colors, layout, responsive design)
-├── script.js       # Product data, countdown timer, WhatsApp order links
-├── .gitignore
+greenbasket/
+│
+├── index.html          # Homepage markup
+├── css/
+│   └── style.css       # All styling (design tokens as CSS variables)
+├── js/
+│   └── script.js       # Product data, cart logic, WhatsApp ordering
+├── assets/
+│   ├── images/         # Put your own product/brand images here
+│   └── icons/          # Put favicon / icon assets here
 └── README.md
 ```
 
-## ✨ Features
+## Getting started
 
-- Hero section with pre-order CTA and "how it works" steps
-- Shop by Category grid
-- Promo banners (cashback, pre-order, quality)
-- Fresh Deals of the Day with a live countdown timer
-- Trust/why-choose-us strip
-- App download, payments, delivery-check & newsletter footer blocks
-- Floating WhatsApp button + WhatsApp ordering on every product/CTA
-- Fully responsive (mobile, tablet, desktop)
+No build step needed. Just open `index.html` in a browser, or serve the folder locally:
 
-## 🛒 How Ordering Currently Works (No Backend Yet)
+```bash
+# Option 1: just open it
+open index.html
 
-There is **no app and no backend/database connected yet**. Every "Add to Cart", "Pre-Order Now", category card, and the floating button opens **WhatsApp** with a pre-filled message to:
-
-```
-+91 97728 21229
+# Option 2: serve it (recommended, avoids any relative-path issues)
+npx serve .
+# or
+python3 -m http.server 5500
 ```
 
-This lets you start taking real orders immediately while the app/backend is being built.
+## How ordering works (Phase 1)
 
-To change the WhatsApp number, edit the constant at the top of `script.js`:
+There's no payment gateway or backend yet. Instead, when a customer adds items to the cart and taps **Order via WhatsApp**, the site:
+
+1. Builds a plain-text order summary (customer name, items, quantities, prices, total).
+2. Opens WhatsApp (web or app) with that message pre-filled, addressed to your business number.
+3. You confirm and take the order manually from there.
+
+### Changing the WhatsApp number
+
+The number lives in **exactly one place** — the `CONFIG` object at the top of `js/script.js`:
 
 ```js
-const WHATSAPP_NUMBER = "919772821229"; // country code + number, no + or spaces
+const CONFIG = {
+  WHATSAPP_NUMBER: "919772821229", // <-- change this
+  CURRENCY_SYMBOL: "₹",
+  STORE_NAME: "Green Basket",
+};
 ```
 
-## 🔌 Connecting a Real Backend Later
+Format: country code + number, no `+`, no spaces, no leading `0` (e.g. `91XXXXXXXXXX` for India). Nothing else in the codebase needs to change.
 
-When you're ready to add a real cart/order system, here's what to replace:
+## Product data (placeholder)
 
-| Feature | Current (frontend-only) | Replace with |
-|---|---|---|
-| Products | Hardcoded array in `script.js` | API call to your backend/database |
-| Add to Cart | Opens WhatsApp chat | Real cart state + checkout API |
-| Newsletter form | Browser `alert()` | POST request to your email/CRM API |
-| Pin code check | Opens WhatsApp chat | Serviceability API |
+All products are defined in one array (`PRODUCTS`) near the top of `js/script.js`. Each product has an `id`, `name`, `unit`, `price`, optional `oldPrice` (for discount display), and an `image` URL.
 
-Look for `TODO` comments in `script.js` — those mark the spots meant to be wired up later.
+Right now images are pulled from Unsplash for development. **Replace the `image` field with your own hosted photo** (e.g. `assets/images/tomato.jpg`) before going live — the markup and styling don't need to change.
 
-## 🎨 Customizing
+```js
+{
+  id: "tomato",
+  name: "Tomato",
+  unit: "1 kg",
+  price: 20,
+  oldPrice: 30,
+  image: "assets/images/tomato.jpg", // swap in your own photo
+  alt: "Fresh red tomatoes",
+}
+```
 
-- **Colors/fonts:** all defined as CSS variables at the top of `style.css` under `:root`
-- **Products:** edit the `products` array in `script.js`
-- **Images:** currently hotlinked from Unsplash for placeholder-quality photos — swap with your own product photography when ready
+## Design notes
 
-## 📄 License
+- Layout, spacing, typography, card style and section rhythm follow the provided reference design as closely as possible.
+- Colors and type scale are defined as CSS variables at the top of `style.css` for easy theming.
+- Fully responsive: desktop, tablet and mobile breakpoints included, no horizontal scroll.
+- Cart state is kept in memory only (resets on page refresh) since there's no backend yet — this is expected for Phase 1.
 
-All rights reserved — Green Basket.
+## Phase 2 (future backend)
+
+The frontend is structured so a real backend can be added later without a UI rebuild:
+
+- `PRODUCTS` in `script.js` can be swapped for a `fetch()` call to a real API.
+- The WhatsApp ordering flow can be replaced with a real checkout/order-management call — the `sendWhatsAppOrder()` function is the single integration point to change.
+- Planned admin capabilities (not built yet): update prices, update images, add/remove products, mark items unavailable, manage incoming orders.
+
+## Browser support
+
+Modern evergreen browsers (Chrome, Edge, Safari, Firefox). No polyfills included.
