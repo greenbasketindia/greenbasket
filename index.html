@@ -1,905 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="GreenBasket — Fresh fruits and vegetables delivered to your doorstep."
-    >
-
-    <title>GreenBasket — Freshness, Delivered</title>
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Green Basket | Fresh Fruits &amp; Vegetables Delivered</title>
+  <meta name="description" content="Order today, fresh tomorrow. Green Basket delivers farm-fresh fruits and vegetables straight to your doorstep." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-
 <body>
 
-    <!-- TOP BAR -->
-
-    <div class="top-bar">
-        Fresh produce. Honest prices.
-        <span>Pre-order today for tomorrow's delivery.</span>
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announce-bar">
+    <div class="container announce-bar__inner">
+      <p>Pre-Order Today &amp; Get Farm Fresh Delivery Tomorrow Morning!</p>
+      <p class="announce-bar__app">Download App &amp; Get 5% OFF</p>
     </div>
+  </div>
 
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="#" class="logo">
+        <span class="logo__icon" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 4C10 4 5 9 5 16v10a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V16c0-7-5-12-12-12Z" fill="#1E7A2E"/>
+            <path d="M17 4c2.5 0 4 3 3 6-1 3-4 3-4 3s-1.5-3.5.5-6c.6-1 1-3 .5-3Z" fill="#7CC24B"/>
+            <path d="M9 16h16" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="logo__text">
+          Green Basket
+          <small>Order Today, Fresh Tomorrow</small>
+        </span>
+      </a>
 
-    <!-- NAVBAR -->
+      <nav class="main-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#" class="active">Home</a></li>
+          <li><a href="#deals">Shop</a></li>
+          <li class="has-dropdown">
+            <a href="#categories">Categories <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </li>
+          <li><a href="#deals">Offers</a></li>
+          <li><a href="#why-us">Our Story</a></li>
+          <li><a href="#footer">Contact</a></li>
+        </ul>
+      </nav>
 
-    <header class="navbar">
+      <div class="header-actions">
+        <button class="location-pill" type="button" aria-label="Change delivery location">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13a7 7 0 1 0-14 0c0 5.42 7 13 7 13Z" stroke="#1E7A2E" stroke-width="1.6"/><circle cx="12" cy="9" r="2.4" stroke="#1E7A2E" stroke-width="1.6"/></svg>
+          <span>
+            <small>Deliver to</small>
+            Hanumangarh
+          </span>
+        </button>
+        <button class="icon-btn" type="button" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#1B1B1B" stroke-width="1.6"/><path d="M4 20c1.6-3.6 5-5.5 8-5.5s6.4 1.9 8 5.5" stroke="#1B1B1B" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn cart-btn" type="button" id="cartToggle" aria-label="Open cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.8h7.7a2 2 0 0 0 2-1.6L21 8H6" stroke="#1B1B1B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.4" fill="#1B1B1B"/><circle cx="18" cy="21" r="1.4" fill="#1B1B1B"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-        <div class="container nav-inner">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <h1>Order Today, <span>Fresh Tomorrow!</span></h1>
+        <p class="hero__subtitle">Pre-order now &amp; enjoy farm fresh fruits and vegetables delivered to your doorstep.</p>
 
-            <a href="index.html" class="logo">
-
-                <span class="logo-mark">G</span>
-
-                GreenBasket
-
-            </a>
-
-
-            <nav class="nav-links">
-
-                <a href="index.html" class="active">
-                    Home
-                </a>
-
-                <a href="shop.html">
-                    Shop
-                </a>
-
-                <a href="#categories">
-                    Categories
-                </a>
-
-                <a href="#deals">
-                    Today's Deals
-                </a>
-
-                <a href="#why">
-                    Why GreenBasket
-                </a>
-
-            </nav>
-
-
-            <div class="nav-actions">
-
-                <button
-                    class="icon-btn"
-                    aria-label="Search"
-                >
-                    ⌕
-                </button>
-
-                <a
-                    href="cart.html"
-                    class="icon-btn cart-btn"
-                    aria-label="Cart"
-                >
-
-                    🛒
-
-                    <span class="cart-count">
-                        0
-                    </span>
-
-                </a>
-
-                <button
-                    class="icon-btn mobile-menu"
-                    id="menuButton"
-                    aria-label="Menu"
-                >
-                    ☰
-                </button>
-
-            </div>
-
+        <div class="hero__features">
+          <div class="hero__feature">
+            <span class="hero__feature-icon">🌾</span>
+            <div><strong>Farm Fresh</strong><small>Direct from farms</small></div>
+          </div>
+          <div class="hero__feature">
+            <span class="hero__feature-icon">💰</span>
+            <div><strong>Best Price</strong><small>Better than market</small></div>
+          </div>
+          <div class="hero__feature">
+            <span class="hero__feature-icon">⏱</span>
+            <div><strong>On Time Delivery</strong><small>Always on time</small></div>
+          </div>
         </div>
 
-    </header>
-
-
-    <!-- HERO -->
-
-    <main>
-
-        <section class="hero">
-
-            <div class="container hero-inner">
-
-                <div class="hero-content">
-
-                    <div class="eyebrow">
-                        Fresh from the source
-                    </div>
-
-
-                    <h1>
-                        Good food
-                        starts with
-                        <em>fresh.</em>
-                    </h1>
-
-
-                    <p class="hero-text">
-                        Discover fresh fruits and vegetables
-                        selected with care and delivered
-                        right to your doorstep.
-                    </p>
-
-
-                    <div class="hero-buttons">
-
-                        <a
-                            href="shop.html"
-                            class="btn btn-primary"
-                        >
-                            Shop Fresh Produce →
-                        </a>
-
-                        <a
-                            href="#categories"
-                            class="btn btn-outline"
-                        >
-                            Explore Categories
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <div class="hero-image">
-
-                    <img
-                        src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=85"
-                        alt="Fresh vegetables"
-                    >
-
-                    <div class="hero-badge">
-
-                        <strong>100% Fresh Produce</strong>
-
-                        <span>
-                            Carefully selected for your family
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- CATEGORIES -->
-
-        <section
-            class="section"
-            id="categories"
-        >
-
-            <div class="container">
-
-                <div class="section-head">
-
-                    <div>
-
-                        <div class="section-label">
-                            Shop by category
-                        </div>
-
-                        <h2 class="section-title">
-                            Freshness for every meal.
-                        </h2>
-
-                        <p class="section-subtitle">
-                            From everyday vegetables to seasonal
-                            fruits, find everything your kitchen needs.
-                        </p>
-
-                    </div>
-
-                    <a
-                        href="shop.html"
-                        class="btn btn-outline"
-                    >
-                        View All
-                    </a>
-
-                </div>
-
-
-                <div class="category-grid">
-
-
-                    <a href="shop.html" class="category-card">
-
-                        <div class="category-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=400&q=80"
-                                alt="Vegetables"
-                            >
-
-                        </div>
-
-                        <h3>Vegetables</h3>
-
-                    </a>
-
-
-                    <a href="shop.html" class="category-card">
-
-                        <div class="category-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=400&q=80"
-                                alt="Fresh fruits"
-                            >
-
-                        </div>
-
-                        <h3>Fresh Fruits</h3>
-
-                    </a>
-
-
-                    <a href="shop.html" class="category-card">
-
-                        <div class="category-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1515584282367-2e4d6e0c0e4c?auto=format&fit=crop&w=400&q=80"
-                                alt="Leafy greens"
-                            >
-
-                        </div>
-
-                        <h3>Leafy Greens</h3>
-
-                    </a>
-
-
-                    <a href="shop.html" class="category-card">
-
-                        <div class="category-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=400&q=80"
-                                alt="Herbs"
-                            >
-
-                        </div>
-
-                        <h3>Herbs</h3>
-
-                    </a>
-
-
-                    <a href="shop.html" class="category-card">
-
-                        <div class="category-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=400&q=80"
-                                alt="Root vegetables"
-                            >
-
-                        </div>
-
-                        <h3>Root Vegetables</h3>
-
-                    </a>
-
-
-                    <a href="shop.html" class="category-card">
-
-                        <div class="category-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=400&q=80"
-                                alt="Seasonal fruits"
-                            >
-
-                        </div>
-
-                        <h3>Seasonal</h3>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- DEALS -->
-
-        <section
-            class="section"
-            id="deals"
-            style="background:#f8f7f2;"
-        >
-
-            <div class="container">
-
-                <div class="section-head">
-
-                    <div>
-
-                        <div class="section-label">
-                            Today's selection
-                        </div>
-
-                        <h2 class="section-title">
-                            Fresh deals, picked for you.
-                        </h2>
-
-                    </div>
-
-                    <a
-                        href="shop.html"
-                        class="btn btn-outline"
-                    >
-                        Shop All
-                    </a>
-
-                </div>
-
-
-                <div class="product-grid">
-
-
-                    <!-- PRODUCT 1 -->
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-
-                            <span class="discount-badge">
-                                15% OFF
-                            </span>
-
-                            <img
-                                src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=700&q=85"
-                                alt="Fresh tomatoes"
-                            >
-
-                        </div>
-
-
-                        <div class="product-info">
-
-                            <span class="product-category">
-                                Vegetables
-                            </span>
-
-                            <h3 class="product-name">
-                                Farm Fresh Tomatoes
-                            </h3>
-
-                            <span class="product-weight">
-                                1 kg
-                            </span>
-
-
-                            <div class="product-bottom">
-
-                                <div class="product-price">
-
-                                    ₹49
-
-                                    <span class="old-price">
-                                        ₹58
-                                    </span>
-
-                                </div>
-
-                                <button
-                                    class="add-btn"
-                                    aria-label="Add tomatoes to cart"
-                                >
-                                    +
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- PRODUCT 2 -->
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-
-                            <span class="discount-badge">
-                                10% OFF
-                            </span>
-
-                            <img
-                                src="https://images.unsplash.com/photo-1582515073490-39981397c445?auto=format&fit=crop&w=700&q=85"
-                                alt="Fresh potatoes"
-                            >
-
-                        </div>
-
-
-                        <div class="product-info">
-
-                            <span class="product-category">
-                                Vegetables
-                            </span>
-
-                            <h3 class="product-name">
-                                Fresh Potatoes
-                            </h3>
-
-                            <span class="product-weight">
-                                1 kg
-                            </span>
-
-
-                            <div class="product-bottom">
-
-                                <div class="product-price">
-
-                                    ₹36
-
-                                    <span class="old-price">
-                                        ₹40
-                                    </span>
-
-                                </div>
-
-                                <button
-                                    class="add-btn"
-                                    aria-label="Add potatoes to cart"
-                                >
-                                    +
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- PRODUCT 3 -->
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-
-                            <span class="discount-badge">
-                                12% OFF
-                            </span>
-
-                            <img
-                                src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=700&q=85"
-                                alt="Fresh bananas"
-                            >
-
-                        </div>
-
-
-                        <div class="product-info">
-
-                            <span class="product-category">
-                                Fruits
-                            </span>
-
-                            <h3 class="product-name">
-                                Premium Bananas
-                            </h3>
-
-                            <span class="product-weight">
-                                1 dozen
-                            </span>
-
-
-                            <div class="product-bottom">
-
-                                <div class="product-price">
-
-                                    ₹45
-
-                                    <span class="old-price">
-                                        ₹51
-                                    </span>
-
-                                </div>
-
-                                <button
-                                    class="add-btn"
-                                    aria-label="Add bananas to cart"
-                                >
-                                    +
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- PRODUCT 4 -->
-
-                    <article class="product-card">
-
-                        <div class="product-image">
-
-                            <span class="discount-badge">
-                                8% OFF
-                            </span>
-
-                            <img
-                                src="https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?auto=format&fit=crop&w=700&q=85"
-                                alt="Fresh capsicum"
-                            >
-
-                        </div>
-
-
-                        <div class="product-info">
-
-                            <span class="product-category">
-                                Vegetables
-                            </span>
-
-                            <h3 class="product-name">
-                                Green Capsicum
-                            </h3>
-
-                            <span class="product-weight">
-                                500 g
-                            </span>
-
-
-                            <div class="product-bottom">
-
-                                <div class="product-price">
-
-                                    ₹39
-
-                                    <span class="old-price">
-                                        ₹42
-                                    </span>
-
-                                </div>
-
-                                <button
-                                    class="add-btn"
-                                    aria-label="Add capsicum to cart"
-                                >
-                                    +
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- PROMO -->
-
-        <section class="section">
-
-            <div class="container">
-
-                <div class="promo">
-
-                    <div class="promo-inner">
-
-                        <div class="promo-content">
-
-                            <div class="section-label">
-                                Freshness promise
-                            </div>
-
-                            <h2>
-                                From our basket
-                                to your table.
-                            </h2>
-
-                            <p>
-                                We believe fresh food should be
-                                simple, honest and accessible.
-                                That's why every product is selected
-                                with quality in mind.
-                            </p>
-
-                            <a
-                                href="shop.html"
-                                class="btn"
-                            >
-                                Explore Fresh Produce →
-                            </a>
-
-                        </div>
-
-
-                        <div class="promo-image">
-
-                            <img
-                                src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=85"
-                                alt="Fresh produce basket"
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- WHY GREENBASKET -->
-
-        <section
-            class="section"
-            id="why"
-        >
-
-            <div class="container">
-
-                <div class="section-head">
-
-                    <div>
-
-                        <div class="section-label">
-                            Why GreenBasket
-                        </div>
-
-                        <h2 class="section-title">
-                            Freshness you can trust.
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="features">
-
-
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            🌱
-                        </div>
-
-                        <h3>
-                            Freshly Selected
-                        </h3>
-
-                        <p>
-                            Every product is selected with
-                            freshness and quality in mind.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            🧺
-                        </div>
-
-                        <h3>
-                            Carefully Packed
-                        </h3>
-
-                        <p>
-                            Your produce is handled carefully
-                            from selection to delivery.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            💚
-                        </div>
-
-                        <h3>
-                            Honest Pricing
-                        </h3>
-
-                        <p>
-                            Simple pricing without compromising
-                            on the quality of your food.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            🚚
-                        </div>
-
-                        <h3>
-                            Doorstep Delivery
-                        </h3>
-
-                        <p>
-                            Fresh groceries delivered conveniently
-                            to your doorstep.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- FOOTER -->
-
-    <footer class="footer">
-
-        <div class="container">
-
-            <div class="footer-grid">
-
-
-                <div class="footer-brand">
-
-                    <a href="index.html" class="logo">
-                        <span class="logo-mark">G</span>
-                        GreenBasket
-                    </a>
-
-                    <p>
-                        Fresh fruits and vegetables,
-                        carefully selected and delivered
-                        to your doorstep.
-                    </p>
-
-                </div>
-
-
-                <div>
-
-                    <h4>Shop</h4>
-
-                    <div class="footer-links">
-
-                        <a href="shop.html">
-                            Vegetables
-                        </a>
-
-                        <a href="shop.html">
-                            Fruits
-                        </a>
-
-                        <a href="shop.html">
-                            Leafy Greens
-                        </a>
-
-                        <a href="shop.html">
-                            Today's Deals
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <div>
-
-                    <h4>Company</h4>
-
-                    <div class="footer-links">
-
-                        <a href="#">
-                            About GreenBasket
-                        </a>
-
-                        <a href="#">
-                            Our Story
-                        </a>
-
-                        <a href="#">
-                            Contact
-                        </a>
-
-                        <a href="#">
-                            FAQ
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <div>
-
-                    <h4>Help</h4>
-
-                    <div class="footer-links">
-
-                        <a href="#">
-                            Delivery Information
-                        </a>
-
-                        <a href="#">
-                            Privacy Policy
-                        </a>
-
-                        <a href="#">
-                            Terms & Conditions
-                        </a>
-
-                        <a href="#">
-                            Refund Policy
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="footer-bottom">
-
-                <span>
-                    © <span id="year"></span> GreenBasket. All rights reserved.
-                </span>
-
-                <span>
-                    Freshness, delivered.
-                </span>
-
-            </div>
-
+        <div class="hero__cta">
+          <a href="#deals" class="btn btn--primary">Pre-Order Now <span aria-hidden="true">→</span></a>
+          <a href="#deals" class="btn btn--outline">Shop Now</a>
         </div>
 
-    </footer>
+        <div class="hero__social-proof">
+          <div class="avatars" aria-hidden="true">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="" loading="lazy" />
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" loading="lazy" />
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="" loading="lazy" />
+          </div>
+          <p>Loved by 10,000+ happy customers &nbsp; <strong>★ 4.8/5</strong></p>
+        </div>
+      </div>
 
+      <div class="hero__media">
+        <img src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=1200&auto=format&fit=crop" alt="Basket overflowing with fresh vegetables including peppers, broccoli, tomatoes and cucumbers" class="hero__image" loading="eager" />
+        <span class="hero__badge">Pre-Order &amp; Save More</span>
+        <div class="hero__process">
+          <div class="hero__process-step">
+            <span>📱</span>
+            <small>You Order Today</small>
+          </div>
+          <span class="hero__process-arrow">→</span>
+          <div class="hero__process-step">
+            <span>🧑‍🌾</span>
+            <small>We Pick Fresh</small>
+          </div>
+          <span class="hero__process-arrow">→</span>
+          <div class="hero__process-step">
+            <span>🛵</span>
+            <small>We Deliver Tomorrow</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <script src="js/main.js"></script>
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="container trust-strip__inner">
+      <span>🚚 Free Delivery <small>on orders above ₹499</small></span>
+      <span>💵 5% Cashback <small>Refer &amp; Earn</small></span>
+      <span>✅ 100% Quality Guaranteed</span>
+      <span>💳 Safe &amp; Secure Payments</span>
+    </div>
+  </div>
 
+  <main>
+    <!-- CATEGORIES -->
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <h2>Shop by Category</h2>
+            <p>Explore a wide range of fresh &amp; healthy products</p>
+          </div>
+          <a href="#deals" class="link-arrow">View All Categories <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="category-grid">
+          <a href="#deals" class="category-card">
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=400&auto=format&fit=crop" alt="Basket of fresh green vegetables" loading="lazy" />
+            <span>Vegetables</span>
+          </a>
+          <a href="#deals" class="category-card">
+            <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=400&auto=format&fit=crop" alt="Woven basket filled with assorted fresh fruits" loading="lazy" />
+            <span>Fruits</span>
+          </a>
+          <a href="#deals" class="category-card">
+            <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?q=80&w=400&auto=format&fit=crop" alt="Bunches of fresh leafy greens" loading="lazy" />
+            <span>Leafy Greens</span>
+          </a>
+          <a href="#deals" class="category-card">
+            <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=400&auto=format&fit=crop" alt="Assorted dried herbs and spices in bowls" loading="lazy" />
+            <span>Herbs &amp; Spices</span>
+          </a>
+          <a href="#deals" class="category-card">
+            <img src="https://images.unsplash.com/photo-1518843875459-f738682238a6?q=80&w=400&auto=format&fit=crop" alt="Colourful exotic vegetables including peppers and aubergine" loading="lazy" />
+            <span>Exotic Vegetables</span>
+          </a>
+          <a href="#deals" class="category-card category-card--offer">
+            <img src="https://images.unsplash.com/photo-1506484381205-f7945653044d?q=80&w=400&auto=format&fit=crop" alt="Basket of seasonal fresh produce" loading="lazy" />
+            <span>Seasonal Offers</span>
+            <em>%</em>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROMO BANNERS -->
+    <section class="section section--tight">
+      <div class="container promo-grid">
+        <div class="promo-card promo-card--dark">
+          <div class="promo-card__text">
+            <span class="promo-card__eyebrow">Invite &amp; Earn</span>
+            <h3>Get 5% cashback on every order of your friend!</h3>
+            <a href="#footer" class="btn btn--light-outline">Invite Now</a>
+          </div>
+          <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=500&auto=format&fit=crop" alt="Person holding a phone showing a cashback offer" loading="lazy" />
+        </div>
+
+        <div class="promo-card promo-card--forest">
+          <div class="promo-card__text">
+            <span class="promo-card__eyebrow">Pre-Order &amp; Save More</span>
+            <h3>Lock in best prices &amp; get freshest delivery tomorrow morning.</h3>
+            <a href="#deals" class="btn btn--light-outline">Pre-Order Now</a>
+          </div>
+          <img src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=500&auto=format&fit=crop" alt="Wooden crate full of fresh mixed vegetables" loading="lazy" />
+        </div>
+
+        <div class="promo-card promo-card--mint">
+          <div class="promo-card__text">
+            <span class="promo-card__eyebrow">Best Quality</span>
+            <h3>Better than market. We deliver the best quality at affordable prices.</h3>
+            <a href="#deals" class="btn btn--primary btn--small">Shop Now</a>
+          </div>
+          <span class="promo-card__seal">100%<small>QUALITY</small></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRESH DEALS -->
+    <section class="section" id="deals">
+      <div class="container">
+        <div class="section-heading section-heading--deals">
+          <div>
+            <h2>Fresh Deals of the Day</h2>
+            <p>Hand-picked produce at prices that won't last</p>
+          </div>
+          <div class="deal-timer" aria-label="Offer time remaining">
+            <span>Offer ends in</span>
+            <strong id="hrs">08</strong>:<strong id="mins">34</strong>:<strong id="secs">22</strong>
+          </div>
+          <a href="#deals" class="link-arrow">View All <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="why-us" id="why-us">
+      <div class="container why-us__inner">
+        <div class="why-us__text">
+          <h2>Why Thousands Trust Green Basket?</h2>
+        </div>
+        <div class="why-us__grid">
+          <div class="why-us__item">
+            <span>🌱</span>
+            <strong>Farm Fresh</strong>
+            <small>Direct from farms</small>
+          </div>
+          <div class="why-us__item">
+            <span>🤝</span>
+            <strong>No Middlemen</strong>
+            <small>Better quality, better prices</small>
+          </div>
+          <div class="why-us__item">
+            <span>🧼</span>
+            <strong>Safe &amp; Hygienic</strong>
+            <small>Carefully packed for you</small>
+          </div>
+          <div class="why-us__item">
+            <span>🚚</span>
+            <strong>On Time Delivery</strong>
+            <small>Fresh to your doorstep</small>
+          </div>
+          <div class="why-us__item">
+            <span>💬</span>
+            <strong>Customer First</strong>
+            <small>Your satisfaction is our priority</small>
+          </div>
+        </div>
+        <div class="why-us__rating">
+          <strong>10,000+</strong>
+          <span>Happy Customers</span>
+          <span class="stars">★★★★★ 4.8/5</span>
+          <small>From 1,500+ Reviews</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- APP / PAYMENTS / DELIVERY / NEWSLETTER -->
+    <section class="section section--tight">
+      <div class="container info-grid">
+        <div class="info-card info-card--app">
+          <h4>Download Our App</h4>
+          <p>For a better &amp; faster experience!</p>
+          <div class="info-card__store-badges">
+            <span>▶ Google Play</span>
+            <span>🍎 App Store</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h4>Secure Payments</h4>
+          <p>Multiple payment options available</p>
+          <div class="info-card__payments">
+            <span>UPI</span><span>VISA</span><span>Mastercard</span><span>RuPay</span><span>Paytm</span>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h4>We Deliver In</h4>
+          <p>Hanumangarh &amp; Nearby Areas</p>
+          <button type="button" class="btn btn--outline btn--small">Check Pin Code</button>
+        </div>
+
+        <div class="info-card">
+          <h4>Stay Updated</h4>
+          <p>Get the best offers &amp; updates delivered to your inbox</p>
+          <form class="newsletter-form" id="newsletterForm">
+            <input type="email" placeholder="Enter your email" required aria-label="Email address" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <div class="social-links" aria-label="Follow Green Basket">
+            <a href="#" aria-label="WhatsApp">🟢</a>
+            <a href="#" aria-label="Instagram">📷</a>
+            <a href="#" aria-label="Facebook">📘</a>
+            <a href="#" aria-label="YouTube">▶️</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="footer">
+    <div class="container footer-strip">
+      <div><strong>Easy Pre-Order</strong><small>Simple &amp; hassle-free process</small></div>
+      <div><strong>Flexible Delivery</strong><small>Choose delivery time that suits you</small></div>
+      <div><strong>Secure Payments</strong><small>100% safe &amp; secure payment options</small></div>
+      <div><strong>24/7 Support</strong><small>We're here to help you anytime</small></div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; <span id="year"></span> Green Basket. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-drawer__header">
+      <h3>Your Cart</h3>
+      <button type="button" id="cartClose" aria-label="Close cart">✕</button>
+    </div>
+    <div class="cart-drawer__items" id="cartItems">
+      <p class="cart-empty">Your cart is empty. Start adding fresh picks!</p>
+    </div>
+    <div class="cart-drawer__footer">
+      <div class="cart-drawer__total">
+        <span>Total</span>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+      <input type="text" id="customerName" placeholder="Your name (for the order)" class="cart-drawer__name" />
+      <button type="button" class="btn btn--primary btn--full" id="whatsappOrderBtn">
+        Order via WhatsApp <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </aside>
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <script src="js/script.js"></script>
 </body>
-
 </html>
