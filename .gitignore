@@ -1,29 +1,3 @@
-# OS files
 .DS_Store
-Thumbs.db
-
-# Editor
-.vscode/
-.idea/
-
-# Env & secrets (for future Firebase phase)
-.env
-.env.local
-.env.*.local
-*firebase-adminsdk*.json
-serviceAccountKey.json
-
-# Firebase (future)
-.firebase/
-firebase-debug.log
-firestore-debug.log
-.firebaserc.local
-
-# Dependencies / build
 node_modules/
-dist/
-build/
-
-# Logs
 *.log
-npm-debug.log*
