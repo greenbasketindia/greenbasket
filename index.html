@@ -4,165 +4,258 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GreenBasket | Order Today, Fresh Tomorrow</title>
-<meta name="description" content="Fresh fruits and vegetables in Hanumangarh. Order on WhatsApp today, get farm-fresh delivery tomorrow.">
+<meta name="description" content="Fresh fruits and vegetables in Hanumangarh. Pre-order on WhatsApp today, get farm-fresh delivery tomorrow morning.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧺</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--g:#0f6b1f;--gd:#0a4a15;--gl:#e9f5df;--gm:#f3f9ec;--or:#f08a1c;--ink:#1b2a1e;--mut:#5d6b60;--line:#e3ebde;--wood:#e0b878}
+:root{--g:#0c5f1d;--g2:#17741f;--gd:#08430f;--gl:#e8f3dc;--gm:#f4f9ee;--ink:#161f18;--mut:#5f6c62;--line:#e6ece1;--wa:#25d366;--max:1260px}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:#fff;line-height:1.5;padding-bottom:76px}
-a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:pointer;border:0}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:#fff;line-height:1.45}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(16px,3.4vw,44px)}
+:focus-visible{outline:3px solid #f3a21b;outline-offset:2px}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.f{fill:currentColor;stroke:none}
 
 /* top bar */
-.top{background:var(--g);color:#fff;font-size:13px;padding:8px 0}
-.top .wrap{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.top b{font-weight:600}
-/* nav */
-header{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);z-index:50;border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
-.logo{display:flex;align-items:center;gap:10px}
-.logo .mark{width:40px;height:40px;border-radius:12px;background:var(--g);display:grid;place-items:center;font-size:22px}
-.logo b{display:block;font-size:18px;line-height:1;font-weight:800;color:var(--gd);letter-spacing:.2px}
-.logo small{font-size:10.5px;color:var(--mut)}
-nav ul{display:flex;gap:28px;list-style:none;font-size:14px;font-weight:500}
-nav a{padding:6px 0;border-bottom:2px solid transparent}
+.top{background:var(--g);color:#fff;font-size:13px}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;height:38px;gap:12px}
+.top span{display:flex;align-items:center;gap:8px;font-weight:500}
+.top .ic{font-size:16px}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:#fff;box-shadow:0 1px 0 var(--line)}
+.nav{display:flex;align-items:center;height:78px;gap:24px}
+.logo{display:flex;align-items:center;gap:10px;flex:none}
+.logo svg{width:46px;height:46px}
+.logo b{display:block;font-size:22px;font-weight:800;letter-spacing:-.3px;color:#1a2a1c;line-height:1}
+.logo small{display:block;font-size:10.5px;color:var(--mut);margin-top:4px;font-weight:500}
+nav{flex:1}
+nav ul{display:flex;justify-content:center;gap:clamp(18px,2.7vw,40px);list-style:none;font-size:14px;font-weight:500}
+nav a{display:block;padding:8px 0;border-bottom:2px solid transparent}
 nav a:hover,nav a.on{color:var(--g);border-color:var(--g)}
-.deliver{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mut);line-height:1.2}
-.deliver b{display:block;color:var(--ink);font-size:14px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:600;font-size:14px;padding:13px 26px;min-height:46px;transition:transform .15s,background .15s}
+.deliver{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--mut);line-height:1.15;flex:none}
+.deliver .ic{font-size:24px;color:var(--g)}
+.deliver b{display:block;font-size:14px;color:var(--ink);font-weight:600}
+.burger{display:none;font-size:28px;margin-left:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:999px;font-weight:600;font-size:13.5px;letter-spacing:.3px;padding:0 28px;min-height:48px;transition:background .18s,transform .12s,color .18s;white-space:nowrap}
 .btn:active{transform:scale(.97)}
+.btn .ic{font-size:18px}
 .btn-g{background:var(--g);color:#fff}.btn-g:hover{background:var(--gd)}
-.btn-o{background:#fff;color:var(--g);border:2px solid var(--g)}.btn-o:hover{background:var(--gl)}
-.btn-wa{background:#25d366;color:#053b1a}.btn-wa:hover{background:#1fbd5b}
-.burger{display:none;background:none;font-size:26px}
+.btn-o{border:1.6px solid var(--g);color:var(--g);background:rgba(255,255,255,.7)}.btn-o:hover{background:var(--g);color:#fff}
+.btn-wa{background:var(--wa);color:#073d1c}.btn-wa:hover{background:#1ebd5a}
+.btn-sm{min-height:40px;padding:0 20px;font-size:12px}
 
 /* hero */
-.hero{position:relative;overflow:hidden;background:radial-gradient(900px 500px at 78% 40%,#fff6df 0,transparent 60%),linear-gradient(180deg,#f7fbf1,#eef7e4)}
-.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:20px;align-items:center;min-height:460px;padding-top:32px;padding-bottom:32px}
-.hero h1{font-size:clamp(34px,5.2vw,58px);line-height:1.08;font-weight:800;letter-spacing:-1px}
-.hero h1 em{display:block;color:var(--g);font-style:normal}
-.hero p.sub{margin:16px 0 20px;color:#3d4d41;font-size:17px;max-width:420px}
-.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
-.chip{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;display:flex;gap:10px;align-items:center;font-size:12px;color:var(--mut);box-shadow:0 4px 14px rgba(15,107,31,.06)}
-.chip b{display:block;color:var(--ink);font-size:13px}
-.chip i{font-style:normal;font-size:22px}
-.cta{display:flex;gap:12px;flex-wrap:wrap}
-.basket{position:relative;height:420px;display:grid;place-items:center}
-.basket .pile{font-size:clamp(70px,11vw,118px);line-height:1;text-align:center;filter:drop-shadow(0 18px 18px rgba(0,0,0,.15))}
-.basket .pile div:nth-child(1){letter-spacing:-6px}
-.basket .pile div:nth-child(2){letter-spacing:-8px;margin-top:-6px}
-.basket .bk{font-size:clamp(120px,19vw,200px);margin-top:-52px;line-height:1}
-.seal{position:absolute;top:0;right:4px;width:112px;height:112px;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;text-align:center;font-weight:800;font-size:13px;line-height:1.15;border:4px dashed #fff;box-shadow:0 0 0 4px var(--g);transform:rotate(8deg)}
-.seal span{font-size:28px;display:block}
-.flow{position:absolute;bottom:6px;right:0;background:linear-gradient(160deg,#edc88b,#d9ac66);border-radius:16px;padding:14px 18px;display:flex;gap:10px;align-items:center;box-shadow:0 10px 24px rgba(120,80,20,.25);font-size:12px;font-weight:600;text-align:center;color:#4a3411}
-.flow i{font-style:normal;font-size:24px;display:block}
-.flow .ar{font-size:18px;opacity:.7}
+.hero{background:linear-gradient(180deg,#f7f9f1,#eff5e6);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);align-items:center;gap:0}
+.hero-txt{padding:36px 0 36px;position:relative;z-index:2}
+.hero h1{font-size:clamp(36px,4.8vw,66px);line-height:1.06;font-weight:800;letter-spacing:-1.6px;color:#14150f}
+.hero h1 span{display:block;color:var(--g2);position:relative;width:max-content;max-width:100%}
+.hero h1 span svg{position:absolute;width:.32em;height:.32em;left:2.35em;top:-.12em;color:var(--g2);fill:currentColor}
+.hero .sub{margin:20px 0 22px;font-size:clamp(15px,1.45vw,19px);color:#2f3a31;max-width:400px;line-height:1.55}
+.chips{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.chip{background:#fff;border-radius:14px;padding:11px 15px;display:flex;gap:10px;align-items:center;box-shadow:0 6px 18px rgba(12,95,29,.09);min-width:132px}
+.chip .ic{font-size:26px;color:var(--g)}
+.chip b{display:block;font-size:12.5px;font-weight:600;line-height:1.2}
+.chip small{font-size:10.5px;color:var(--mut)}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.cta .btn{min-height:52px;text-transform:uppercase;font-size:13px}
+.proof{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:12.5px;color:#3b473d}
+.proof i{width:30px;height:30px;border-radius:50%;background:var(--wa);display:grid;place-items:center;color:#fff;font-size:18px}
+.hero-img{position:relative;width:100%;max-width:880px;margin-left:auto;aspect-ratio:936/640;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 20%);mask-image:linear-gradient(90deg,transparent 0,#000 20%)}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+.seal{position:absolute;left:77.6%;top:18.4%;width:24.6%;aspect-ratio:1;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;text-align:center;border:3px solid #fff;box-shadow:0 0 0 3px var(--g),0 8px 20px rgba(0,0,0,.22);font-weight:700;font-size:clamp(8px,1.05vw,14px);line-height:1.15;letter-spacing:.4px}
+.seal .ic{font-size:2.8em;margin:0 auto 3px}
+.hero-img{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 20%);mask-image:linear-gradient(90deg,transparent 0,#000 20%)}
+.seal-w{position:absolute;inset:0;pointer-events:none}
 
-/* strip */
-.strip{background:var(--gl);border-block:1px solid var(--line);font-size:13px;font-weight:600;color:var(--gd)}
-.strip .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
-.strip span{display:flex;align-items:center;gap:8px}
+/* trust strip */
+.strip{background:#e9f4de;border-bottom:1px solid #dbe9cc}
+.strip .wrap{display:flex;justify-content:space-between;align-items:center;min-height:50px;gap:14px;font-size:12px;font-weight:600;color:#26452b}
+.strip span{display:flex;align-items:center;gap:9px;flex:1;justify-content:center;position:relative}
+.strip span+span:before{content:"";position:absolute;left:0;top:50%;height:20px;width:1px;background:#c7dbb6;transform:translateY(-50%)}
+.strip .ic{font-size:20px;color:var(--g)}
 
-/* sections */
-section{padding:44px 0 8px}
-.sh{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:20px}
-.sh h2{font-size:22px;font-weight:700}
-.sh p{color:var(--mut);font-size:13px}
-.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
-.cat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 8px 12px;text-align:center;font-size:14px;font-weight:600;transition:.2s;cursor:pointer;box-shadow:0 4px 14px rgba(15,107,31,.05)}
-.cat:hover,.cat.on{border-color:var(--g);background:var(--gm);transform:translateY(-3px)}
-.cat .e{font-size:46px;line-height:1.1;display:block;margin-bottom:6px}
+/* section heads */
+section{padding-top:38px}
+.sh{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}
+.sh h2{font-size:clamp(18px,1.9vw,23px);font-weight:700;letter-spacing:-.2px;display:flex;align-items:center;gap:10px;text-transform:uppercase}
+.sh h2 .ic{color:var(--g);font-size:22px}
+.sh p{font-size:12.5px;color:var(--mut);margin-top:2px;text-transform:none;font-weight:400;letter-spacing:0}
 
-.promos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
-.promo{border-radius:18px;padding:22px;min-height:150px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
-.promo h3{font-size:19px;line-height:1.2;max-width:70%}
-.promo p{font-size:13px;max-width:62%;margin:6px 0 12px;opacity:.9}
-.promo .em{position:absolute;right:14px;bottom:8px;font-size:72px;opacity:.95}
-.p1{background:linear-gradient(135deg,#1c8a2e,#0f6b1f);color:#fff}
-.p2{background:#0e3d16;color:#fff}
-.p3{background:linear-gradient(135deg,#eaf5dc,#dcedc9);color:var(--gd)}
-.promo .btn{padding:8px 18px;min-height:38px;font-size:13px}
-.p1 .btn,.p2 .btn{background:#fff;color:var(--g)}
+/* categories */
+.carousel{position:relative}
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.6vw,22px)}
+.cat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 8px 12px;text-align:center;font-weight:600;font-size:14px;box-shadow:0 8px 22px rgba(20,60,20,.07);transition:transform .2s,border-color .2s}
+.cat:hover{transform:translateY(-3px)}
+.cat.on{border-color:var(--g);box-shadow:0 0 0 1.5px var(--g) inset,0 8px 22px rgba(20,60,20,.07)}
+.cat img{width:100%;aspect-ratio:104/80;object-fit:contain;margin-bottom:8px}
+.arr{position:absolute;right:-14px;top:42%;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);display:none;place-items:center;font-size:20px;z-index:3}
+
+/* promos */
+.promos{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px);margin-top:32px}
+.promo{border-radius:18px;padding:clamp(18px,2vw,28px);min-height:172px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.promo h3{font-size:clamp(17px,1.7vw,22px);line-height:1.18;font-weight:800;max-width:56%}
+.promo h3 em{font-style:normal;display:block}
+.promo p{font-size:12.5px;margin:8px 0 16px;max-width:52%;line-height:1.45}
+.promo .btn{min-height:38px;padding:0 20px;font-size:12px;text-transform:uppercase}
+.p1{background:linear-gradient(120deg,#0d6a1f,#1b8a2c);color:#fff}
+.p1 h3 em{color:#ffd54a}
+.p1 .btn{background:#fff;color:var(--g)}
+.p2{background:#0c3a14;color:#fff}.p2 .btn{background:#fff;color:var(--g)}
+.p2 img{position:absolute;right:0;bottom:0;height:100%;width:50%;object-fit:cover;-webkit-mask-image:linear-gradient(90deg,transparent,#000 35%);mask-image:linear-gradient(90deg,transparent,#000 35%)}
+.p3{background:linear-gradient(120deg,#eaf4dd,#d9ebc3);color:var(--gd)}
+.p3 h3 em{color:var(--g2)}
 .p3 .btn{background:var(--g);color:#fff}
+.phone{position:absolute;right:clamp(14px,2vw,28px);bottom:-22px;width:38%;max-width:150px;background:#fff;border:5px solid #17321b;border-radius:22px 22px 0 0;padding:10px 8px 24px;box-shadow:0 10px 24px rgba(0,0,0,.25);transform:rotate(5deg)}
+.phone .b{background:#dcf8c6;border-radius:8px 8px 8px 2px;font-size:8.5px;color:#222;padding:6px 7px;line-height:1.35;margin-bottom:6px}
+.phone .b.r{background:#f1f1f1;border-radius:8px 8px 2px 8px;margin-left:12px}
+.rosette{position:absolute;right:clamp(14px,2.4vw,34px);top:50%;transform:translateY(-50%);width:clamp(92px,9vw,128px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#1b8a2c 0 58%,#0c5f1d 59%);color:#fff;display:grid;place-items:center;text-align:center;font-weight:800;font-size:12px;line-height:1.15;box-shadow:0 0 0 5px #cfe5b8,0 0 0 8px var(--g)}
+.rosette .ic{font-size:30px;margin:0 auto 2px}
 
 /* products */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:14px}
-.card{border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;background:#fff;position:relative;transition:box-shadow .2s,border-color .2s}
-.card:hover{box-shadow:0 10px 26px rgba(15,107,31,.1)}
-.card.sel{border-color:var(--g);box-shadow:0 0 0 2px var(--g) inset}
-.card .img{height:104px;border-radius:12px;background:var(--gm);display:grid;place-items:center;font-size:58px;overflow:hidden}
-.card .img img{width:100%;height:100%;object-fit:cover}
-.card h3{font-size:15px;font-weight:600;margin-top:10px}
-.card small{color:var(--mut);font-size:12px;display:block;min-height:34px}
-.av{font-size:11px;font-weight:600;color:var(--g);margin:6px 0 10px;display:flex;align-items:center;gap:6px}
-.av:before{content:"";width:7px;height:7px;border-radius:50%;background:#25d366}
-.av.out{color:#b45309}.av.out:before{background:#f59e0b}
-.card .row{display:flex;gap:8px;margin-top:auto}
-.card .row .btn{padding:9px 12px;min-height:40px;font-size:12.5px;flex:1}
-.card .row .tg{flex:0 0 40px;background:var(--gl);color:var(--g);border-radius:50%;font-size:20px;font-weight:700;padding:0}
+.sh .r{display:flex;align-items:center;gap:14px;font-size:12.5px;color:var(--mut)}
+.sh .r b{color:var(--g);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.4vw,18px)}
+.card{border:1px solid var(--line);border-radius:16px;padding:12px 12px 14px;background:#fff;display:flex;flex-direction:column;position:relative;box-shadow:0 6px 18px rgba(20,60,20,.05);transition:box-shadow .2s,border-color .2s}
+.card:hover{box-shadow:0 12px 28px rgba(20,60,20,.12)}
+.card.sel{border-color:var(--g);box-shadow:0 0 0 1.5px var(--g) inset}
+.card .im{aspect-ratio:104/62;display:grid;place-items:center;margin-bottom:8px}
+.card .im img{width:100%;height:100%;object-fit:contain}
+.card h3{font-size:14px;font-weight:600;line-height:1.25}
+.card small{font-size:12px;color:var(--mut)}
+.av{font-size:12px;font-weight:600;color:var(--g2);margin:6px 0 12px;display:flex;align-items:center;gap:6px}
+.av:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--wa)}
+.av.out{color:#b35c00}.av.out:before{background:#f59e0b}
+.card .btn{width:100%;min-height:38px;padding:0 8px;font-size:11.5px;border-radius:9px;background:var(--g);color:#fff;text-transform:uppercase;margin-top:auto;gap:7px}
+.card .btn:hover{background:var(--gd)}
+.tg{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:var(--gl);color:var(--g);font-size:20px;font-weight:600;display:grid;place-items:center;line-height:1}
 .card.sel .tg{background:var(--g);color:#fff}
 .empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:30px}
 
-/* why */
-.why{margin-top:48px;background:linear-gradient(90deg,#0b4a16,#136d25);color:#fff;padding:34px 0}
-.why .wrap{display:grid;grid-template-columns:1.1fr 4fr;gap:24px;align-items:center}
-.why h2{font-size:22px;line-height:1.25}
-.whyg{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:center;font-size:12.5px}
-.whyg b{display:block;font-size:14px;margin:4px 0 2px}
-.whyg i{font-style:normal;font-size:34px}
-.whyg div{opacity:.95}
+/* why band */
+.why{margin-top:40px;color:#fff;background:linear-gradient(95deg,#093b11 0,#0f5d1d 55%,#0b4a17);position:relative;overflow:hidden}
+.why:after{content:"";position:absolute;inset:0;background:radial-gradient(500px 220px at 85% 0,rgba(255,255,255,.07),transparent)}
+.why .wrap{display:grid;grid-template-columns:.8fr 4fr 1.2fr;gap:22px;align-items:center;padding-top:26px;padding-bottom:26px;position:relative;z-index:1}
+.why h2{font-size:clamp(18px,1.9vw,23px);line-height:1.25;font-weight:700}
+.whyg{display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+.whyg div{padding:2px 14px;font-size:11.5px;opacity:.95;position:relative}
+.whyg div+div:before{content:"";position:absolute;left:0;top:10%;height:80%;width:1px;background:rgba(255,255,255,.2)}
+.whyg .ic{font-size:36px;margin-bottom:6px;stroke-width:1.4}
+.whyg b{display:block;font-size:13.5px;font-weight:600;margin-bottom:2px}
+.whybox{background:#fff;color:var(--ink);border-radius:14px;padding:16px 18px;text-align:center;box-shadow:0 10px 26px rgba(0,0,0,.2)}
+.whybox b{display:block;font-size:19px;font-weight:800;color:var(--g)}
+.whybox small{font-size:11.5px;color:var(--mut);display:block;margin:2px 0 10px}
 
-.info{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px;margin-top:34px}
-.box{background:var(--gm);border:1px solid var(--line);border-radius:18px;padding:22px}
-.box h3{font-size:15px;margin-bottom:6px}
-.box p{font-size:13px;color:var(--mut);margin-bottom:14px}
-.steps{display:grid;gap:10px;font-size:13px}
-.steps div{display:flex;gap:12px;align-items:flex-start}
-.steps span{flex:0 0 26px;height:26px;border-radius:50%;background:var(--g);color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+/* info boxes */
+.info{display:grid;grid-template-columns:1.25fr 1.05fr 1fr 1fr;gap:clamp(10px,1.4vw,18px);margin-top:28px}
+.box{background:var(--gm);border:1px solid var(--line);border-radius:18px;padding:20px}
+.box h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px}
+.box p{font-size:12.5px;color:var(--mut);margin-bottom:12px}
+.steps{display:grid;gap:9px;font-size:12.5px}
+.steps div{display:flex;gap:10px;align-items:flex-start}
+.steps span{flex:0 0 24px;height:24px;border-radius:50%;background:var(--g);color:#fff;font-weight:700;font-size:12px;display:grid;place-items:center}
+.map{height:70px;border-radius:12px;margin-bottom:12px;background:
+ linear-gradient(115deg,transparent 46%,#fff 47% 49%,transparent 50%),linear-gradient(20deg,transparent 58%,#fff 59% 61%,transparent 62%),linear-gradient(0deg,#e1ecd2,#eaf3dd);display:grid;place-items:center;color:var(--g);font-size:34px}
+.box .btn{min-height:40px;font-size:12px;padding:0 18px;text-transform:uppercase}
 
-footer{margin-top:44px;background:#0b2a12;color:#cfe3d2;padding:34px 0 24px;font-size:13px}
+.feats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:26px 0 0;padding:18px 20px;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(20,60,20,.06)}
+.feats div{display:flex;gap:12px;align-items:center;font-size:11.5px;color:var(--mut);line-height:1.35}
+.feats .ic{font-size:34px;color:var(--g);stroke-width:1.4}
+.feats b{display:block;font-size:13px;color:var(--ink);font-weight:600}
+
+/* about + footer */
+.about{display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:center;margin-top:34px;padding:28px;border-radius:20px;background:#fff;border:1px solid var(--line)}
+.about h2{font-size:22px;font-weight:700}
+.about p{font-size:14.5px;color:var(--mut);max-width:640px}
+footer{margin-top:40px;background:#0a2a11;color:#c8dccb;font-size:13px;padding:32px 0 22px}
 footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px}
 footer h4{color:#fff;margin-bottom:8px;font-size:14px}
-footer a{display:block;margin:4px 0;opacity:.9}footer a:hover{opacity:1;text-decoration:underline}
+footer a{display:block;margin:5px 0;opacity:.9}footer a:hover{opacity:1;text-decoration:underline}
 .copy{grid-column:1/-1;border-top:1px solid #1d4a28;padding-top:16px;font-size:12px;opacity:.8}
 
-/* sticky order bar + fab */
-#bar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding:10px 16px;box-shadow:0 -6px 20px rgba(0,0,0,.08);display:flex;gap:12px;align-items:center;justify-content:center}
-#bar .t{font-size:13px;color:var(--mut)}
-#bar .t b{color:var(--ink)}
-#bar .btn{padding:11px 22px}
-#clr{background:none;color:var(--mut);font-size:12px;text-decoration:underline;display:none}
+/* floating + bar */
+.fab{position:fixed;right:16px;bottom:16px;z-index:70;width:58px;height:58px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;font-size:32px;box-shadow:0 8px 22px rgba(0,0,0,.28)}
+#bar{position:fixed;left:0;right:0;bottom:0;z-index:80;background:#fff;border-top:1px solid var(--line);padding:10px 16px;box-shadow:0 -8px 24px rgba(0,0,0,.1);display:none;gap:14px;align-items:center;justify-content:center}
+#bar.show{display:flex}
+#bar .t{font-size:13px;color:var(--mut)}#bar .t b{color:var(--ink)}
+#clr{font-size:12px;color:var(--mut);text-decoration:underline}
+body.has-bar .fab{display:none}
 
-@media(max-width:900px){
- nav,.deliver,.top .r{display:none}
- .burger{display:block}
- nav.open{display:block;position:absolute;top:68px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:12px 20px 18px}
- nav.open ul{flex-direction:column;gap:12px}
- .hero .wrap{grid-template-columns:1fr;min-height:0}
- .basket{height:330px}
- .seal{width:92px;height:92px;font-size:11px}.seal span{font-size:22px}
- .cats{grid-template-columns:repeat(3,1fr)}
- .promos,.info,footer .wrap{grid-template-columns:1fr}
- .why .wrap{grid-template-columns:1fr}.whyg{grid-template-columns:repeat(2,1fr)}
- .strip .wrap{justify-content:center;font-size:12px}
- .promo h3,.promo p{max-width:68%}
+@media(max-width:1060px){
+ .grid{grid-template-columns:repeat(4,1fr)}
+ .info{grid-template-columns:1fr 1fr}
+ .why .wrap{grid-template-columns:1fr;gap:16px}.whybox{max-width:340px}
 }
-@media(max-width:420px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}.card{padding:10px}.flow{padding:10px 12px;gap:6px;font-size:11px}}
-@media(prefers-reduced-motion:no-preference){.pile{animation:fl 5s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-8px)}}}
+@media(max-width:860px){
+ .top .r{display:none}.top .wrap{justify-content:center}
+ .nav{height:66px}.logo svg{width:40px;height:40px}.logo b{font-size:19px}
+ nav,.deliver,.nav>.btn{display:none}.burger{display:block}
+ nav.open{display:block;position:absolute;top:100%;left:0;right:0;background:#fff;padding:8px 24px 20px;box-shadow:0 14px 24px rgba(0,0,0,.1)}
+ nav.open ul{flex-direction:column;gap:2px;align-items:flex-start}nav.open a{padding:11px 0;font-size:15px}
+ .hero .wrap{grid-template-columns:1fr}
+ .hero-txt{padding:28px 0 6px}
+ .hero-img{max-width:none;margin:0 calc(-1*clamp(16px,3.4vw,44px));width:auto;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 16%);mask-image:linear-gradient(180deg,transparent 0,#000 16%)}
+ .chips{gap:8px}.chip{min-width:0;padding:9px 11px;flex:1 1 30%}.chip .ic{font-size:22px}.chip b{font-size:11.5px}
+ .strip .wrap{flex-wrap:wrap;padding-top:10px;padding-bottom:10px;gap:8px 0}.strip span{flex:1 1 50%;font-size:11px}.strip span:nth-child(3):before{display:none}
+ .cats{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:4px 2px 12px;scrollbar-width:none}
+ .cats::-webkit-scrollbar{display:none}
+ .cat{flex:0 0 132px;scroll-snap-align:start}
+ .arr{display:grid;right:-6px}
+ .promos{grid-template-columns:1fr}
+ .promo{min-height:160px}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .sh{flex-wrap:wrap}.sh .r{display:none}
+ .whyg{grid-template-columns:repeat(2,1fr);row-gap:20px}.whyg div:nth-child(3):before{display:none}
+ .feats{grid-template-columns:1fr 1fr}
+ .about{grid-template-columns:1fr}
+ footer .wrap{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+ .info{grid-template-columns:1fr}
+ .cta .btn{flex:1 1 100%}
+ .hero h1{letter-spacing:-1px}
+ .feats{grid-template-columns:1fr;gap:14px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 
-<div class="top"><div class="wrap"><span>🌿 <b>Order today &amp; get farm-fresh delivery tomorrow morning!</b></span><span class="r">Order directly on WhatsApp</span></div></div>
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19C5 10 10 5 20 4c0 10-5 15-13 15"/><path d="M5 19c3-5 6-8 10-10"/></symbol>
+ <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12c0-4-3-6-8-6 0 4 3 6 8 6z"/><path d="M12 14c0-3 2-5 7-5 0 3-2 5-7 5z"/></symbol>
+ <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+ <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+ <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+ <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+ <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4M9 15l2 2 4-4"/></symbol>
+ <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></symbol>
+ <symbol id="i-basket" viewBox="0 0 24 24"><path d="M3 10h18l-2 10H5z"/><path d="M8 10l3-6M16 10l-3-6M9 14v3M12 14v3M15 14v3"/></symbol>
+ <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+ <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+ <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></symbol>
+ <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12.04 2a9.9 9.9 0 00-8.5 14.9L2 22l5.25-1.38A9.9 9.9 0 1012.04 2zm0 1.8a8.1 8.1 0 11-4.2 15.03l-.3-.18-3.1.82.83-3.03-.2-.31A8.1 8.1 0 0112.04 3.8zM8.7 7.4c-.2 0-.5.07-.75.35-.25.27-.97.95-.97 2.3 0 1.36.99 2.67 1.13 2.85.14.19 1.92 3.08 4.74 4.2 2.35.93 2.82.75 3.33.7.5-.04 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33-.28-.14-1.64-.81-1.9-.9-.25-.1-.44-.14-.62.14-.19.28-.72.9-.88 1.09-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.38-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.13-.12.28-.32.42-.49.14-.16.19-.28.28-.46.1-.19.05-.35-.02-.49-.07-.14-.62-1.5-.85-2.05-.22-.54-.45-.47-.62-.48h-.53z" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+<div class="top"><div class="wrap">
+ <span><svg class="ic"><use href="#i-leaf"/></svg>Pre-order today &amp; get farm-fresh delivery tomorrow morning!</span>
+ <span class="r"><svg class="ic f"><use href="#i-wa"/></svg>Order directly on WhatsApp</span>
+</div></div>
 
 <header>
  <div class="wrap nav">
-  <a href="#home" class="logo"><span class="mark">🧺</span><span><b>GREEN BASKET</b><small>Order Today, Fresh Tomorrow</small></span></a>
+  <a href="#home" class="logo" aria-label="GreenBasket home">
+   <svg viewBox="0 0 48 48" fill="none" stroke="#0c5f1d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h36l-3.5 20H9.5z"/><path d="M14 20l6-11M34 20l-6-11"/><path d="M17 26v8M24 26v8M31 26v8"/><path d="M22 8c2-4 7-4 8-1-3 1-6 1-8 1z" fill="#6fb53a" stroke="#6fb53a"/></svg>
+   <span><b>GREEN BASKET</b><small>Order Today, Fresh Tomorrow</small></span>
+  </a>
   <nav id="nav"><ul>
    <li><a href="#home" class="on">Home</a></li>
    <li><a href="#shop">Fresh Produce</a></li>
@@ -171,170 +264,193 @@ footer a{display:block;margin:4px 0;opacity:.9}footer a:hover{opacity:1;text-dec
    <li><a href="#about">About</a></li>
    <li><a href="#contact">Contact</a></li>
   </ul></nav>
-  <div class="deliver">📍<span>Deliver to<b>Hanumangarh</b></span></div>
-  <a class="btn btn-wa" data-wa="general" href="#">Order on WhatsApp</a>
-  <button class="burger" id="burger" aria-label="Menu">☰</button>
+  <div class="deliver"><svg class="ic"><use href="#i-pin"/></svg><span>Deliver to<b>Hanumangarh</b></span></div>
+  <a class="btn btn-wa btn-sm" data-wa="general" href="#"><svg class="ic f"><use href="#i-wa"/></svg>Order on WhatsApp</a>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
  </div>
 </header>
 
 <main id="home">
 <div class="hero"><div class="wrap">
- <div>
-  <h1>Order Today,<em>Fresh Tomorrow!</em></h1>
-  <p class="sub">Pre-order now and enjoy farm-fresh fruits and vegetables delivered to your doorstep.</p>
+ <div class="hero-txt">
+  <h1>Order Today,<span>Fresh Tomorrow!<svg viewBox="0 0 24 24"><path d="M3 21C3 9 10 3 21 3c0 12-7 18-16 18z"/></svg></span></h1>
+  <p class="sub">Pre-order now &amp; enjoy farm-fresh fruits and vegetables delivered to your doorstep.</p>
   <div class="chips">
-   <div class="chip"><i>🌱</i><span><b>Farm Fresh</b>Picked for you</span></div>
-   <div class="chip"><i>✅</i><span><b>Quality Checked</b>Every order</span></div>
-   <div class="chip"><i>⏰</i><span><b>Next-Morning</b>Delivery</span></div>
+   <div class="chip"><svg class="ic"><use href="#i-sprout"/></svg><span><b>Farm Fresh</b><small>Picked for you</small></span></div>
+   <div class="chip"><svg class="ic"><use href="#i-shield"/></svg><span><b>Quality Checked</b><small>Every order</small></span></div>
+   <div class="chip"><svg class="ic"><use href="#i-clock"/></svg><span><b>Next-Morning</b><small>Delivery</small></span></div>
   </div>
   <div class="cta">
-   <a class="btn btn-g" data-wa="general" href="#">Pre-order on WhatsApp →</a>
-   <a class="btn btn-o" href="#shop">Shop Now</a>
+   <a class="btn btn-g" data-wa="general" href="#">Pre-order now <svg class="ic"><use href="#i-arrow"/></svg></a>
+   <a class="btn btn-o" href="#shop">Shop now</a>
   </div>
+  <div class="proof"><i><svg class="ic f"><use href="#i-wa"/></svg></i><span>No signup. No app. Just one WhatsApp message.</span></div>
  </div>
- <div class="basket" aria-hidden="true">
-  <div class="seal"><div><span>🧺</span>PRE-ORDER<br>&amp; SAVE TIME</div></div>
-  <div class="pile"><div>🥬🥦🍅🫑</div><div>🥕🍎🍆🥒</div></div>
-  <div class="bk">🧺</div>
-  <div class="flow"><div><i>📱</i>You Order<br>Today</div><span class="ar">→</span><div><i>🧑‍🌾</i>We Pick<br>Fresh</div><span class="ar">→</span><div><i>🛵</i>We Deliver<br>Tomorrow</div></div>
+ <div class="hero-img">
+  <img src="images/hero.jpg" alt="Basket of fresh vegetables and fruits" fetchpriority="high" width="936" height="640">
+  <div class="seal"><div><svg class="ic"><use href="#i-basket"/></svg>PRE-ORDER<br>&amp; GET IT<br>FRESH</div></div>
  </div>
 </div></div>
 
 <div class="strip"><div class="wrap">
- <span>🛵 Delivery in Hanumangarh</span><span>💬 Order in 1 tap on WhatsApp</span><span>🛡️ Quality checked produce</span><span>🤝 Confirm price on WhatsApp</span>
+ <span><svg class="ic"><use href="#i-truck"/></svg>Delivery in Hanumangarh</span>
+ <span><svg class="ic f"><use href="#i-wa"/></svg>Order in one tap on WhatsApp</span>
+ <span><svg class="ic"><use href="#i-shield"/></svg>100% quality checked</span>
+ <span><svg class="ic"><use href="#i-chat"/></svg>Confirm price on WhatsApp</span>
 </div></div>
 
 <section id="categories"><div class="wrap">
- <div class="sh"><div><h2>Shop by Category</h2><p>Explore our range of fresh &amp; healthy produce</p></div><a class="btn btn-o" style="padding:8px 18px;min-height:38px;font-size:13px" href="#shop" data-cat="All">View all</a></div>
- <div class="cats" id="cats"></div>
+ <div class="sh"><div><h2><svg class="ic"><use href="#i-leaf"/></svg>Shop by category</h2><p>Explore a wide range of fresh &amp; healthy products</p></div>
+  <a class="btn btn-o btn-sm" href="#shop" data-cat="All" style="text-transform:uppercase">View all categories <svg class="ic"><use href="#i-arrow"/></svg></a></div>
+ <div class="carousel"><div class="cats" id="cats"></div><button class="arr" id="arr" aria-label="Next categories"><svg class="ic"><use href="#i-chev"/></svg></button></div>
 
  <div class="promos">
-  <div class="promo p1"><div><h3>Pre-order &amp; get it fresh</h3><p>Order today, we pick tomorrow morning.</p></div><a class="btn" data-wa="general" href="#">Pre-order now</a><span class="em">📱</span></div>
-  <div class="promo p2"><div><h3>Fresh from the farm to your door</h3><p>Handpicked in the morning, delivered the same day.</p></div><a class="btn" href="#shop">Shop now</a><span class="em">🥗</span></div>
-  <div class="promo p3"><div><h3>Best quality, local &amp; trusted</h3><p>Every item is checked before packing.</p></div><a class="btn" href="#about">Our story</a><span class="em">🏅</span></div>
+  <div class="promo p1">
+   <h3>Pre-order on<em>WhatsApp</em></h3><p>Send your list today. We pick fresh tomorrow.</p>
+   <a class="btn" data-wa="general" href="#">Pre-order now <svg class="ic"><use href="#i-arrow"/></svg></a>
+   <div class="phone" aria-hidden="true"><div class="b">Hi GreenBasket 👋<br>I want to order:<br>• Tomato<br>• Apple</div><div class="b r">Sure! Sharing today's price &amp; availability ✅</div></div>
+  </div>
+  <div class="promo p2">
+   <h3>Order today.<em>Fresh tomorrow.</em></h3><p>Lock in your list and get the freshest picks next morning.</p>
+   <a class="btn" href="#shop">Shop now <svg class="ic"><use href="#i-arrow"/></svg></a>
+   <img src="images/crate.jpg" alt="" loading="lazy">
+  </div>
+  <div class="promo p3">
+   <h3>Quality you can<em>see &amp; trust</em></h3><p>Every item is checked before it is packed for you.</p>
+   <a class="btn" href="#about">Our story <svg class="ic"><use href="#i-arrow"/></svg></a>
+   <div class="rosette" aria-hidden="true"><div><svg class="ic"><use href="#i-check"/></svg>QUALITY<br>CHECKED</div></div>
+  </div>
  </div>
 </div></section>
 
 <section id="shop"><div class="wrap">
- <div class="sh"><div><h2>Fresh Picks of the Day</h2><p>Tap + to build your list, then order everything in one WhatsApp message. Price is confirmed on WhatsApp.</p></div></div>
+ <div class="sh"><div><h2>Fresh picks of the day</h2><p>Tap + to build your list, then send it in one WhatsApp message. Price is confirmed on WhatsApp.</p></div>
+  <div class="r"><span>Order today for <b>tomorrow morning</b></span></div></div>
  <div class="grid" id="grid"></div>
 </div></section>
 
 <div class="why"><div class="wrap">
- <h2>Why families trust<br>Green Basket</h2>
+ <h2>Why families<br>choose GreenBasket</h2>
  <div class="whyg">
-  <div><i>🚜</i><b>Farm Fresh</b>Sourced from local farms</div>
-  <div><i>🛡️</i><b>Quality Checked</b>Carefully sorted &amp; packed</div>
-  <div><i>🛵</i><b>Next-Morning Delivery</b>Order today, fresh tomorrow</div>
-  <div><i>💬</i><b>Simple Ordering</b>Just WhatsApp us</div>
+  <div><svg class="ic"><use href="#i-sprout"/></svg><b>Farm Fresh</b>Sourced from local farms</div>
+  <div><svg class="ic"><use href="#i-shield"/></svg><b>Carefully Checked</b>Sorted &amp; packed with care</div>
+  <div><svg class="ic"><use href="#i-truck"/></svg><b>Next-Morning Delivery</b>Order today, fresh tomorrow</div>
+  <div><svg class="ic"><use href="#i-chat"/></svg><b>We're a message away</b>Ask us anything on WhatsApp</div>
  </div>
+ <div class="whybox"><b>Order in a minute</b><small>No signup. No app.</small><a class="btn btn-wa btn-sm" data-wa="general" href="#"><svg class="ic f"><use href="#i-wa"/></svg>WhatsApp us</a></div>
 </div></div>
 
 <div class="wrap">
  <div class="info">
-  <div class="box" id="how"><h3>How it works</h3><p>Three steps, no signup, no app.</p>
+  <div class="box" id="how"><h3>How it works</h3><p>Three simple steps.</p>
    <div class="steps">
     <div><span>1</span>Pick your fresh products on this page.</div>
-    <div><span>2</span>Tap “Order on WhatsApp”. Your list is already typed.</div>
-    <div><span>3</span>Confirm price and delivery with GreenBasket on WhatsApp.</div>
+    <div><span>2</span>Tap Order on WhatsApp. Your list is already typed.</div>
+    <div><span>3</span>Confirm price and delivery with GreenBasket.</div>
    </div></div>
-  <div class="box"><h3>We deliver in</h3><p>Hanumangarh and nearby areas.</p><a class="btn btn-o" data-wa="area" href="#">Check your area</a></div>
-  <div class="box"><h3>Talk to us</h3><p>Questions, bulk orders or special requests? Message us directly.</p><a class="btn btn-wa" data-wa="general" href="#">Chat on WhatsApp</a></div>
+  <div class="box"><h3>We deliver in</h3><p>Hanumangarh and nearby areas.</p><div class="map"><svg class="ic" style="stroke-width:1.8"><use href="#i-pin"/></svg></div><a class="btn btn-o" data-wa="area" href="#">Check your area</a></div>
+  <div class="box"><h3>Daily availability</h3><p>Ask what's fresh today, or request something special.</p><a class="btn btn-g" data-wa="general" href="#">Message us</a></div>
+  <div class="box"><h3>Bulk &amp; regular orders</h3><p>Families, shops and events: tell us what you need.</p><a class="btn btn-o" data-wa="bulk" href="#">Ask on WhatsApp</a></div>
+ </div>
+
+ <div class="feats">
+  <div><svg class="ic"><use href="#i-cal"/></svg><span><b>Easy Pre-Order</b>Simple &amp; hassle-free</span></div>
+  <div><svg class="ic"><use href="#i-clock"/></svg><span><b>Flexible Delivery</b>Confirm timing on WhatsApp</span></div>
+  <div><svg class="ic"><use href="#i-shield"/></svg><span><b>Quality Checked</b>Fresh produce, every order</span></div>
+  <div><svg class="ic"><use href="#i-chat"/></svg><span><b>Always Here to Help</b>Reach us on WhatsApp</span></div>
+ </div>
+
+ <div class="about" id="about">
+  <h2>About GreenBasket</h2>
+  <p>GreenBasket is a local fresh produce service for Hanumangarh. You send your list today, we source and pick your fruits and vegetables the next morning, and bring them to your door. Simple, fresh and personal, all through one WhatsApp conversation.</p>
  </div>
 </div>
-
-<section id="about"><div class="wrap">
- <div class="box" style="background:#fff">
-  <h2 style="font-size:22px;margin-bottom:8px">About GreenBasket</h2>
-  <p style="font-size:14.5px;color:var(--mut);max-width:720px;margin:0">GreenBasket is a local fresh produce service for Hanumangarh. You order today, we source and pick your fruits and vegetables fresh the next morning, and bring them to your door. No app, no signup. Just one WhatsApp message.</p>
- </div>
-</div></section>
 </main>
 
 <footer id="contact"><div class="wrap">
- <div><h4>🧺 GreenBasket</h4>Order Today, Fresh Tomorrow.<br>Fresh fruits &amp; vegetables, ordered on WhatsApp.</div>
+ <div><h4>GreenBasket</h4>Order Today, Fresh Tomorrow.<br>Fresh fruits &amp; vegetables, ordered on WhatsApp.</div>
  <div><h4>Contact</h4><a data-wa="general" href="#">WhatsApp: +91 97728 21229</a><span>Service area: Hanumangarh, Rajasthan</span></div>
  <div><h4>Explore</h4><a href="#shop">Fresh Produce</a><a href="#categories">Categories</a><a href="#about">About</a></div>
  <div class="copy">© <span id="yr"></span> GreenBasket India. All rights reserved.</div>
 </div></footer>
 
-<div id="bar"><span class="t" id="bt">Pick items to order together, or <b>chat directly</b>.</span><button id="clr">Clear</button><a class="btn btn-wa" id="bbtn" data-wa="general" href="#">Order on WhatsApp</a></div>
+<a class="fab" data-wa="general" href="#" aria-label="Order on WhatsApp"><svg class="ic f"><use href="#i-wa"/></svg></a>
+<div id="bar"><span class="t" id="bt"></span><button id="clr">Clear</button><a class="btn btn-wa btn-sm" id="bbtn" data-wa="general" href="#"><svg class="ic f"><use href="#i-wa"/></svg><span id="bl">Order on WhatsApp</span></a></div>
 
 <script>
-/* ===== CONFIG: change the WhatsApp number ONLY here ===== */
-const GREENBASKET_WHATSAPP_NUMBER = "919772821229"; // country code + number, no + or spaces
+/* ===== CONFIG: change the WhatsApp number ONLY here (country code + number, no + or spaces) ===== */
+const GREENBASKET_WHATSAPP_NUMBER = "919772821229";
 
-/* ===== PRODUCTS: edit/add here (later this can load from a Google Sheet/CMS). NO prices are shown publicly. ===== */
+/* ===== DATA: edit/add products here. image = file in /images (or any image URL). NO prices on the public site. ===== */
 const CATEGORIES = [
-  {name:"Vegetables", emoji:"🥕"},{name:"Fruits", emoji:"🍎"},{name:"Leafy Greens", emoji:"🥬"},
-  {name:"Herbs & Spices", emoji:"🌿"},{name:"Exotic", emoji:"🥦"},{name:"Seasonal", emoji:"🍊"}
+  {name:"Vegetables",img:"images/cat-vegetables.jpg"},{name:"Fruits",img:"images/cat-fruits.jpg"},
+  {name:"Leafy Greens",img:"images/cat-leafy.jpg"},{name:"Herbs & Spices",img:"images/cat-herbs.jpg"},
+  {name:"Exotic Vegetables",img:"images/cat-exotic.jpg"},{name:"Seasonal",img:"images/cat-seasonal.jpg"}
 ];
 const PRODUCTS = [
-  {name:"Tomato",cat:"Vegetables",emoji:"🍅",desc:"Ripe & juicy, per kg",available:true,image:""},
-  {name:"Potato",cat:"Vegetables",emoji:"🥔",desc:"Fresh, for everyday cooking",available:true,image:""},
-  {name:"Onion",cat:"Vegetables",emoji:"🧅",desc:"Firm and full-flavoured",available:true,image:""},
-  {name:"Cucumber",cat:"Vegetables",emoji:"🥒",desc:"Crisp and cool",available:true,image:""},
-  {name:"Green Capsicum",cat:"Vegetables",emoji:"🫑",desc:"Crunchy, bright green",available:true,image:""},
-  {name:"Carrot",cat:"Vegetables",emoji:"🥕",desc:"Sweet and crunchy",available:true,image:""},
-  {name:"Brinjal",cat:"Vegetables",emoji:"🍆",desc:"Glossy, tender",available:true,image:""},
-  {name:"Spinach",cat:"Leafy Greens",emoji:"🥬",desc:"Fresh-cut leaves",available:true,image:""},
-  {name:"Coriander",cat:"Herbs & Spices",emoji:"🌿",desc:"Fragrant bunch",available:true,image:""},
-  {name:"Broccoli",cat:"Exotic",emoji:"🥦",desc:"Fresh green florets",available:false,image:""},
-  {name:"Banana",cat:"Fruits",emoji:"🍌",desc:"Naturally sweet, per dozen",available:true,image:""},
-  {name:"Apple",cat:"Fruits",emoji:"🍎",desc:"Crisp and juicy",available:true,image:""},
-  {name:"Orange",cat:"Seasonal",emoji:"🍊",desc:"Seasonal, tangy-sweet",available:true,image:""},
-  {name:"Pomegranate",cat:"Seasonal",emoji:"🍎",desc:"Ruby red seeds",available:false,image:""}
+  {name:"Tomato",cat:"Vegetables",img:"images/p-tomato.jpg",unit:"1 kg",available:true},
+  {name:"Potato",cat:"Vegetables",img:"images/p-potato.jpg",unit:"1 kg",available:true},
+  {name:"Cucumber",cat:"Vegetables",img:"images/p-cucumber.jpg",unit:"1 kg",available:true},
+  {name:"Green Capsicum",cat:"Vegetables",img:"images/p-capsicum.jpg",unit:"1 kg",available:true},
+  {name:"Banana",cat:"Fruits",img:"images/p-banana.jpg",unit:"1 dozen",available:true},
+  {name:"Apple",cat:"Fruits",img:"images/p-apple.jpg",unit:"1 kg",available:true},
+  {name:"Mixed Vegetables",cat:"Vegetables",img:"images/cat-vegetables.jpg",unit:"Basket",available:true},
+  {name:"Fresh Fruit Basket",cat:"Fruits",img:"images/cat-fruits.jpg",unit:"Basket",available:true},
+  {name:"Leafy Greens",cat:"Leafy Greens",img:"images/cat-leafy.jpg",unit:"Bunch",available:true},
+  {name:"Herbs & Spices",cat:"Herbs & Spices",img:"images/cat-herbs.jpg",unit:"Assorted",available:true},
+  {name:"Exotic Vegetables",cat:"Exotic Vegetables",img:"images/cat-exotic.jpg",unit:"Assorted",available:false},
+  {name:"Seasonal Basket",cat:"Seasonal",img:"images/cat-seasonal.jpg",unit:"Basket",available:true}
 ];
-const SERVICE_AREA = "Hanumangarh";
 
-/* ===== WhatsApp link builder (wa.me works on mobile app and WhatsApp Web) ===== */
-function waLink(text){return "https://wa.me/"+GREENBASKET_WHATSAPP_NUMBER+"?text="+encodeURIComponent(text);}
-function msgFor(items){
-  if(!items.length) return "Hi GreenBasket 👋\nI want to order fresh fruits and vegetables. Please share today's availability.";
-  return "Hi GreenBasket 👋\nI want to order:\n"+items.map(n=>"• "+n).join("\n")+"\n\nPlease help me with today's price and availability.";
-}
+/* ===== WhatsApp: wa.me opens the app on mobile and WhatsApp Web on desktop ===== */
+const waLink = t => "https://wa.me/"+GREENBASKET_WHATSAPP_NUMBER+"?text="+encodeURIComponent(t);
+const msgFor = items => items.length
+  ? "Hi GreenBasket 👋\nI want to order:\n"+items.map(n=>"• "+n).join("\n")+"\n\nPlease help me with today's price and availability."
+  : "Hi GreenBasket 👋\nI want to pre-order fresh fruits and vegetables. Please share today's availability.";
+const WAI = '<svg class="ic f"><use href="#i-wa"/></svg>';
 
-/* ===== state ===== */
-const sel = new Set(); let activeCat = "All";
-const $ = s=>document.querySelector(s);
+const $ = s => document.querySelector(s);
+const sel = new Set(); let active = "All";
 
 function renderCats(){
-  $("#cats").innerHTML = CATEGORIES.map(c=>`<button class="cat ${activeCat===c.name?'on':''}" data-cat="${c.name}"><span class="e">${c.emoji}</span>${c.name}</button>`).join("");
+  $("#cats").innerHTML = CATEGORIES.map(c=>`<button class="cat ${active===c.name?'on':''}" data-cat="${c.name}"><img src="${c.img}" alt="" loading="lazy">${c.name}</button>`).join("");
 }
 function renderGrid(){
-  const list = PRODUCTS.filter(p=>activeCat==="All"||p.cat===activeCat);
+  const list = PRODUCTS.filter(p=>active==="All"||p.cat===active);
   $("#grid").innerHTML = list.length ? list.map(p=>`
    <article class="card ${sel.has(p.name)?'sel':''}">
-    <div class="img">${p.image?`<img loading="lazy" src="${p.image}" alt="${p.name}">`:p.emoji}</div>
-    <h3>${p.name}</h3><small>${p.desc}</small>
-    <div class="av ${p.available?'':'out'}">${p.available?'Available':'Check on WhatsApp'}</div>
-    <div class="row">
-     <a class="btn btn-wa" href="${waLink(msgFor([p.name]))}" target="_blank" rel="noopener">Order on WhatsApp</a>
-     <button class="tg" data-t="${p.name}" aria-label="Add ${p.name} to my list">${sel.has(p.name)?'✓':'+'}</button>
-    </div>
-   </article>`).join("") : `<p class="empty">No products in this category yet.</p>`;
+    <button class="tg" data-t="${p.name}" aria-label="${sel.has(p.name)?'Remove':'Add'} ${p.name}">${sel.has(p.name)?'✓':'+'}</button>
+    <div class="im"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
+    <h3>${p.name}</h3><small>${p.unit}</small>
+    <div class="av ${p.available?'':'out'}">${p.available?'Available':'Ask on WhatsApp'}</div>
+    <a class="btn" href="${waLink(msgFor([p.name]))}" target="_blank" rel="noopener">${WAI}Order on WhatsApp</a>
+   </article>`).join("") : '<p class="empty">No products in this category yet.</p>';
 }
 function renderBar(){
   const n = sel.size;
-  $("#bt").innerHTML = n ? `<b>${n}</b> item${n>1?'s':''} selected` : `Pick items to order together, or <b>chat directly</b>.`;
-  $("#clr").style.display = n?"inline":"none";
-  $("#bbtn").textContent = n ? "Order "+n+" on WhatsApp" : "Order on WhatsApp";
+  $("#bar").classList.toggle("show",n>0); document.body.classList.toggle("has-bar",n>0);
+  $("#bt").innerHTML = `<b>${n}</b> item${n>1?'s':''} selected`;
+  $("#bl").textContent = "Order "+n+" on WhatsApp";
 }
-function refresh(){renderCats();renderGrid();renderBar();}
+function refresh(){renderCats();renderGrid();renderBar();checkArr();}
+function checkArr(){const c=$("#cats");$("#arr").style.display=(getComputedStyle(c).display==="flex"&&c.scrollWidth>c.clientWidth+4)?"grid":"none";}
 
 document.addEventListener("click",e=>{
   const t=e.target.closest("[data-t]"); if(t){const k=t.dataset.t; sel.has(k)?sel.delete(k):sel.add(k); renderGrid(); renderBar(); return;}
-  const c=e.target.closest("[data-cat]"); if(c){activeCat = (c.dataset.cat===activeCat)?"All":c.dataset.cat; refresh(); $("#shop").scrollIntoView({behavior:"smooth"}); e.preventDefault(); return;}
+  const c=e.target.closest("[data-cat]"); if(c){e.preventDefault(); active=(c.dataset.cat===active)?"All":c.dataset.cat; renderCats(); renderGrid(); $("#shop").scrollIntoView({behavior:"smooth"}); return;}
   const w=e.target.closest("[data-wa]"); if(w){
     e.preventDefault();
-    let text = msgFor([...sel]);
-    if(w.dataset.wa==="area") text="Hi GreenBasket 👋\nDo you deliver to my area? My locality is: ";
+    const k=w.dataset.wa; let text=msgFor([...sel]);
+    if(k==="area") text="Hi GreenBasket 👋\nDo you deliver to my area? My locality is: ";
+    if(k==="bulk") text="Hi GreenBasket 👋\nI want to place a regular/bulk order. Details: ";
     window.open(waLink(text),"_blank","noopener");
   }
 });
+$("#arr").onclick=()=>$("#cats").scrollBy({left:280,behavior:"smooth"});
 $("#clr").onclick=()=>{sel.clear();renderGrid();renderBar();};
-$("#burger").onclick=()=>$("#nav").classList.toggle("open");
+$("#burger").onclick=e=>{const o=$("#nav").classList.toggle("open");e.currentTarget.setAttribute("aria-expanded",o);};
 $("#nav").onclick=e=>{if(e.target.tagName==="A")$("#nav").classList.remove("open");};
+addEventListener("resize",checkArr);
 $("#yr").textContent=new Date().getFullYear();
 refresh();
 </script>
