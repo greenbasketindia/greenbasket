@@ -1,283 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GreenBasket | Order Today, Fresh Tomorrow</title>
+<meta name="description" content="Fresh fruits and vegetables in Hanumangarh. Order on WhatsApp today, get farm-fresh delivery tomorrow.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧺</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#0f6b1f;--gd:#0a4a15;--gl:#e9f5df;--gm:#f3f9ec;--or:#f08a1c;--ink:#1b2a1e;--mut:#5d6b60;--line:#e3ebde;--wood:#e0b878}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:#fff;line-height:1.5;padding-bottom:76px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--or);outline-offset:2px}
 
-  <title>GreenBasket | Fresh Fruits & Vegetables, Ordered on WhatsApp</title>
-  <meta name="description" content="GreenBasket brings premium fresh fruits, vegetables and leafy greens, quality checked and ordered easily on WhatsApp. Freshness you can trust.">
-  <meta name="theme-color" content="#1f5c3a">
+/* top bar */
+.top{background:var(--g);color:#fff;font-size:13px;padding:8px 0}
+.top .wrap{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.top b{font-weight:600}
+/* nav */
+header{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);z-index:50;border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo .mark{width:40px;height:40px;border-radius:12px;background:var(--g);display:grid;place-items:center;font-size:22px}
+.logo b{display:block;font-size:18px;line-height:1;font-weight:800;color:var(--gd);letter-spacing:.2px}
+.logo small{font-size:10.5px;color:var(--mut)}
+nav ul{display:flex;gap:28px;list-style:none;font-size:14px;font-weight:500}
+nav a{padding:6px 0;border-bottom:2px solid transparent}
+nav a:hover,nav a.on{color:var(--g);border-color:var(--g)}
+.deliver{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mut);line-height:1.2}
+.deliver b{display:block;color:var(--ink);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:600;font-size:14px;padding:13px 26px;min-height:46px;transition:transform .15s,background .15s}
+.btn:active{transform:scale(.97)}
+.btn-g{background:var(--g);color:#fff}.btn-g:hover{background:var(--gd)}
+.btn-o{background:#fff;color:var(--g);border:2px solid var(--g)}.btn-o:hover{background:var(--gl)}
+.btn-wa{background:#25d366;color:#053b1a}.btn-wa:hover{background:#1fbd5b}
+.burger{display:none;background:none;font-size:26px}
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="GreenBasket">
-  <meta property="og:title" content="GreenBasket | Freshness You Can Trust">
-  <meta property="og:description" content="Premium fresh fruits and vegetables. Browse the catalogue and order on WhatsApp.">
-  <meta property="og:image" content="assets/images/og-cover.jpg">
-  <meta name="twitter:card" content="summary_large_image">
+/* hero */
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 500px at 78% 40%,#fff6df 0,transparent 60%),linear-gradient(180deg,#f7fbf1,#eef7e4)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:20px;align-items:center;min-height:460px;padding-top:32px;padding-bottom:32px}
+.hero h1{font-size:clamp(34px,5.2vw,58px);line-height:1.08;font-weight:800;letter-spacing:-1px}
+.hero h1 em{display:block;color:var(--g);font-style:normal}
+.hero p.sub{margin:16px 0 20px;color:#3d4d41;font-size:17px;max-width:420px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;display:flex;gap:10px;align-items:center;font-size:12px;color:var(--mut);box-shadow:0 4px 14px rgba(15,107,31,.06)}
+.chip b{display:block;color:var(--ink);font-size:13px}
+.chip i{font-style:normal;font-size:22px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.basket{position:relative;height:420px;display:grid;place-items:center}
+.basket .pile{font-size:clamp(70px,11vw,118px);line-height:1;text-align:center;filter:drop-shadow(0 18px 18px rgba(0,0,0,.15))}
+.basket .pile div:nth-child(1){letter-spacing:-6px}
+.basket .pile div:nth-child(2){letter-spacing:-8px;margin-top:-6px}
+.basket .bk{font-size:clamp(120px,19vw,200px);margin-top:-52px;line-height:1}
+.seal{position:absolute;top:0;right:4px;width:112px;height:112px;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;text-align:center;font-weight:800;font-size:13px;line-height:1.15;border:4px dashed #fff;box-shadow:0 0 0 4px var(--g);transform:rotate(8deg)}
+.seal span{font-size:28px;display:block}
+.flow{position:absolute;bottom:6px;right:0;background:linear-gradient(160deg,#edc88b,#d9ac66);border-radius:16px;padding:14px 18px;display:flex;gap:10px;align-items:center;box-shadow:0 10px 24px rgba(120,80,20,.25);font-size:12px;font-weight:600;text-align:center;color:#4a3411}
+.flow i{font-style:normal;font-size:24px;display:block}
+.flow .ar{font-size:18px;opacity:.7}
 
-  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+/* strip */
+.strip{background:var(--gl);border-block:1px solid var(--line);font-size:13px;font-weight:600;color:var(--gd)}
+.strip .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.strip span{display:flex;align-items:center;gap:8px}
+
+/* sections */
+section{padding:44px 0 8px}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:20px}
+.sh h2{font-size:22px;font-weight:700}
+.sh p{color:var(--mut);font-size:13px}
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.cat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 8px 12px;text-align:center;font-size:14px;font-weight:600;transition:.2s;cursor:pointer;box-shadow:0 4px 14px rgba(15,107,31,.05)}
+.cat:hover,.cat.on{border-color:var(--g);background:var(--gm);transform:translateY(-3px)}
+.cat .e{font-size:46px;line-height:1.1;display:block;margin-bottom:6px}
+
+.promos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.promo{border-radius:18px;padding:22px;min-height:150px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
+.promo h3{font-size:19px;line-height:1.2;max-width:70%}
+.promo p{font-size:13px;max-width:62%;margin:6px 0 12px;opacity:.9}
+.promo .em{position:absolute;right:14px;bottom:8px;font-size:72px;opacity:.95}
+.p1{background:linear-gradient(135deg,#1c8a2e,#0f6b1f);color:#fff}
+.p2{background:#0e3d16;color:#fff}
+.p3{background:linear-gradient(135deg,#eaf5dc,#dcedc9);color:var(--gd)}
+.promo .btn{padding:8px 18px;min-height:38px;font-size:13px}
+.p1 .btn,.p2 .btn{background:#fff;color:var(--g)}
+.p3 .btn{background:var(--g);color:#fff}
+
+/* products */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;background:#fff;position:relative;transition:box-shadow .2s,border-color .2s}
+.card:hover{box-shadow:0 10px 26px rgba(15,107,31,.1)}
+.card.sel{border-color:var(--g);box-shadow:0 0 0 2px var(--g) inset}
+.card .img{height:104px;border-radius:12px;background:var(--gm);display:grid;place-items:center;font-size:58px;overflow:hidden}
+.card .img img{width:100%;height:100%;object-fit:cover}
+.card h3{font-size:15px;font-weight:600;margin-top:10px}
+.card small{color:var(--mut);font-size:12px;display:block;min-height:34px}
+.av{font-size:11px;font-weight:600;color:var(--g);margin:6px 0 10px;display:flex;align-items:center;gap:6px}
+.av:before{content:"";width:7px;height:7px;border-radius:50%;background:#25d366}
+.av.out{color:#b45309}.av.out:before{background:#f59e0b}
+.card .row{display:flex;gap:8px;margin-top:auto}
+.card .row .btn{padding:9px 12px;min-height:40px;font-size:12.5px;flex:1}
+.card .row .tg{flex:0 0 40px;background:var(--gl);color:var(--g);border-radius:50%;font-size:20px;font-weight:700;padding:0}
+.card.sel .tg{background:var(--g);color:#fff}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:30px}
+
+/* why */
+.why{margin-top:48px;background:linear-gradient(90deg,#0b4a16,#136d25);color:#fff;padding:34px 0}
+.why .wrap{display:grid;grid-template-columns:1.1fr 4fr;gap:24px;align-items:center}
+.why h2{font-size:22px;line-height:1.25}
+.whyg{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:center;font-size:12.5px}
+.whyg b{display:block;font-size:14px;margin:4px 0 2px}
+.whyg i{font-style:normal;font-size:34px}
+.whyg div{opacity:.95}
+
+.info{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px;margin-top:34px}
+.box{background:var(--gm);border:1px solid var(--line);border-radius:18px;padding:22px}
+.box h3{font-size:15px;margin-bottom:6px}
+.box p{font-size:13px;color:var(--mut);margin-bottom:14px}
+.steps{display:grid;gap:10px;font-size:13px}
+.steps div{display:flex;gap:12px;align-items:flex-start}
+.steps span{flex:0 0 26px;height:26px;border-radius:50%;background:var(--g);color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+
+footer{margin-top:44px;background:#0b2a12;color:#cfe3d2;padding:34px 0 24px;font-size:13px}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px}
+footer h4{color:#fff;margin-bottom:8px;font-size:14px}
+footer a{display:block;margin:4px 0;opacity:.9}footer a:hover{opacity:1;text-decoration:underline}
+.copy{grid-column:1/-1;border-top:1px solid #1d4a28;padding-top:16px;font-size:12px;opacity:.8}
+
+/* sticky order bar + fab */
+#bar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding:10px 16px;box-shadow:0 -6px 20px rgba(0,0,0,.08);display:flex;gap:12px;align-items:center;justify-content:center}
+#bar .t{font-size:13px;color:var(--mut)}
+#bar .t b{color:var(--ink)}
+#bar .btn{padding:11px 22px}
+#clr{background:none;color:var(--mut);font-size:12px;text-decoration:underline;display:none}
+
+@media(max-width:900px){
+ nav,.deliver,.top .r{display:none}
+ .burger{display:block}
+ nav.open{display:block;position:absolute;top:68px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:12px 20px 18px}
+ nav.open ul{flex-direction:column;gap:12px}
+ .hero .wrap{grid-template-columns:1fr;min-height:0}
+ .basket{height:330px}
+ .seal{width:92px;height:92px;font-size:11px}.seal span{font-size:22px}
+ .cats{grid-template-columns:repeat(3,1fr)}
+ .promos,.info,footer .wrap{grid-template-columns:1fr}
+ .why .wrap{grid-template-columns:1fr}.whyg{grid-template-columns:repeat(2,1fr)}
+ .strip .wrap{justify-content:center;font-size:12px}
+ .promo h3,.promo p{max-width:68%}
+}
+@media(max-width:420px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}.card{padding:10px}.flow{padding:10px 12px;gap:6px;font-size:11px}}
+@media(prefers-reduced-motion:no-preference){.pile{animation:fl 5s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-8px)}}}
+</style>
 </head>
-
 <body>
 
-  <!-- Icon sprite (used across the page via <use>) -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <defs>
-      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
-      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
-      <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
-      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
-      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
-      <symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></symbol>
-      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
-      <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
-      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
-      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></symbol>
-    </defs>
-  </svg>
+<div class="top"><div class="wrap"><span>🌿 <b>Order today &amp; get farm-fresh delivery tomorrow morning!</b></span><span class="r">Order directly on WhatsApp</span></div></div>
 
-  <a class="skip-link" href="#main">Skip to content</a>
+<header>
+ <div class="wrap nav">
+  <a href="#home" class="logo"><span class="mark">🧺</span><span><b>GREEN BASKET</b><small>Order Today, Fresh Tomorrow</small></span></a>
+  <nav id="nav"><ul>
+   <li><a href="#home" class="on">Home</a></li>
+   <li><a href="#shop">Fresh Produce</a></li>
+   <li><a href="#categories">Categories</a></li>
+   <li><a href="#how">How It Works</a></li>
+   <li><a href="#about">About</a></li>
+   <li><a href="#contact">Contact</a></li>
+  </ul></nav>
+  <div class="deliver">📍<span>Deliver to<b>Hanumangarh</b></span></div>
+  <a class="btn btn-wa" data-wa="general" href="#">Order on WhatsApp</a>
+  <button class="burger" id="burger" aria-label="Menu">☰</button>
+ </div>
+</header>
 
-  <!-- ================= NAVBAR ================= -->
-  <header class="site-header" id="top">
-    <nav class="nav container" aria-label="Main navigation">
-      <a class="brand" href="#home" aria-label="GreenBasket home">
-        <svg class="icon brand-icon" aria-hidden="true"><use href="#i-leaf"/></svg>
-        <span class="brand-name">GreenBasket</span>
-      </a>
+<main id="home">
+<div class="hero"><div class="wrap">
+ <div>
+  <h1>Order Today,<em>Fresh Tomorrow!</em></h1>
+  <p class="sub">Pre-order now and enjoy farm-fresh fruits and vegetables delivered to your doorstep.</p>
+  <div class="chips">
+   <div class="chip"><i>🌱</i><span><b>Farm Fresh</b>Picked for you</span></div>
+   <div class="chip"><i>✅</i><span><b>Quality Checked</b>Every order</span></div>
+   <div class="chip"><i>⏰</i><span><b>Next-Morning</b>Delivery</span></div>
+  </div>
+  <div class="cta">
+   <a class="btn btn-g" data-wa="general" href="#">Pre-order on WhatsApp →</a>
+   <a class="btn btn-o" href="#shop">Shop Now</a>
+  </div>
+ </div>
+ <div class="basket" aria-hidden="true">
+  <div class="seal"><div><span>🧺</span>PRE-ORDER<br>&amp; SAVE TIME</div></div>
+  <div class="pile"><div>🥬🥦🍅🫑</div><div>🥕🍎🍆🥒</div></div>
+  <div class="bk">🧺</div>
+  <div class="flow"><div><i>📱</i>You Order<br>Today</div><span class="ar">→</span><div><i>🧑‍🌾</i>We Pick<br>Fresh</div><span class="ar">→</span><div><i>🛵</i>We Deliver<br>Tomorrow</div></div>
+ </div>
+</div></div>
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#produce">Fresh Produce</a></li>
-        <li><a href="#categories">Categories</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="nav-cta-mobile">
-          <a class="btn btn-primary" href="#" data-wa="general">
-            <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>
-            Order on WhatsApp
-          </a>
-        </li>
-      </ul>
+<div class="strip"><div class="wrap">
+ <span>🛵 Delivery in Hanumangarh</span><span>💬 Order in 1 tap on WhatsApp</span><span>🛡️ Quality checked produce</span><span>🤝 Confirm price on WhatsApp</span>
+</div></div>
 
-      <a class="btn btn-primary nav-cta" href="#" data-wa="general">
-        <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>
-        Order on WhatsApp
-      </a>
+<section id="categories"><div class="wrap">
+ <div class="sh"><div><h2>Shop by Category</h2><p>Explore our range of fresh &amp; healthy produce</p></div><a class="btn btn-o" style="padding:8px 18px;min-height:38px;font-size:13px" href="#shop" data-cat="All">View all</a></div>
+ <div class="cats" id="cats"></div>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
-        <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
-      </button>
-    </nav>
-  </header>
+ <div class="promos">
+  <div class="promo p1"><div><h3>Pre-order &amp; get it fresh</h3><p>Order today, we pick tomorrow morning.</p></div><a class="btn" data-wa="general" href="#">Pre-order now</a><span class="em">📱</span></div>
+  <div class="promo p2"><div><h3>Fresh from the farm to your door</h3><p>Handpicked in the morning, delivered the same day.</p></div><a class="btn" href="#shop">Shop now</a><span class="em">🥗</span></div>
+  <div class="promo p3"><div><h3>Best quality, local &amp; trusted</h3><p>Every item is checked before packing.</p></div><a class="btn" href="#about">Our story</a><span class="em">🏅</span></div>
+ </div>
+</div></section>
 
-  <main id="main">
+<section id="shop"><div class="wrap">
+ <div class="sh"><div><h2>Fresh Picks of the Day</h2><p>Tap + to build your list, then order everything in one WhatsApp message. Price is confirmed on WhatsApp.</p></div></div>
+ <div class="grid" id="grid"></div>
+</div></section>
 
-    <!-- ================= HERO ================= -->
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">Fresh. Local. Trusted.</p>
-          <h1>Freshness You Can&nbsp;Trust.</h1>
-          <p class="hero-sub">
-            Premium fruits and vegetables, hand-picked and quality checked.
-            Browse today's produce and order in a single WhatsApp message.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#produce">
-              Explore Fresh Produce
-              <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
-            <a class="btn btn-outline" href="#" data-wa="general">
-              <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>
-              Order on WhatsApp
-            </a>
-          </div>
-        </div>
+<div class="why"><div class="wrap">
+ <h2>Why families trust<br>Green Basket</h2>
+ <div class="whyg">
+  <div><i>🚜</i><b>Farm Fresh</b>Sourced from local farms</div>
+  <div><i>🛡️</i><b>Quality Checked</b>Carefully sorted &amp; packed</div>
+  <div><i>🛵</i><b>Next-Morning Delivery</b>Order today, fresh tomorrow</div>
+  <div><i>💬</i><b>Simple Ordering</b>Just WhatsApp us</div>
+ </div>
+</div></div>
 
-        <div class="hero-visual">
-          <img src="assets/images/hero.jpg" alt="A basket of fresh fruits and vegetables"
-               width="900" height="1000" fetchpriority="high">
-        </div>
-      </div>
-    </section>
+<div class="wrap">
+ <div class="info">
+  <div class="box" id="how"><h3>How it works</h3><p>Three steps, no signup, no app.</p>
+   <div class="steps">
+    <div><span>1</span>Pick your fresh products on this page.</div>
+    <div><span>2</span>Tap “Order on WhatsApp”. Your list is already typed.</div>
+    <div><span>3</span>Confirm price and delivery with GreenBasket on WhatsApp.</div>
+   </div></div>
+  <div class="box"><h3>We deliver in</h3><p>Hanumangarh and nearby areas.</p><a class="btn btn-o" data-wa="area" href="#">Check your area</a></div>
+  <div class="box"><h3>Talk to us</h3><p>Questions, bulk orders or special requests? Message us directly.</p><a class="btn btn-wa" data-wa="general" href="#">Chat on WhatsApp</a></div>
+ </div>
+</div>
 
-    <!-- ================= CATEGORIES ================= -->
-    <section class="section" id="categories" aria-labelledby="categoriesTitle">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Browse</p>
-          <h2 id="categoriesTitle">Shop by Category</h2>
-          <p class="section-sub">From everyday staples to the best of the season.</p>
-        </div>
-        <!-- Filled by JavaScript -->
-        <div class="category-grid" id="categoryGrid"></div>
-      </div>
-    </section>
+<section id="about"><div class="wrap">
+ <div class="box" style="background:#fff">
+  <h2 style="font-size:22px;margin-bottom:8px">About GreenBasket</h2>
+  <p style="font-size:14.5px;color:var(--mut);max-width:720px;margin:0">GreenBasket is a local fresh produce service for Hanumangarh. You order today, we source and pick your fruits and vegetables fresh the next morning, and bring them to your door. No app, no signup. Just one WhatsApp message.</p>
+ </div>
+</div></section>
+</main>
 
-    <!-- ================= PRODUCT CATALOGUE ================= -->
-    <section class="section section-soft" id="produce" aria-labelledby="produceTitle">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Today's Catalogue</p>
-          <h2 id="produceTitle">Fresh Produce</h2>
-          <p class="section-sub">Pick what you need. We'll confirm today's price and availability on WhatsApp.</p>
-        </div>
+<footer id="contact"><div class="wrap">
+ <div><h4>🧺 GreenBasket</h4>Order Today, Fresh Tomorrow.<br>Fresh fruits &amp; vegetables, ordered on WhatsApp.</div>
+ <div><h4>Contact</h4><a data-wa="general" href="#">WhatsApp: +91 97728 21229</a><span>Service area: Hanumangarh, Rajasthan</span></div>
+ <div><h4>Explore</h4><a href="#shop">Fresh Produce</a><a href="#categories">Categories</a><a href="#about">About</a></div>
+ <div class="copy">© <span id="yr"></span> GreenBasket India. All rights reserved.</div>
+</div></footer>
 
-        <!-- Filter chips, filled by JavaScript -->
-        <div class="filter-bar" id="filterBar" role="group" aria-label="Filter products by category"></div>
+<div id="bar"><span class="t" id="bt">Pick items to order together, or <b>chat directly</b>.</span><button id="clr">Clear</button><a class="btn btn-wa" id="bbtn" data-wa="general" href="#">Order on WhatsApp</a></div>
 
-        <!-- Product cards, filled by JavaScript -->
-        <div class="product-grid" id="productGrid" aria-live="polite"></div>
-        <p class="empty-state" id="productEmpty" hidden>No products found in this category right now.</p>
-      </div>
-    </section>
+<script>
+/* ===== CONFIG: change the WhatsApp number ONLY here ===== */
+const GREENBASKET_WHATSAPP_NUMBER = "919772821229"; // country code + number, no + or spaces
 
-    <!-- ================= HOW IT WORKS ================= -->
-    <section class="section" id="how" aria-labelledby="howTitle">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Simple Process</p>
-          <h2 id="howTitle">How It Works</h2>
-        </div>
-        <ol class="steps">
-          <li class="step">
-            <span class="step-icon"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></span>
-            <h3>1. Explore</h3>
-            <p>Browse our fresh fruits, vegetables and leafy greens.</p>
-          </li>
-          <li class="step">
-            <span class="step-icon"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span>
-            <h3>2. Order on WhatsApp</h3>
-            <p>Tap the button. Your order message is ready to send.</p>
-          </li>
-          <li class="step">
-            <span class="step-icon"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
-            <h3>3. Confirm</h3>
-            <p>We share today's price and availability and confirm your order.</p>
-          </li>
-        </ol>
-      </div>
-    </section>
+/* ===== PRODUCTS: edit/add here (later this can load from a Google Sheet/CMS). NO prices are shown publicly. ===== */
+const CATEGORIES = [
+  {name:"Vegetables", emoji:"🥕"},{name:"Fruits", emoji:"🍎"},{name:"Leafy Greens", emoji:"🥬"},
+  {name:"Herbs & Spices", emoji:"🌿"},{name:"Exotic", emoji:"🥦"},{name:"Seasonal", emoji:"🍊"}
+];
+const PRODUCTS = [
+  {name:"Tomato",cat:"Vegetables",emoji:"🍅",desc:"Ripe & juicy, per kg",available:true,image:""},
+  {name:"Potato",cat:"Vegetables",emoji:"🥔",desc:"Fresh, for everyday cooking",available:true,image:""},
+  {name:"Onion",cat:"Vegetables",emoji:"🧅",desc:"Firm and full-flavoured",available:true,image:""},
+  {name:"Cucumber",cat:"Vegetables",emoji:"🥒",desc:"Crisp and cool",available:true,image:""},
+  {name:"Green Capsicum",cat:"Vegetables",emoji:"🫑",desc:"Crunchy, bright green",available:true,image:""},
+  {name:"Carrot",cat:"Vegetables",emoji:"🥕",desc:"Sweet and crunchy",available:true,image:""},
+  {name:"Brinjal",cat:"Vegetables",emoji:"🍆",desc:"Glossy, tender",available:true,image:""},
+  {name:"Spinach",cat:"Leafy Greens",emoji:"🥬",desc:"Fresh-cut leaves",available:true,image:""},
+  {name:"Coriander",cat:"Herbs & Spices",emoji:"🌿",desc:"Fragrant bunch",available:true,image:""},
+  {name:"Broccoli",cat:"Exotic",emoji:"🥦",desc:"Fresh green florets",available:false,image:""},
+  {name:"Banana",cat:"Fruits",emoji:"🍌",desc:"Naturally sweet, per dozen",available:true,image:""},
+  {name:"Apple",cat:"Fruits",emoji:"🍎",desc:"Crisp and juicy",available:true,image:""},
+  {name:"Orange",cat:"Seasonal",emoji:"🍊",desc:"Seasonal, tangy-sweet",available:true,image:""},
+  {name:"Pomegranate",cat:"Seasonal",emoji:"🍎",desc:"Ruby red seeds",available:false,image:""}
+];
+const SERVICE_AREA = "Hanumangarh";
 
-    <!-- ================= WHY GREENBASKET ================= -->
-    <section class="section section-dark" id="why" aria-labelledby="whyTitle">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Our Promise</p>
-          <h2 id="whyTitle">Why GreenBasket</h2>
-        </div>
-        <div class="why-grid">
-          <article class="why-item">
-            <svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg>
-            <h3>Fresh Produce</h3>
-            <p>Sourced fresh and handled with care, from the market to your door.</p>
-          </article>
-          <article class="why-item">
-            <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
-            <h3>Quality Checked</h3>
-            <p>Every item is sorted and inspected before it reaches you.</p>
-          </article>
-          <article class="why-item">
-            <svg class="icon" aria-hidden="true"><use href="#i-zap"/></svg>
-            <h3>Easy Ordering</h3>
-            <p>No sign-ups, no apps. Just one message on WhatsApp.</p>
-          </article>
-          <article class="why-item">
-            <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>
-            <h3>Local &amp; Trusted</h3>
-            <p>A local service built on honest quality and reliability.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+/* ===== WhatsApp link builder (wa.me works on mobile app and WhatsApp Web) ===== */
+function waLink(text){return "https://wa.me/"+GREENBASKET_WHATSAPP_NUMBER+"?text="+encodeURIComponent(text);}
+function msgFor(items){
+  if(!items.length) return "Hi GreenBasket 👋\nI want to order fresh fruits and vegetables. Please share today's availability.";
+  return "Hi GreenBasket 👋\nI want to order:\n"+items.map(n=>"• "+n).join("\n")+"\n\nPlease help me with today's price and availability.";
+}
 
-    <!-- ================= ABOUT ================= -->
-    <section class="section" id="about" aria-labelledby="aboutTitle">
-      <div class="container about-grid">
-        <div class="about-visual">
-          <img src="assets/images/about.jpg" alt="Fresh produce being carefully sorted"
-               width="800" height="900" loading="lazy">
-        </div>
-        <div class="about-copy">
-          <p class="eyebrow">Our Story</p>
-          <h2 id="aboutTitle">About GreenBasket</h2>
-          <p>
-            GreenBasket was started with a simple belief: good food begins with
-            good produce. We bring fresh fruits and vegetables that are carefully
-            picked, checked for quality and delivered with honesty.
-          </p>
-          <p>
-            We keep ordering personal and simple. You message us on WhatsApp,
-            we confirm today's price and availability, and your order is on its way.
-          </p>
-        </div>
-      </div>
-    </section>
+/* ===== state ===== */
+const sel = new Set(); let activeCat = "All";
+const $ = s=>document.querySelector(s);
 
-    <!-- ================= FINAL CTA ================= -->
-    <section class="cta" id="order" aria-labelledby="ctaTitle">
-      <div class="container cta-inner">
-        <h2 id="ctaTitle">Ready for fresh produce today?</h2>
-        <p>Send us a message and we'll take it from there.</p>
-        <a class="btn btn-light" href="#" data-wa="general">
-          <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>
-          Order on WhatsApp
-        </a>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="site-footer" id="contact">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <a class="brand" href="#home" aria-label="GreenBasket home">
-          <svg class="icon brand-icon" aria-hidden="true"><use href="#i-leaf"/></svg>
-          <span class="brand-name">GreenBasket</span>
-        </a>
-        <p>Premium fresh fruits and vegetables, ordered easily on WhatsApp.</p>
-      </div>
-
-      <div>
-        <h3>Contact</h3>
-        <ul>
-          <li><a href="#" data-wa="general">Message us on WhatsApp</a></li>
-          <li id="serviceArea">Service area: <span data-brand="serviceArea"></span></li>
-        </ul>
-      </div>
-
-      <div>
-        <h3>Explore</h3>
-        <ul>
-          <li><a href="#produce">Fresh Produce</a></li>
-          <li><a href="#categories">Categories</a></li>
-          <li><a href="#about">About</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h3>Legal</h3>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms</a></li>
-        </ul>
-      </div>
+function renderCats(){
+  $("#cats").innerHTML = CATEGORIES.map(c=>`<button class="cat ${activeCat===c.name?'on':''}" data-cat="${c.name}"><span class="e">${c.emoji}</span>${c.name}</button>`).join("");
+}
+function renderGrid(){
+  const list = PRODUCTS.filter(p=>activeCat==="All"||p.cat===activeCat);
+  $("#grid").innerHTML = list.length ? list.map(p=>`
+   <article class="card ${sel.has(p.name)?'sel':''}">
+    <div class="img">${p.image?`<img loading="lazy" src="${p.image}" alt="${p.name}">`:p.emoji}</div>
+    <h3>${p.name}</h3><small>${p.desc}</small>
+    <div class="av ${p.available?'':'out'}">${p.available?'Available':'Check on WhatsApp'}</div>
+    <div class="row">
+     <a class="btn btn-wa" href="${waLink(msgFor([p.name]))}" target="_blank" rel="noopener">Order on WhatsApp</a>
+     <button class="tg" data-t="${p.name}" aria-label="Add ${p.name} to my list">${sel.has(p.name)?'✓':'+'}</button>
     </div>
+   </article>`).join("") : `<p class="empty">No products in this category yet.</p>`;
+}
+function renderBar(){
+  const n = sel.size;
+  $("#bt").innerHTML = n ? `<b>${n}</b> item${n>1?'s':''} selected` : `Pick items to order together, or <b>chat directly</b>.`;
+  $("#clr").style.display = n?"inline":"none";
+  $("#bbtn").textContent = n ? "Order "+n+" on WhatsApp" : "Order on WhatsApp";
+}
+function refresh(){renderCats();renderGrid();renderBar();}
 
-    <div class="container footer-bottom">
-      <p>&copy; <span id="year"></span> GreenBasket. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- Scripts: config first, then app logic -->
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/app.js" defer></script>
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-t]"); if(t){const k=t.dataset.t; sel.has(k)?sel.delete(k):sel.add(k); renderGrid(); renderBar(); return;}
+  const c=e.target.closest("[data-cat]"); if(c){activeCat = (c.dataset.cat===activeCat)?"All":c.dataset.cat; refresh(); $("#shop").scrollIntoView({behavior:"smooth"}); e.preventDefault(); return;}
+  const w=e.target.closest("[data-wa]"); if(w){
+    e.preventDefault();
+    let text = msgFor([...sel]);
+    if(w.dataset.wa==="area") text="Hi GreenBasket 👋\nDo you deliver to my area? My locality is: ";
+    window.open(waLink(text),"_blank","noopener");
+  }
+});
+$("#clr").onclick=()=>{sel.clear();renderGrid();renderBar();};
+$("#burger").onclick=()=>$("#nav").classList.toggle("open");
+$("#nav").onclick=e=>{if(e.target.tagName==="A")$("#nav").classList.remove("open");};
+$("#yr").textContent=new Date().getFullYear();
+refresh();
+</script>
 </body>
 </html>
