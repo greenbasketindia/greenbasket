@@ -1,170 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Terms of Use | GreenBasket</title>
-  <meta name="description" content="The terms for browsing the GreenBasket catalogue and ordering fresh produce through WhatsApp.">
-  <meta name="theme-color" content="#1f5c3a">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms &amp; Conditions | GreenBasket</title>
+<meta name="description" content="The terms for browsing the GreenBasket catalogue and ordering fresh produce through WhatsApp.">
+<meta name="theme-color" content="#0c5f1d">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧺</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#0c5f1d;--g2:#17741f;--gd:#08430f;--gl:#e8f3dc;--gm:#f4f9ee;--ink:#161f18;--mut:#5f6c62;--line:#e6ece1;--wa:#25d366;--max:1100px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:90px}
+body{font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:#fff;line-height:1.65}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(16px,3.4vw,40px)}
+:focus-visible{outline:3px solid #f3a21b;outline-offset:2px}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.f{fill:currentColor;stroke:none}
 
-  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+/* header */
+header{position:sticky;top:0;z-index:50;background:#fff;box-shadow:0 1px 0 var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo svg{width:40px;height:40px}
+.logo b{display:block;font-size:19px;font-weight:800;letter-spacing:-.3px;color:#1a2a1c;line-height:1}
+.logo small{display:block;font-size:10px;color:var(--mut);margin-top:4px;font-weight:500}
+.links{display:flex;gap:30px;font-size:14px;font-weight:500}
+.links a{padding:6px 0;border-bottom:2px solid transparent}
+.links a:hover,.links a.on{color:var(--g);border-color:var(--g)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:999px;font-weight:600;font-size:13px;padding:0 24px;min-height:44px;transition:background .18s,transform .12s,color .18s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn .ic{font-size:18px}
+.btn-wa{background:var(--wa);color:#073d1c}.btn-wa:hover{background:#1ebd5a}
 
-  <!-- Small extra styles for long-form legal text -->
-  <style>
-    .legal { padding: 56px 0 88px; }
-    .legal-inner { max-width: 760px; }
-    .legal h1 { font-size: clamp(2rem, 6vw, 3rem); color: var(--green-900); }
-    .legal .updated { margin-top: 12px; color: var(--muted); font-size: 0.92rem; }
-    .legal h2 { margin-top: 40px; font-size: 1.4rem; color: var(--green-900); }
-    .legal p, .legal li { margin-top: 12px; color: var(--muted); }
-    .legal ul { list-style: disc; padding-left: 22px; }
-    .legal li { margin-top: 8px; }
-    .legal a:not(.btn) { color: var(--green-700); text-decoration: underline; text-underline-offset: 3px; }
-    .legal .btn { margin-top: 28px; }
-  </style>
+/* page hero */
+.phero{background:linear-gradient(180deg,#f7f9f1,#eff5e6);padding:clamp(40px,7vw,76px) 0}
+.crumb{font-size:12.5px;color:var(--mut);margin-bottom:14px}
+.crumb a{color:var(--g);font-weight:500}.crumb a:hover{text-decoration:underline}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--g2);margin-bottom:10px}
+.phero h1{font-size:clamp(32px,5vw,54px);line-height:1.1;font-weight:800;letter-spacing:-1.2px;color:#14150f}
+.phero p{margin-top:16px;max-width:620px;font-size:clamp(15px,1.5vw,18px);color:#2f3a31}
+.updated{display:inline-block;margin-top:18px;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12.5px;color:var(--mut)}
+
+/* layout: sticky contents + article */
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(24px,4vw,56px);padding:clamp(36px,5vw,64px) 0 0;align-items:start}
+.toc{position:sticky;top:96px;border:1px solid var(--line);border-radius:18px;padding:20px;background:var(--gm)}
+.toc h2{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g2);margin-bottom:10px}
+.toc a{display:block;padding:6px 0;font-size:13.5px;color:var(--mut);border-left:2px solid transparent;padding-left:12px;margin-left:-12px}
+.toc a:hover{color:var(--g);border-color:var(--g)}
+article section{padding:0 0 34px;margin-bottom:34px;border-bottom:1px solid var(--line)}
+article section:last-of-type{border-bottom:0}
+article h2{font-size:clamp(20px,2.3vw,26px);font-weight:700;letter-spacing:-.3px;line-height:1.25;display:flex;gap:12px;align-items:center}
+article h2 i{font-style:normal;flex:0 0 34px;height:34px;border-radius:50%;background:var(--g);color:#fff;font-size:14px;font-weight:700;display:grid;place-items:center}
+article p{margin-top:14px;color:var(--mut);font-size:15.5px}
+article ul{margin-top:14px;display:grid;gap:10px}
+article li{list-style:none;display:flex;gap:12px;color:#2f3a31;font-size:15px}
+article li:before{content:"";flex:0 0 8px;height:8px;border-radius:50%;background:var(--g);margin-top:10px}
+article a.in{color:var(--g);text-decoration:underline;text-underline-offset:3px;font-weight:500}
+.callout{margin-top:16px;padding:20px 22px;border-left:4px solid var(--g);background:var(--gm);border-radius:0 16px 16px 0}
+.callout p{margin:0;color:#2f3a31}
+.contact-card{margin-top:18px;padding:24px;border:1px solid var(--line);border-radius:18px;background:var(--gm);display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.contact-card p{margin:0;max-width:420px}
+
+/* footer */
+footer{margin-top:clamp(48px,7vw,84px);background:#0a2a11;color:#c8dccb;font-size:13px;padding:32px 0 22px}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px}
+footer h4{color:#fff;margin-bottom:8px;font-size:14px}
+footer a{display:block;margin:5px 0;opacity:.9}footer a:hover{opacity:1;text-decoration:underline}
+.copy{grid-column:1/-1;border-top:1px solid #1d4a28;padding-top:16px;font-size:12px;opacity:.8}
+
+@media(max-width:860px){
+ .links{display:none}
+ .layout{grid-template-columns:1fr}
+ .toc{position:static}
+ footer .wrap{grid-template-columns:1fr}
+}
+@media(max-width:480px){.nav .btn span{display:none}.nav .btn{padding:0 14px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
-
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <nav class="nav container" aria-label="Main navigation">
-      <a class="brand" href="index.html" aria-label="GreenBasket home">
-        <svg class="icon brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-        <span class="brand-name">GreenBasket</span>
-      </a>
-      <a class="btn btn-outline" href="index.html" style="padding:10px 20px;">Back to Home</a>
-    </nav>
-  </header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12.04 2a9.9 9.9 0 00-8.5 14.9L2 22l5.25-1.38A9.9 9.9 0 1012.04 2zm0 1.8a8.1 8.1 0 11-4.2 15.03l-.3-.18-3.1.82.83-3.03-.2-.31A8.1 8.1 0 0112.04 3.8zM8.7 7.4c-.2 0-.5.07-.75.35-.25.27-.97.95-.97 2.3 0 1.36.99 2.67 1.13 2.85.14.19 1.92 3.08 4.74 4.2 2.35.93 2.82.75 3.33.7.5-.04 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33-.28-.14-1.64-.81-1.9-.9-.25-.1-.44-.14-.62.14-.19.28-.72.9-.88 1.09-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.38-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.13-.12.28-.32.42-.49.14-.16.19-.28.28-.46.1-.19.05-.35-.02-.49-.07-.14-.62-1.5-.85-2.05-.22-.54-.45-.47-.62-.48h-.53z" fill="currentColor" stroke="none"/></symbol>
+</svg>
 
-  <main id="main" class="legal">
-    <div class="container legal-inner">
-      <p class="eyebrow">Legal</p>
-      <h1>Terms of Use</h1>
-      <p class="updated">Last updated: 5 October 2026</p>
+<header>
+ <div class="wrap nav">
+  <a href="index.html" class="logo" aria-label="GreenBasket home">
+   <svg viewBox="0 0 48 48" fill="none" stroke="#0c5f1d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h36l-3.5 20H9.5z"/><path d="M14 20l6-11M34 20l-6-11"/><path d="M17 26v8M24 26v8M31 26v8"/><path d="M22 8c2-4 7-4 8-1-3 1-6 1-8 1z" fill="#6fb53a" stroke="#6fb53a"/></svg>
+   <span><b>GREEN BASKET</b><small>Order Today, Fresh Tomorrow</small></span>
+  </a>
+  <nav class="links" aria-label="Main navigation">
+   <a href="index.html">Home</a>
+   <a href="index.html#shop">Fresh Produce</a>
+   <a href="about.html">About</a>
+   <a href="help.html">Help</a>
+  </nav>
+  <a class="btn btn-wa" data-wa href="#"><svg class="ic f"><use href="#i-wa"/></svg><span>Order on WhatsApp</span></a>
+ </div>
+</header>
 
-      <p>
-        Welcome to GreenBasket. By using this website you agree to these terms.
-        They are short and simple, because our service is simple: you browse fresh
-        produce here and place your order by messaging us on WhatsApp.
-      </p>
+<main>
+ <div class="phero"><div class="wrap">
+  <p class="crumb"><a href="index.html">Home</a> / Terms &amp; Conditions</p>
+  <p class="eyebrow">Legal</p>
+  <h1>Terms &amp; Conditions</h1>
+  <p>Our service is simple: you browse fresh produce here and place your order by messaging us on WhatsApp. These terms explain how that works. By using this website you agree to them.</p>
+  <span class="updated">Last updated: 5 October 2026</span>
+ </div></div>
 
-      <h2>1. About this website</h2>
-      <p>
-        This website is a catalogue. It is not an online shop. You cannot buy,
-        pay or check out on this website. Orders are made only through a
-        conversation with us on WhatsApp.
-      </p>
+ <div class="wrap layout">
+  <aside class="toc" aria-label="On this page">
+   <h2>On this page</h2>
+   <a href="#about-site">About this website</a>
+   <a href="#ordering">How ordering works</a>
+   <a href="#prices">Prices</a>
+   <a href="#availability">Availability</a>
+   <a href="#photos">Photos and descriptions</a>
+   <a href="#delivery">Delivery and payment</a>
+   <a href="#quality">Quality and replacements</a>
+   <a href="#use">Acceptable use</a>
+   <a href="#ip">Intellectual property</a>
+   <a href="#liability">Limitation of liability</a>
+   <a href="#changes">Changes</a>
+   <a href="#law">Governing law</a>
+   <a href="#contact-us">Contact us</a>
+  </aside>
 
-      <h2>2. How ordering works</h2>
-      <ul>
-        <li>Tapping "Order on WhatsApp" opens WhatsApp with a pre-filled message. Nothing is sent until you press send.</li>
-        <li>Sending a message is a request for price and availability. It is not a confirmed order.</li>
-        <li>An order is confirmed only when we reply and confirm it with you on WhatsApp.</li>
-      </ul>
+  <article>
+   <section id="about-site">
+    <h2><i>1</i>About this website</h2>
+    <p>This website is a catalogue. It is not an online shop. You cannot buy, pay or check out on this website. Orders are made only through a conversation with us on WhatsApp.</p>
+   </section>
 
-      <h2>3. Prices</h2>
-      <p>
-        Prices of fresh produce change with the market, season and quality. For this
-        reason we do not display prices on this website. We share the current price
-        with you on WhatsApp before your order is confirmed, and you are free to
-        accept or decline it.
-      </p>
+   <section id="ordering">
+    <h2><i>2</i>How ordering works</h2>
+    <ul>
+     <li>Tapping "Order on WhatsApp" opens WhatsApp with a pre-filled message. Nothing is sent until you press send.</li>
+     <li>Sending a message is a request for price and availability. It is not a confirmed order.</li>
+     <li>An order is confirmed only when we reply and confirm it with you on WhatsApp.</li>
+    </ul>
+   </section>
 
-      <h2>4. Availability</h2>
-      <p>
-        Fresh produce is a natural product and stock varies through the day. An item
-        shown on the website may sometimes be unavailable. We will tell you on
-        WhatsApp if your selection cannot be fulfilled, and may suggest an alternative.
-      </p>
+   <section id="prices">
+    <h2><i>3</i>Prices</h2>
+    <p>Prices of fresh produce change with the market, season and quality, so we do not display prices on this website.</p>
+    <div class="callout"><p>We share the current price with you on WhatsApp before your order is confirmed, and you are free to accept or decline it.</p></div>
+   </section>
 
-      <h2>5. Product photos and descriptions</h2>
-      <p>
-        Photos are for illustration. Actual size, shape and colour of fruits and
-        vegetables can differ slightly because they are natural products.
-      </p>
+   <section id="availability">
+    <h2><i>4</i>Availability</h2>
+    <p>Fresh produce is a natural product and stock varies through the day. An item shown on the website may sometimes be unavailable. We will tell you on WhatsApp if your selection cannot be fulfilled, and may suggest an alternative.</p>
+   </section>
 
-      <h2>6. Quantity, delivery and payment</h2>
-      <p>
-        Quantities, delivery area, delivery time, delivery charges (if any) and the
-        payment method are agreed with you on WhatsApp when your order is confirmed.
-        Our current service area is listed in the website footer.
-      </p>
+   <section id="photos">
+    <h2><i>5</i>Product photos and descriptions</h2>
+    <p>Photos are for illustration. The actual size, shape and colour of fruits and vegetables can differ slightly because they are natural products.</p>
+   </section>
 
-      <h2>7. Quality and replacements</h2>
-      <p>
-        We check our produce for quality. If something you receive is not fresh or
-        not as agreed, message us on WhatsApp as soon as possible, ideally with a
-        photo, and we will work with you to put it right.
-      </p>
+   <section id="delivery">
+    <h2><i>6</i>Quantity, delivery and payment</h2>
+    <p>Quantities, delivery area, delivery time, delivery charges (if any) and the payment method are agreed with you on WhatsApp when your order is confirmed. Our current service area is listed in the website footer and on the <a class="in" href="help.html#service-area">Help &amp; Support</a> page.</p>
+   </section>
 
-      <h2>8. Acceptable use</h2>
-      <p>
-        Please use this website and our WhatsApp for genuine orders and enquiries
-        only. Do not misuse the website, attempt to disrupt it, or copy our content
-        and images without permission.
-      </p>
+   <section id="quality">
+    <h2><i>7</i>Quality and replacements</h2>
+    <p>We check our produce for quality. If something you receive is not fresh or not as agreed, message us on WhatsApp as soon as possible, ideally with a photo, and we will work with you to put it right.</p>
+   </section>
 
-      <h2>9. Intellectual property</h2>
-      <p>
-        The GreenBasket name, logo, design, text and images on this website belong
-        to GreenBasket or its licensors and may not be reused without permission.
-      </p>
+   <section id="use">
+    <h2><i>8</i>Acceptable use</h2>
+    <p>Please use this website and our WhatsApp for genuine orders and enquiries only. Do not misuse the website, attempt to disrupt it, or copy our content and images without permission.</p>
+   </section>
 
-      <h2>10. Limitation of liability</h2>
-      <p>
-        We work hard to keep this website accurate and available, but we provide it
-        "as is". To the extent permitted by law, GreenBasket is not responsible for
-        temporary website downtime or minor errors in product information.
-      </p>
+   <section id="ip">
+    <h2><i>9</i>Intellectual property</h2>
+    <p>The GreenBasket name, logo, design, text and images on this website belong to GreenBasket or its licensors and may not be reused without permission.</p>
+   </section>
 
-      <h2>11. Changes to these terms</h2>
-      <p>
-        We may update these terms from time to time. The "Last updated" date at the
-        top shows when they last changed. Continued use of the website means you
-        accept the updated terms.
-      </p>
+   <section id="liability">
+    <h2><i>10</i>Limitation of liability</h2>
+    <p>We work hard to keep this website accurate and available, but we provide it "as is". To the extent permitted by law, GreenBasket is not responsible for temporary website downtime or minor errors in product information.</p>
+   </section>
 
-      <h2>12. Governing law</h2>
-      <p>These terms are governed by the laws of India.</p>
+   <section id="changes">
+    <h2><i>11</i>Changes to these terms</h2>
+    <p>We may update these terms from time to time. The "Last updated" date at the top shows when they last changed. Continued use of the website means you accept the updated terms.</p>
+   </section>
 
-      <h2>13. Contact us</h2>
-      <p>
-        Questions about these terms? See our
-        <a href="privacy.html">Privacy Policy</a> or message us on WhatsApp.
-      </p>
+   <section id="law">
+    <h2><i>12</i>Governing law</h2>
+    <p>These terms are governed by the laws of India.</p>
+   </section>
 
-      <a class="btn btn-primary" href="#" data-wa="general" target="_blank" rel="noopener noreferrer">
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-        Message us on WhatsApp
-      </a>
+   <section id="contact-us">
+    <h2><i>13</i>Contact us</h2>
+    <p>Questions about these terms? See our <a class="in" href="privacy.html">Privacy Policy</a> or message us on WhatsApp.</p>
+    <div class="contact-card">
+     <p>We are happy to explain anything before you order.</p>
+     <a class="btn btn-wa" data-wa href="#"><svg class="ic f"><use href="#i-wa"/></svg>Message us on WhatsApp</a>
     </div>
-  </main>
+   </section>
+  </article>
+ </div>
+</main>
 
-  <footer class="site-footer">
-    <div class="container footer-bottom" style="margin-top:0;border-top:0;">
-      <p>
-        &copy; <span id="year"></span> GreenBasket. All rights reserved. &nbsp;·&nbsp;
-        <a href="index.html">Home</a> &nbsp;·&nbsp;
-        <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp;
-        <a href="terms.html">Terms</a>
-      </p>
-    </div>
-  </footer>
+<footer><div class="wrap">
+ <div><h4>GreenBasket</h4>Order Today, Fresh Tomorrow.<br>Fresh fruits &amp; vegetables, ordered on WhatsApp.</div>
+ <div><h4>Company</h4><a href="about.html">About Us</a><a href="help.html">Help &amp; Support</a></div>
+ <div><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a></div>
+ <div><h4>Contact</h4><a data-wa href="#">Contact on WhatsApp</a><span>Service area: Hanumangarh, Rajasthan</span></div>
+ <div class="copy">© <span id="yr"></span> GreenBasket India. All rights reserved.</div>
+</div></footer>
 
-  <script src="assets/js/config.js"></script>
-  <script>
-    (function () {
-      var c = window.GREENBASKET_CONFIG;
-      document.getElementById("year").textContent = new Date().getFullYear();
-      if (!c) return;
-      var url = "https://wa.me/" + c.whatsapp.number + "?text=" + encodeURIComponent(c.whatsapp.generalMessage);
-      document.querySelectorAll("[data-wa='general']").forEach(function (a) { a.href = url; });
-    })();
-  </script>
+<script>
+/* WhatsApp number: keep the same as in index.html (country code + number, no + or spaces) */
+const GREENBASKET_WHATSAPP_NUMBER = "919772821229";
+const MSG = "Hi GreenBasket 👋\nI have a question about your Terms & Conditions. ";
+const url = "https://wa.me/" + GREENBASKET_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(MSG);
+document.querySelectorAll("[data-wa]").forEach(a => { a.href = url; a.target = "_blank"; a.rel = "noopener"; });
+document.getElementById("yr").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
