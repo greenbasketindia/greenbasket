@@ -1,146 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page not found | GreenBasket</title>
-  <meta name="description" content="This page could not be found. Head back to GreenBasket's fresh produce catalogue.">
-  <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#1f5c3a">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found | GreenBasket</title>
+<meta name="description" content="This page could not be found. Head back to GreenBasket's fresh produce catalogue.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0c5f1d">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧺</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#0c5f1d;--g2:#17741f;--gd:#08430f;--gm:#f4f9ee;--ink:#161f18;--mut:#5f6c62;--line:#e6ece1;--wa:#25d366}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;flex-direction:column;font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);line-height:1.6;background:linear-gradient(180deg,#f7f9f1,#eff5e6);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid #f3a21b;outline-offset:2px;border-radius:6px}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.f{fill:currentColor;stroke:none}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+header{padding:18px clamp(16px,3.4vw,40px)}
+.logo{display:inline-flex;align-items:center;gap:10px}
+.logo svg{width:40px;height:40px}
+.logo b{display:block;font-size:19px;font-weight:800;letter-spacing:-.3px;color:#1a2a1c;line-height:1}
+.logo small{display:block;font-size:10px;color:var(--mut);margin-top:4px;font-weight:500}
 
-  <!-- Styles are inline on purpose: this page must work from ANY broken URL depth -->
-  <style>
-    :root {
-      --green-900: #143d27; --green-700: #1f5c3a; --green-600: #2a7a4d;
-      --green-100: #e6f0e8; --cream: #fbfaf6; --soft: #f3f7f1;
-      --ink: #17231c; --muted: #5d6b62; --line: #e3e8e1; --white: #fff;
-      --font-head: "Fraunces", Georgia, serif;
-      --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    body {
-      margin: 0; min-height: 100vh; display: flex; flex-direction: column;
-      font-family: var(--font-body); line-height: 1.65; color: var(--ink);
-      background: linear-gradient(180deg, var(--soft) 0%, var(--cream) 100%);
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: inherit; text-decoration: none; }
-    .icon { width: 1.25em; height: 1.25em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-    :focus-visible { outline: 3px solid #e08a3c; outline-offset: 3px; border-radius: 6px; }
+main{flex:1;display:grid;place-items:center;padding:24px 20px 64px;text-align:center}
+.wrap{max-width:540px}
+.code{display:inline-flex;align-items:center;gap:.02em;font-weight:800;line-height:1;letter-spacing:-.04em;font-size:clamp(6rem,28vw,11rem);color:var(--g)}
+.code .leaf{width:.7em;height:.7em;color:var(--g2);stroke-width:1.5;transform-origin:50% 90%;animation:sway 4s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
 
-    header { padding: 20px; }
-    .brand { display: inline-flex; align-items: center; gap: 10px; }
-    .brand .icon { width: 28px; height: 28px; color: var(--green-700); }
-    .brand span { font-family: var(--font-head); font-size: 1.4rem; font-weight: 600; color: var(--green-900); }
+.eyebrow{margin:18px 0 10px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--g2)}
+h1{font-size:clamp(24px,5vw,34px);font-weight:700;letter-spacing:-.5px;line-height:1.2}
+.lead{margin-top:14px;color:var(--mut);font-size:15.5px}
 
-    main { flex: 1; display: grid; place-items: center; padding: 24px 20px 56px; text-align: center; }
-    .wrap { max-width: 520px; }
+.actions{margin-top:30px;display:flex;flex-direction:column;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:999px;font-weight:600;font-size:13.5px;padding:0 28px;min-height:48px;border:1.6px solid transparent;transition:background .18s,transform .12s,color .18s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn .ic{font-size:18px}
+.btn-g{background:var(--g);color:#fff}.btn-g:hover{background:var(--gd)}
+.btn-wa{background:var(--wa);color:#073d1c}.btn-wa:hover{background:#1ebd5a}
 
-    .code {
-      font-family: var(--font-head); font-weight: 600; line-height: 1;
-      font-size: clamp(6rem, 28vw, 11rem); color: var(--green-900);
-      display: inline-flex; align-items: center; gap: 0.04em;
-    }
-    .code .leaf {
-      width: 0.72em; height: 0.72em; color: var(--green-600);
-      stroke-width: 1.6; animation: sway 4s ease-in-out infinite; transform-origin: 50% 90%;
-    }
-    @keyframes sway { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+.links{margin-top:26px;display:flex;gap:6px 22px;justify-content:center;flex-wrap:wrap;font-size:13.5px;color:var(--mut)}
+.links a{border-bottom:1px solid transparent}.links a:hover{color:var(--g);border-color:var(--g)}
 
-    .eyebrow { margin: 18px 0 10px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-600); }
-    h1 { margin: 0; font-family: var(--font-head); font-weight: 600; font-size: clamp(1.7rem, 5vw, 2.3rem); line-height: 1.2; color: var(--green-900); }
-    p.lead { margin: 14px 0 0; color: var(--muted); }
+.wrap>*{animation:rise .7s ease both}
+.wrap>*:nth-child(2){animation-delay:.07s}.wrap>*:nth-child(3){animation-delay:.14s}
+.wrap>*:nth-child(4){animation-delay:.21s}.wrap>*:nth-child(5){animation-delay:.28s}.wrap>*:nth-child(6){animation-delay:.35s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-    .actions { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 14px 26px; border-radius: 999px; font-weight: 600; font-size: 0.95rem;
-      border: 1.5px solid transparent; transition: transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: var(--green-700); color: var(--white); }
-    .btn-primary:hover { background: var(--green-900); box-shadow: 0 10px 30px rgba(20,61,39,.15); }
-    .btn-outline { color: var(--green-700); border-color: var(--green-700); }
-    .btn-outline:hover { background: var(--green-700); color: var(--white); }
+footer{padding:20px;text-align:center;font-size:12.5px;color:var(--mut);border-top:1px solid var(--line);background:#fff}
 
-    .wrap > * { animation: rise .7s ease both; }
-    .wrap > *:nth-child(2) { animation-delay: .08s; }
-    .wrap > *:nth-child(3) { animation-delay: .16s; }
-    .wrap > *:nth-child(4) { animation-delay: .24s; }
-    .wrap > *:nth-child(5) { animation-delay: .32s; }
-    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-
-    footer { padding: 20px; text-align: center; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); }
-
-    @media (min-width: 600px) { .actions { flex-direction: row; justify-content: center; } }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
-  </style>
+@media(min-width:600px){.actions{flex-direction:row;justify-content:center}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
-
 <body>
-  <header>
-    <a class="brand" href="/" data-home aria-label="GreenBasket home">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-      <span>GreenBasket</span>
-    </a>
-  </header>
 
-  <main>
-    <div class="wrap">
-      <div class="code" aria-hidden="true">
-        4
-        <svg class="icon leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-        4
-      </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19C5 10 10 5 20 4c0 10-5 15-13 15"/><path d="M5 19c3-5 6-8 10-10"/></symbol>
+ <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+ <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12.04 2a9.9 9.9 0 00-8.5 14.9L2 22l5.25-1.38A9.9 9.9 0 1012.04 2zm0 1.8a8.1 8.1 0 11-4.2 15.03l-.3-.18-3.1.82.83-3.03-.2-.31A8.1 8.1 0 0112.04 3.8zM8.7 7.4c-.2 0-.5.07-.75.35-.25.27-.97.95-.97 2.3 0 1.36.99 2.67 1.13 2.85.14.19 1.92 3.08 4.74 4.2 2.35.93 2.82.75 3.33.7.5-.04 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33-.28-.14-1.64-.81-1.9-.9-.25-.1-.44-.14-.62.14-.19.28-.72.9-.88 1.09-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.38-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.13-.12.28-.32.42-.49.14-.16.19-.28.28-.46.1-.19.05-.35-.02-.49-.07-.14-.62-1.5-.85-2.05-.22-.54-.45-.47-.62-.48h-.53z" fill="currentColor" stroke="none"/></symbol>
+</svg>
 
-      <p class="eyebrow">Page not found</p>
-      <h1>This page seems to have gone off the shelf.</h1>
-      <p class="lead">The link may be broken or the page may have moved. The freshest produce is just a tap away.</p>
+<header>
+ <a class="logo" href="./" data-base="" aria-label="GreenBasket home">
+  <svg viewBox="0 0 48 48" fill="none" stroke="#0c5f1d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h36l-3.5 20H9.5z"/><path d="M14 20l6-11M34 20l-6-11"/><path d="M17 26v8M24 26v8M31 26v8"/><path d="M22 8c2-4 7-4 8-1-3 1-6 1-8 1z" fill="#6fb53a" stroke="#6fb53a"/></svg>
+  <span><b>GREEN BASKET</b><small>Order Today, Fresh Tomorrow</small></span>
+ </a>
+</header>
 
-      <div class="actions">
-        <a class="btn btn-primary" href="/" data-home>
-          Back to Home
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-        </a>
-        <a class="btn btn-outline" href="#" id="waLink" target="_blank" rel="noopener noreferrer">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-          Order on WhatsApp
-        </a>
-      </div>
-    </div>
-  </main>
+<main>
+ <div class="wrap">
+  <div class="code" aria-hidden="true">4<svg class="ic leaf"><use href="#i-leaf"/></svg>4</div>
+  <p class="eyebrow">Page not found</p>
+  <h1>This page seems to have gone off the shelf.</h1>
+  <p class="lead">The link may be broken or the page may have moved. The freshest produce is just a tap away.</p>
 
-  <footer>&copy; <span id="year"></span> GreenBasket. All rights reserved.</footer>
+  <div class="actions">
+   <a class="btn btn-g" href="./" data-base="">Back to Home <svg class="ic"><use href="#i-arrow"/></svg></a>
+   <a class="btn btn-wa" id="wa" href="#" target="_blank" rel="noopener"><svg class="ic f"><use href="#i-wa"/></svg>Order on WhatsApp</a>
+  </div>
 
-  <script>
-    (function () {
-      // If your repo is named "yourname.github.io" (or you use a custom domain),
-      // set BASE to "/" below. Otherwise leave it as null (auto-detect).
-      var BASE = null;
+  <div class="links">
+   <a href="./" data-base="#shop">Fresh Produce</a>
+   <a href="./" data-base="about.html">About</a>
+   <a href="./" data-base="help.html">Help &amp; Support</a>
+   <a href="./" data-base="privacy.html">Privacy Policy</a>
+  </div>
+ </div>
+</main>
 
-      if (BASE === null) {
-        var onGithub = location.hostname.slice(-10) === ".github.io";
-        var firstSegment = location.pathname.split("/")[1];
-        BASE = onGithub && firstSegment ? "/" + firstSegment + "/" : "/";
-      }
+<footer>© <span id="yr"></span> GreenBasket India. All rights reserved.</footer>
 
-      document.querySelectorAll("[data-home]").forEach(function (a) { a.href = BASE; });
-      document.getElementById("year").textContent = new Date().getFullYear();
+<script>
+(function () {
+  /* WhatsApp number: keep the same as in index.html (country code + number, no + or spaces) */
+  var NUMBER = "919772821229";
+  var MSG = "Hi GreenBasket 👋\nI would like to order fresh fruits and vegetables. Please share today's availability.";
 
-      // Reuse the same WhatsApp settings from config.js (number is not repeated here)
-      var s = document.createElement("script");
-      s.src = BASE + "assets/js/config.js";
-      s.onload = function () {
-        var c = window.GREENBASKET_CONFIG;
-        if (c) document.getElementById("waLink").href =
-          "https://wa.me/" + c.whatsapp.number + "?text=" + encodeURIComponent(c.whatsapp.generalMessage);
-      };
-      document.head.appendChild(s);
-    })();
-  </script>
+  /* Works on a GitHub project site (username.github.io/repo/) and on a custom domain. */
+  var BASE = "/";
+  if (location.hostname.slice(-10) === ".github.io") {
+    var seg = location.pathname.split("/")[1];
+    if (seg) BASE = "/" + seg + "/";
+  }
+
+  document.querySelectorAll("[data-base]").forEach(function (a) {
+    var t = a.getAttribute("data-base");
+    a.href = BASE + (t.charAt(0) === "#" ? "index.html" + t : t);
+  });
+  document.getElementById("wa").href = "https://wa.me/" + NUMBER + "?text=" + encodeURIComponent(MSG);
+  document.getElementById("yr").textContent = new Date().getFullYear();
+})();
+</script>
 </body>
 </html>
