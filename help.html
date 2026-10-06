@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help & Support | GreenBasket</title>
+<meta name="description" content="How to order from GreenBasket on WhatsApp, how availability and prices work, our service area, and how to contact us.">
+<meta name="theme-color" content="#0c5f1d">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧺</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#0c5f1d;--g2:#17741f;--gd:#08430f;--gl:#e8f3dc;--gm:#f4f9ee;--ink:#161f18;--mut:#5f6c62;--line:#e6ece1;--wa:#25d366;--max:1100px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:90px}
+body{font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(16px,3.4vw,40px)}
+:focus-visible{outline:3px solid #f3a21b;outline-offset:2px}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.f{fill:currentColor;stroke:none}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:#fff;box-shadow:0 1px 0 var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo svg{width:40px;height:40px}
+.logo b{display:block;font-size:19px;font-weight:800;letter-spacing:-.3px;color:#1a2a1c;line-height:1}
+.logo small{display:block;font-size:10px;color:var(--mut);margin-top:4px;font-weight:500}
+.links{display:flex;gap:30px;font-size:14px;font-weight:500}
+.links a{padding:6px 0;border-bottom:2px solid transparent}
+.links a:hover,.links a.on{color:var(--g);border-color:var(--g)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:999px;font-weight:600;font-size:13px;padding:0 24px;min-height:44px;transition:background .18s,transform .12s,color .18s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn .ic{font-size:18px}
+.btn-wa{background:var(--wa);color:#073d1c}.btn-wa:hover{background:#1ebd5a}
+
+/* page hero */
+.phero{background:linear-gradient(180deg,#f7f9f1,#eff5e6);padding:clamp(40px,7vw,80px) 0}
+.crumb{font-size:12.5px;color:var(--mut);margin-bottom:14px}
+.crumb a{color:var(--g);font-weight:500}.crumb a:hover{text-decoration:underline}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--g2);margin-bottom:10px}
+.phero h1{font-size:clamp(32px,5vw,54px);line-height:1.1;font-weight:800;letter-spacing:-1.2px;color:#14150f}
+.phero p{margin-top:18px;max-width:620px;font-size:clamp(15px,1.5vw,18px);color:#2f3a31}
+
+/* quick links */
+.quick{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.quick a{padding:9px 18px;border:1px solid var(--line);background:#fff;border-radius:999px;font-size:13px;font-weight:500;transition:border-color .2s,color .2s}
+.quick a:hover{border-color:var(--g);color:var(--g)}
+
+/* content */
+section{padding:clamp(36px,5vw,60px) 0 0}
+h2{font-size:clamp(22px,2.6vw,30px);font-weight:700;letter-spacing:-.3px;line-height:1.2}
+.lead{margin-top:12px;color:var(--mut);max-width:700px;font-size:15.5px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px);margin-top:24px}
+.step{border:1px solid var(--line);border-radius:18px;padding:24px;background:#fff;box-shadow:0 8px 22px rgba(20,60,20,.06)}
+.step span{width:34px;height:34px;border-radius:50%;background:var(--g);color:#fff;font-weight:700;display:grid;place-items:center;margin-bottom:14px}
+.step h3{font-size:16px;font-weight:600}
+.step p{margin-top:6px;font-size:14px;color:var(--mut)}
+.list{margin-top:16px;display:grid;gap:10px;max-width:700px}
+.list li{list-style:none;display:flex;gap:12px;font-size:14.5px;color:#2f3a31}
+.list li:before{content:"";flex:0 0 8px;height:8px;border-radius:50%;background:var(--g);margin-top:9px}
+.note{margin-top:22px;padding:18px 22px;border-left:4px solid var(--g);background:var(--gm);border-radius:0 14px 14px 0;font-size:14.5px;color:#2f3a31;max-width:760px}
+.box{margin-top:22px;padding:24px;background:var(--gm);border:1px solid var(--line);border-radius:18px;max-width:760px}
+.box h3{font-size:16px;font-weight:600}
+.box p{margin-top:6px;font-size:14.5px;color:var(--mut)}
+
+/* FAQ */
+.faq{margin-top:22px;max-width:760px;display:grid;gap:10px}
+.faq details{border:1px solid var(--line);border-radius:14px;background:#fff;padding:0 20px}
+.faq summary{cursor:pointer;padding:16px 0;font-weight:600;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-size:22px;color:var(--g);font-weight:500;line-height:1}
+.faq details[open] summary:after{content:"–"}
+.faq details p{padding:0 0 16px;font-size:14.5px;color:var(--mut)}
+
+/* cta band */
+.cta{margin-top:clamp(48px,7vw,84px);background:linear-gradient(95deg,#093b11,#0f5d1d 55%,#0b4a17);color:#fff;text-align:center;padding:clamp(40px,6vw,64px) 0}
+.cta h2{font-size:clamp(24px,3vw,34px)}
+.cta p{margin:12px auto 24px;max-width:480px;opacity:.85}
+
+/* footer */
+footer{background:#0a2a11;color:#c8dccb;font-size:13px;padding:32px 0 22px}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px}
+footer h4{color:#fff;margin-bottom:8px;font-size:14px}
+footer a{display:block;margin:5px 0;opacity:.9}footer a:hover{opacity:1;text-decoration:underline}
+.copy{grid-column:1/-1;border-top:1px solid #1d4a28;padding-top:16px;font-size:12px;opacity:.8}
+
+@media(max-width:860px){
+ .links{display:none}
+ .steps{grid-template-columns:1fr}
+ footer .wrap{grid-template-columns:1fr}
+}
+@media(max-width:480px){.nav .btn span{display:none}.nav .btn{padding:0 14px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12.04 2a9.9 9.9 0 00-8.5 14.9L2 22l5.25-1.38A9.9 9.9 0 1012.04 2zm0 1.8a8.1 8.1 0 11-4.2 15.03l-.3-.18-3.1.82.83-3.03-.2-.31A8.1 8.1 0 0112.04 3.8zM8.7 7.4c-.2 0-.5.07-.75.35-.25.27-.97.95-.97 2.3 0 1.36.99 2.67 1.13 2.85.14.19 1.92 3.08 4.74 4.2 2.35.93 2.82.75 3.33.7.5-.04 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33-.28-.14-1.64-.81-1.9-.9-.25-.1-.44-.14-.62.14-.19.28-.72.9-.88 1.09-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.38-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.13-.12.28-.32.42-.49.14-.16.19-.28.28-.46.1-.19.05-.35-.02-.49-.07-.14-.62-1.5-.85-2.05-.22-.54-.45-.47-.62-.48h-.53z" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+<header>
+ <div class="wrap nav">
+  <a href="index.html" class="logo" aria-label="GreenBasket home">
+   <svg viewBox="0 0 48 48" fill="none" stroke="#0c5f1d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h36l-3.5 20H9.5z"/><path d="M14 20l6-11M34 20l-6-11"/><path d="M17 26v8M24 26v8M31 26v8"/><path d="M22 8c2-4 7-4 8-1-3 1-6 1-8 1z" fill="#6fb53a" stroke="#6fb53a"/></svg>
+   <span><b>GREEN BASKET</b><small>Order Today, Fresh Tomorrow</small></span>
+  </a>
+  <nav class="links" aria-label="Main navigation">
+   <a href="index.html">Home</a>
+   <a href="index.html#shop">Fresh Produce</a>
+   <a href="about.html">About</a>
+   <a href="help.html" class="on" aria-current="page">Help</a>
+  </nav>
+  <a class="btn btn-wa" data-wa href="#"><svg class="ic f"><use href="#i-wa"/></svg><span>Order on WhatsApp</span></a>
+ </div>
+</header>
+
+<main>
+ <div class="phero"><div class="wrap">
+  <p class="crumb"><a href="index.html">Home</a> / Help &amp; Support</p>
+  <p class="eyebrow">Help &amp; Support</p>
+  <h1>How can we help?</h1>
+  <p>Everything you need to know about ordering from GreenBasket, in one place. Can't find your answer? Message us on WhatsApp.</p>
+  <div class="quick">
+   <a href="#how-to-order">How to order</a>
+   <a href="#availability">Availability</a>
+   <a href="#prices">Prices</a>
+   <a href="#service-area">Service area</a>
+   <a href="#contact-us">Contact us</a>
+  </div>
+ </div></div>
+
+ <section id="how-to-order"><div class="wrap">
+  <h2>How to order</h2>
+  <p class="lead">You do not need an account, password or app. Ordering takes about a minute.</p>
+  <div class="steps">
+   <div class="step"><span>1</span><h3>Explore</h3><p>Browse the products on our website. Tap + on items to build your list.</p></div>
+   <div class="step"><span>2</span><h3>Order on WhatsApp</h3><p>Tap Order on WhatsApp. Your list is already typed in the message.</p></div>
+   <div class="step"><span>3</span><h3>Confirm</h3><p>We reply with today's price and availability, and confirm your order and delivery.</p></div>
+  </div>
+ </div></section>
+
+ <section id="whatsapp"><div class="wrap">
+  <h2>How WhatsApp ordering works</h2>
+  <ul class="list">
+   <li>Tapping an order button opens WhatsApp on your phone (or WhatsApp Web on a computer) with a message ready for GreenBasket.</li>
+   <li>Nothing is sent until you press send in WhatsApp. You can edit the message first, for example to change the quantity.</li>
+   <li>Your order is confirmed only after we reply and agree the details with you on WhatsApp.</li>
+  </ul>
+ </div></section>
+
+ <section id="availability"><div class="wrap">
+  <h2>Product availability</h2>
+  <p class="lead">Fresh produce is seasonal and stock can change during the day. If an item you want is not available, we will tell you on WhatsApp and, where possible, suggest an alternative. Items marked "Ask on WhatsApp" on the website need a quick check with us first.</p>
+ </div></section>
+
+ <section id="prices"><div class="wrap">
+  <h2>Price information</h2>
+  <p class="lead">Prices of fruits and vegetables move with the market, so we do not display prices on the website. We share today's price with you on WhatsApp before you confirm anything.</p>
+  <p class="note">You are never charged just for sending a message. You decide whether to go ahead once you have seen the price.</p>
+ </div></section>
+
+ <section id="service-area"><div class="wrap">
+  <h2>Service area</h2>
+  <p class="lead">GreenBasket serves Hanumangarh and nearby areas.</p>
+  <div class="box">
+   <h3>Not sure if we deliver to you?</h3>
+   <p>Send us your locality on WhatsApp and we will confirm whether we can deliver there.</p>
+   <p style="margin-top:14px"><a class="btn btn-wa" data-wa="area" href="#"><svg class="ic f"><use href="#i-wa"/></svg>Ask about my area</a></p>
+  </div>
+ </div></section>
+
+ <section id="faq"><div class="wrap">
+  <h2>Common questions</h2>
+  <div class="faq">
+   <details><summary>Do I need to create an account?</summary><p>No. There is no login, signup or password. Just send us a message on WhatsApp.</p></details>
+   <details><summary>Can I pay on the website?</summary><p>No. The website is a catalogue only. Payment and delivery details are agreed with you on WhatsApp when your order is confirmed.</p></details>
+   <details><summary>Can I change my order after sending it?</summary><p>Yes, message us on WhatsApp as early as you can and we will update it if the order has not been packed yet.</p></details>
+   <details><summary>What if something I receive is not fresh?</summary><p>Message us on WhatsApp with a photo and we will work with you to put it right.</p></details>
+  </div>
+ </div></section>
+
+ <section id="contact-us"><div class="wrap">
+  <h2>Contact us</h2>
+  <p class="lead">The quickest way to reach GreenBasket is WhatsApp. Ask about availability, place an order, or tell us about any problem.</p>
+ </div></section>
+
+ <div class="cta"><div class="wrap">
+  <h2>Need help? We're a message away.</h2>
+  <p>Message GreenBasket on WhatsApp and we will get back to you.</p>
+  <a class="btn btn-wa" data-wa="support" href="#"><svg class="ic f"><use href="#i-wa"/></svg>Chat on WhatsApp</a>
+ </div></div>
+</main>
+
+<footer><div class="wrap">
+ <div><h4>GreenBasket</h4>Order Today, Fresh Tomorrow.<br>Fresh fruits &amp; vegetables, ordered on WhatsApp.</div>
+ <div><h4>Company</h4><a href="about.html">About Us</a><a href="help.html">Help &amp; Support</a></div>
+ <div><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a></div>
+ <div><h4>Contact</h4><a data-wa="support" href="#">Contact on WhatsApp</a><span>Service area: Hanumangarh, Rajasthan</span></div>
+ <div class="copy">© <span id="yr"></span> GreenBasket India. All rights reserved.</div>
+</div></footer>
+
+<script>
+/* WhatsApp number: keep the same as in index.html (country code + number, no + or spaces) */
+const GREENBASKET_WHATSAPP_NUMBER = "919772821229";
+const MESSAGES = {
+  "":        "Hi GreenBasket 👋\nI would like to order fresh fruits and vegetables. Please share today's availability.",
+  "area":    "Hi GreenBasket 👋\nDo you deliver to my area? My locality is: ",
+  "support": "Hi GreenBasket 👋\nI need some help. "
+};
+document.querySelectorAll("[data-wa]").forEach(a => {
+  const text = MESSAGES[a.dataset.wa] || MESSAGES[""];
+  a.href = "https://wa.me/" + GREENBASKET_WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
+  a.target = "_blank"; a.rel = "noopener";
+});
+document.getElementById("yr").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
