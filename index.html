@@ -135,7 +135,7 @@ section{padding-top:38px}
 .cat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 8px 12px;text-align:center;font-weight:600;font-size:14px;box-shadow:0 8px 22px rgba(20,60,20,.07);transition:transform .2s,border-color .2s}
 .cat:hover{transform:translateY(-3px)}
 .cat.on{border-color:var(--g);box-shadow:0 0 0 1.5px var(--g) inset,0 8px 22px rgba(20,60,20,.07)}
-.cat img{width:100%;aspect-ratio:104/80;object-fit:contain;margin-bottom:8px}
+.cat img{width:100%;aspect-ratio:1/1;object-fit:contain;margin-bottom:8px;border-radius:12px;background:#f8faf5}
 .arr{position:absolute;right:-14px;top:42%;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);display:none;place-items:center;font-size:20px;z-index:3}
 
 /* promos */
@@ -165,8 +165,8 @@ section{padding-top:38px}
 .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.4vw,18px)}
 .card{border:1px solid var(--line);border-radius:16px;padding:12px 12px 14px;background:#fff;display:flex;flex-direction:column;position:relative;box-shadow:0 6px 18px rgba(20,60,20,.05);transition:box-shadow .2s,border-color .2s}
 .card:hover{box-shadow:0 12px 28px rgba(20,60,20,.12)}
-.card .im{aspect-ratio:104/62;display:grid;place-items:center;margin-bottom:8px}
-.card .im img{width:100%;height:100%;object-fit:contain}
+.card .im{aspect-ratio:1/1;display:grid;place-items:center;margin-bottom:10px;overflow:hidden;border-radius:12px;background:#fafbf7}
+.card .im img{width:100%;height:100%;object-fit:contain;transition:transform .25s ease}.card:hover .im img{transform:scale(1.045)}
 .card h3{font-size:14px;font-weight:600;line-height:1.25}
 .pr{margin-top:3px;font-size:16px;font-weight:700;color:var(--g);line-height:1.25}
 .pr small{font-size:12px;font-weight:500;color:var(--mut)}
@@ -302,26 +302,11 @@ body.has-bar .fab{display:none}
  #cart{top:auto;left:0;width:100%;max-height:88vh;border-radius:20px 20px 0 0;transform:translateY(100%);box-shadow:0 -12px 40px rgba(0,0,0,.2)}
  #cart.show{transform:none}
 }
-@media(max-width:560px)
-    .grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-  }
-  .card{
-    min-width:0;
-    padding:10px;
-  }
-  .card .im{
-    width:100%;
-    height:110px;
-    aspect-ratio:auto;
-    overflow:hidden;
-  }
-  .card .im img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-  }{
+@media(max-width:560px){
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .card{min-width:0;padding:10px}
+ .card .im{width:100%;height:auto;aspect-ratio:1/1;overflow:hidden}
+ .card .im img{width:100%;height:100%;object-fit:contain}
  .info{grid-template-columns:1fr}
  .cta .btn{flex:1 1 100%}
  .hero h1{letter-spacing:-1px}
