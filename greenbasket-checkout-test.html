@@ -521,7 +521,12 @@ body.has-bar .fab{display:none}
   <div id="upiDetails" hidden><img class="qr" src="images/images/greenbasket-upi-qr.jpg" alt="Green Basket UPI payment QR code"><p style="text-align:center;font-size:13px">UPI ID: <b>dhananjai.karwasra-1@oksbi</b></p><p class="pnote">Please verify recipient name before paying. UPI payments remain pending verification.</p><label>UPI transaction / UTR ID<input name="utr" maxlength="100" placeholder="Enter payment reference"></label></div>
   <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
  </form>
- <div class="checkout-foot"><p class="status" id="checkoutStatus">Order submission is in testing mode. Your order is not placed until Green Basket confirms it.</p><button class="btn btn-g" id="placeOrder" type="button">Submit order for verification</button><button class="btn btn-wa" id="checkoutWhatsApp" type="button" hidden>Send order details on WhatsApp</button></div>
+ <div class="checkout-foot">
+  <p class="status" id="checkoutStatus">DEMO MODE — No real order will be placed.</p>
+  <button class="btn btn-g" id="placeOrder" type="button" disabled>Real order submission disabled (Demo Mode)</button>
+  <button class="btn btn-g" id="demoConfirmBtn" type="button" onclick="showDemoOrderConfirmation()" style="background:#e8f5e9;color:#087b28;">🧪 Test Order Confirmation (Demo Only)</button>
+  <button class="btn btn-wa" id="checkoutWhatsApp" type="button" hidden>Send order details on WhatsApp</button>
+ </div>
 </section>
 
 <div class="sr" id="live" aria-live="polite"></div>
@@ -541,6 +546,7 @@ const IMG_DIR = "images/images/";
 const CART_KEY = "gb_cart_v1";
 const ORDERS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyH8HEJ1fF2MMRp6sg0isIMiinbMSbnr3OHwPPsqko4W0gvCNiQuSzuAOdzac0KSirnfw/exec";
 const CHECKOUT_REQUEST_KEY = "gb_pending_request_v1";
+  const CHECKOUT_DEMO_MODE = true;
 
 /* Category cards. New categories found in the sheet are added automatically. */
 const CATEGORIES = [
@@ -570,6 +576,21 @@ const FALLBACK_PRODUCTS = [
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const imgUrl = f => (/^(https?:)?\/\//.test(f) || f.includes("/")) ? f : IMG_DIR + f;
+  function showDemoOrderConfirmation() {
+  const status = document.getElementById("checkoutStatus");
+  const button = document.getElementById("placeOrder");
+
+  if (status) {
+    status.textContent =
+      "✅ DEMO ONLY — Order Confirmed! Test Order ID: DEMO-12345. No real order has been placed.";
+    status.style.color = "#087b28";
+  }
+
+  if (button) {
+    button.textContent = "Demo Order Confirmed ✓";
+    button.disabled = true;
+  }
+}
 const PLACEHOLDER = "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="240"><rect width="400" height="240" fill="#e8f3dc"/></svg>');
 /* broken image -> soft green placeholder (once) */
 document.addEventListener("error", e => { const i=e.target; if(i.tagName==="IMG" && !i.dataset.fb){ i.dataset.fb="1"; i.src=PLACEHOLDER; } }, true);
@@ -956,6 +977,15 @@ function showPendingCheckout(order,totals){
   };
 }
 function recoverPendingCheckout(){
+  if(CHECKOUT_DEMO_MODE){
+    const btn=$('#placeOrder');
+    btn.disabled=true;
+    btn.textContent='Real order submission disabled (Demo Mode)';
+    btn.onclick=null;
+    $('#checkoutStatus').textContent='DEMO MODE — No real order will be placed.';
+    $('#checkoutWhatsApp').hidden=true;
+    return;
+  }
   let saved=checkoutPending;
   if(!saved){
     try{saved=JSON.parse(sessionStorage.getItem(CHECKOUT_REQUEST_KEY)||'null');}catch(e){}
@@ -968,12 +998,13 @@ function recoverPendingCheckout(){
   }else{
     $('#checkoutStatus').textContent='Order submission is in testing mode. Your order is not placed until Green Basket confirms it.';
     $('#checkoutStatus').style.color='#8a4900';
-    const btn=$('#placeOrder');btn.disabled=false;btn.textContent='Submit order for verification';
+    const btn=$('#placeOrder');btn.disabled=CHECKOUT_DEMO_MODE;btn.textContent=CHECKOUT_DEMO_MODE ? 'Real order submission disabled (Demo Mode)' : 'Submit order for verification';
     btn.onclick=submitCheckoutOrder;
     $('#checkoutWhatsApp').hidden=true;
   }
 }
 async function submitCheckoutOrder(){
+  if(CHECKOUT_DEMO_MODE)return;
   if(checkoutPending){
     showPendingCheckout(checkoutPending.order,checkoutPending.totals);
     return;
@@ -998,7 +1029,7 @@ async function submitCheckoutOrder(){
     showPendingCheckout(order,totals);
   }
 }
-$('#placeOrder').onclick=submitCheckoutOrder;
+$('#placeOrder').onclick=CHECKOUT_DEMO_MODE ? null : submitCheckoutOrder;
 
 /* ===== Start ===== */
 loadCart(); $("#cnote").value=note; renderCart();
