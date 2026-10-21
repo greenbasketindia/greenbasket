@@ -522,7 +522,7 @@ body.has-bar .fab{display:none}
   <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
  </form>
  <div class="checkout-foot">
-  <p class="status" id="checkoutStatus">DEMO MODE — No real order will be placed.</p>
+  <p class="status" id="checkoutStatus">Your order will be confirmed after successful verification. Please do not submit twice.</p>
   <button
   class="btn btn-g"
   id="placeOrder"
@@ -987,8 +987,7 @@ function recoverPendingCheckout(){
     // A previous submission must be checked, never automatically posted again.
     $('#placeOrder').click();
   }else{
-    $('#checkoutStatus').textContent='Order submission is in testing mode. Your order is not placed until Green Basket confirms it.';
-    $('#checkoutStatus').style.color='#8a4900';
+    $('#checkoutStatus').textContent='Your order will be confirmed after successful verification. Please do not submit twice.';$('#checkoutStatus').style.color='#8a4900';
     const btn=$('#placeOrder');btn.disabled=CHECKOUT_DEMO_MODE;btn.textContent=CHECKOUT_DEMO_MODE ? 'Real order submission disabled (Demo Mode)' : 'Submit order for verification';
     btn.onclick=submitCheckoutOrder;
     $('#checkoutWhatsApp').hidden=true;
