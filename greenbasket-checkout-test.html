@@ -943,14 +943,40 @@ function showCheckoutWhatsApp(order,totals){
   $('#checkoutWhatsApp').onclick=()=>window.open(waLink(checkoutMessage(order,totals)),'_blank','noopener');
 }
 function showVerifiedCheckout(requestId){
-  const btn=$('#placeOrder');
-  $('#checkoutStatus').textContent='✓ Order Confirmed! Your order has been saved. Order ID: GB-'+requestId+'. Payment status and delivery details will be confirmed by Green Basket.';
-  $('#checkoutStatus').style.color='#0c5f1d';
-  btn.disabled=true;
-  btn.textContent='Order Confirmed ✓';
-  $('#checkoutWhatsApp').hidden=true;
-  checkoutPending=null;
-  try{sessionStorage.removeItem(CHECKOUT_REQUEST_KEY);}catch(e){}
+  const btn = $('#placeOrder');
+
+  const order = checkoutPending?.order;
+  const totals = checkoutPending?.totals;
+
+  let message = '✅ Order Confirmed!\n';
+  message += 'Order ID: GB-' + requestId + '\n';
+
+  if (totals) {
+    message += 'Total Amount: ₹' + totals.total + '\n';
+  }
+
+  if (order) {
+    message += 'Payment Method: ' + order.payment + '\n';
+  }
+
+  message += 'Expected Delivery: ' + checkoutDeliveryDate() + '\n';
+message += 'Final delivery details will be confirmed by Green Basket.';
+
+  const status = $('#checkoutStatus');
+  status.textContent = message;
+  status.style.whiteSpace = 'pre-line';
+  status.style.color = '#0c5f1d';
+
+  btn.disabled = true;
+  btn.textContent = 'Order Confirmed ✓';
+
+  $('#checkoutWhatsApp').hidden = true;
+
+  checkoutPending = null;
+  try {
+    sessionStorage.removeItem(CHECKOUT_REQUEST_KEY);
+  } catch(e) {}
+
   clearCart();
 }
 function showPendingCheckout(order,totals){
