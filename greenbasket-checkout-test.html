@@ -877,6 +877,7 @@ function checkoutDeliveryDate(){
   return new Intl.DateTimeFormat('en-IN',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}).format(d);
 }
 function checkoutOpen(){
+  $('#checkoutStatus').style.color='#8a4900';
   const totals=checkoutTotals();
   if(!totals){alert('Checkout requires current prices for all items. Please contact Green Basket on WhatsApp.');return;}
   closeCart();
@@ -894,27 +895,74 @@ function checkoutMessage(order,totals){
 $('#csend').addEventListener('click',e=>{e.preventDefault();checkoutOpen();});
 $('#checkoutClose').onclick=checkoutClose;$('#checkoutOv').onclick=checkoutClose;
 $('#checkoutForm').addEventListener('change',()=>{const upi=$('#checkoutForm').elements.payment.value==='UPI';$('#upiDetails').hidden=!upi;$('#checkoutForm').elements.utr.required=upi;});
+/* Verify a saved order via Apps Script JSONP. A POST no-cors response is not proof of saving. */
+function verifySavedOrder(requestId){
+  return new Promise(resolve=>{
+    const callback='gbOrderStatus_'+Array.from(crypto.getRandomValues(new Uint8Array(12)),b=>b.toString(16).padStart(2,'0')).join('');
+    const script=document.createElement('script');
+    let settled=false;
+    let timer;
+    function finish(result){
+      if(settled)return;
+      settled=true;
+      clearTimeout(timer);
+      script.remove();
+      // Avoid deleting the callback immediately: a delayed script must remain harmless.
+      window[callback]=()=>{};
+      resolve(result);
+    }
+    window[callback]=data=>finish(data&&data.success===true&&data.found===true&&data.orderId==='GB-'+requestId);
+    script.onerror=()=>finish(false);
+    timer=setTimeout(()=>finish(false),10000);
+    script.src=ORDERS_WEB_APP_URL+'?requestId='+encodeURIComponent(requestId)+'&callback='+encodeURIComponent(callback)+'&t='+Date.now();
+    document.head.appendChild(script);
+  });
+}
+async function verifyWithRetries(requestId){
+  for(let attempt=0;attempt<4;attempt++){
+    if(await verifySavedOrder(requestId))return true;
+    if(attempt<3)await new Promise(resolve=>setTimeout(resolve,2000));
+  }
+  return false;
+}
+function showCheckoutWhatsApp(order,totals){
+  $('#checkoutWhatsApp').hidden=false;
+  $('#checkoutWhatsApp').onclick=()=>window.open(waLink(checkoutMessage(order,totals)),'_blank','noopener');
+}
 $('#placeOrder').onclick=async()=>{
   const form=$('#checkoutForm');if(!form.reportValidity())return;
   const totals=checkoutTotals();if(!totals){alert('Prices unavailable. Please contact us.');return;}
   const fd=new FormData(form);
-  const order={requestId:makeRequestId(),name:String(fd.get('name')).trim(),mobile:String(fd.get('mobile')).trim(),address:String(fd.get('address')).trim(),landmark:String(fd.get('landmark')).trim(),pin:String(fd.get('pin')).trim(),note, payment:String(fd.get('payment')),utr:String(fd.get('utr')||'').trim(),website:String(fd.get('website')||''),items:cart.map(i=>({name:i.name,qty:i.qty}))};
+  const order={requestId:makeRequestId(),name:String(fd.get('name')).trim(),mobile:String(fd.get('mobile')).trim(),address:String(fd.get('address')).trim(),landmark:String(fd.get('landmark')).trim(),pin:String(fd.get('pin')).trim(),note,payment:String(fd.get('payment')),utr:String(fd.get('utr')||'').trim(),website:String(fd.get('website')||''),items:cart.map(i=>({name:i.name,qty:i.qty}))};
   if(order.website)return;
   const btn=$('#placeOrder');btn.disabled=true;btn.textContent='Sending…';
+  $('#checkoutWhatsApp').hidden=true;
   $('#checkoutStatus').textContent='Sending order request. Please wait…';
+  // Retain this exact request ID if the customer needs to retry; it prevents duplicate rows.
+  checkoutPending={order,totals};
+  try{sessionStorage.setItem(CHECKOUT_REQUEST_KEY,JSON.stringify(checkoutPending));}catch(e){}
   try{
-    // Apps Script ContentService is cross-origin; an opaque response cannot confirm saving.
     await fetch(ORDERS_WEB_APP_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(order)});
-    checkoutPending={order,totals};
-    $('#checkoutStatus').textContent='Request sent, but the browser cannot verify whether Google Sheets saved it. Do NOT pay again or assume your order is confirmed. Send details on WhatsApp for manual confirmation.';
-    $('#checkoutWhatsApp').hidden=false;
-    $('#checkoutWhatsApp').onclick=()=>window.open(waLink(checkoutMessage(order,totals)),'_blank','noopener');
-    btn.textContent='Request sent — unverified';
+    $('#checkoutStatus').textContent='Checking whether your order was saved in Google Sheets…';
+    const verified=await verifyWithRetries(order.requestId);
+    if(verified){
+      $('#checkoutStatus').textContent='✓ Order placed successfully! Order ID: GB-'+order.requestId+'. Payment status and delivery details will be confirmed by Green Basket.';
+      $('#checkoutStatus').style.color='#0c5f1d';
+      btn.textContent='Order placed successfully ✓';
+      try{sessionStorage.removeItem(CHECKOUT_REQUEST_KEY);}catch(e){}
+      // Leave the order summary visible, but remove ordered products from the cart.
+      clearCart();
+    }else{
+      $('#checkoutStatus').style.color='#8a4900';
+      $('#checkoutStatus').textContent='Order status could not be verified. It may already be saved. Please do NOT submit another order or pay again. Contact Green Basket on WhatsApp with this request ID: GB-'+order.requestId;
+      showCheckoutWhatsApp(order,totals);
+      btn.textContent='Verification pending — contact us';
+    }
   }catch(err){
-    $('#checkoutStatus').textContent='Unable to send the request. Your order is NOT confirmed. Please use WhatsApp.';
-    checkoutPending={order,totals};$('#checkoutWhatsApp').hidden=false;
-    $('#checkoutWhatsApp').onclick=()=>window.open(waLink(checkoutMessage(order,totals)),'_blank','noopener');
-    btn.disabled=false;btn.textContent='Try submitting again';
+    $('#checkoutStatus').style.color='#8a4900';
+    $('#checkoutStatus').textContent='Unable to verify submission. Your order may or may not be saved. Do NOT submit another order or pay again; contact Green Basket on WhatsApp with request ID: GB-'+order.requestId;
+    showCheckoutWhatsApp(order,totals);
+    btn.textContent='Verification pending — contact us';
   }
 };
 
