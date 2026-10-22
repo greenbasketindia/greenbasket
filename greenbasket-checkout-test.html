@@ -943,6 +943,8 @@ function showCheckoutWhatsApp(order,totals){
   $('#checkoutWhatsApp').onclick=()=>window.open(waLink(checkoutMessage(order,totals)),'_blank','noopener');
 }
 function showVerifiedCheckout(requestId){
+  
+function showVerifiedCheckout(requestId){
   const btn = $('#placeOrder');
 
   const order = checkoutPending?.order;
@@ -960,7 +962,7 @@ function showVerifiedCheckout(requestId){
   }
 
   message += 'Expected Delivery: ' + checkoutDeliveryDate() + '\n';
-message += 'Final delivery details will be confirmed by Green Basket.';
+  message += 'Final delivery details will be confirmed by Green Basket.';
 
   const status = $('#checkoutStatus');
   status.textContent = message;
@@ -970,15 +972,31 @@ message += 'Final delivery details will be confirmed by Green Basket.';
   btn.disabled = true;
   btn.textContent = 'Order Confirmed ✓';
 
-  $('#checkoutWhatsApp').hidden = true;
+  // Show WhatsApp button only after successful verification
+  const whatsappBox = $('#checkoutWhatsApp');
+
+  if (whatsappBox) {
+    whatsappBox.hidden = false;
+    whatsappBox.innerHTML = '';
+
+    const whatsappBtn = document.createElement('button');
+    whatsappBtn.type = 'button';
+    whatsappBtn.textContent = '📲 Send Order on WhatsApp';
+    whatsappBtn.disabled = true;
+    whatsappBtn.title = 'WhatsApp number setup pending';
+
+    whatsappBox.appendChild(whatsappBtn);
+  }
 
   checkoutPending = null;
+
   try {
     sessionStorage.removeItem(CHECKOUT_REQUEST_KEY);
   } catch(e) {}
 
   clearCart();
 }
+
 function showPendingCheckout(order,totals){
   const btn=$('#placeOrder');
   btn.disabled=false;
