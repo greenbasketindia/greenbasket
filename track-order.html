@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,214 +6,78 @@
   <title>Track My Order | Green Basket</title>
   <style>
     * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f9f3;
-      color: #263b2a;
-    }
-
-    header {
-      background: #ffffff;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #e4ece1;
-    }
-
-    .brand {
-      color: #237a3b;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    header a {
-      display: inline-block;
-      margin-top: 10px;
-      color: #237a3b;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    main {
-      max-width: 480px;
-      margin: 45px auto;
-      padding: 0 18px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 30px 24px;
-      box-shadow: 0 8px 30px rgba(30, 70, 30, 0.08);
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: 27px;
-      text-align: center;
-    }
-
-    .subtitle {
-      color: #657267;
-      text-align: center;
-      line-height: 1.5;
-      margin-bottom: 28px;
-      font-size: 14px;
-    }
-
-    label {
-      display: block;
-      font-weight: 600;
-      margin: 18px 0 8px;
-      font-size: 14px;
-    }
-
-    input {
-      width: 100%;
-      padding: 15px;
-      border: 1px solid #d7e2d4;
-      border-radius: 11px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #288b48;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 24px;
-      padding: 16px;
-      border: 0;
-      border-radius: 12px;
-      background: #237a3b;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: 0.65;
-      cursor: wait;
-    }
-
-    .message {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .result {
-      display: none;
-      margin-top: 24px;
-      padding: 20px;
-      background: #f0f8ed;
-      border: 1px solid #d9ebd4;
-      border-radius: 14px;
-    }
-
-    .result h2 {
-      margin-top: 0;
-      color: #237a3b;
-      font-size: 20px;
-    }
-
-    .detail {
-      margin-top: 14px;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
-    }
-
-    .detail strong {
-      display: block;
-      font-size: 13px;
-      color: #607263;
-    }
-
-    footer {
-      text-align: center;
-      color: #758075;
-      padding: 25px;
-      font-size: 13px;
-    }
+    body { margin: 0; font-family: Arial, sans-serif; background: #f5f9f3; color: #263b2a; }
+    header { background: #fff; padding: 20px; text-align: center; border-bottom: 1px solid #e4ece1; }
+    .brand { color: #237a3b; font-size: 28px; font-weight: bold; }
+    header a { display: inline-block; margin-top: 10px; color: #237a3b; text-decoration: none; font-size: 14px; }
+    main { max-width: 500px; margin: 45px auto; padding: 0 18px; }
+    .card { background: white; border-radius: 20px; padding: 30px 24px; box-shadow: 0 8px 30px rgba(30,70,30,.08); }
+    h1 { margin: 0 0 10px; font-size: 27px; text-align: center; }
+    .subtitle { color: #657267; text-align: center; line-height: 1.5; margin-bottom: 28px; font-size: 14px; }
+    label { display: block; font-weight: 600; margin: 18px 0 8px; font-size: 14px; }
+    input { width: 100%; padding: 15px; border: 1px solid #d7e2d4; border-radius: 11px; font-size: 16px; outline: none; }
+    input:focus { border-color: #288b48; }
+    button { width: 100%; margin-top: 24px; padding: 16px; border: 0; border-radius: 12px; background: #237a3b; color: white; font-size: 16px; font-weight: bold; cursor: pointer; }
+    button:disabled { opacity: .65; cursor: wait; }
+    .message { margin-top: 20px; text-align: center; font-size: 14px; line-height: 1.6; }
+    .result { display: none; margin-top: 24px; padding: 20px; background: #f0f8ed; border: 1px solid #d9ebd4; border-radius: 14px; }
+    .result h2 { margin-top: 0; color: #237a3b; font-size: 20px; }
+    .detail { margin-top: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+    .detail strong { display: block; font-size: 13px; color: #607263; }
+    .status-pill { display: inline-block; padding: 5px 12px; margin-top: 4px; background: #dcefd9; color: #1c7033; border-radius: 999px; font-weight: 700; font-size: 14px; }
+    .status-pill.cancelled { background: #fde7e7; color: #a32929; }
+    .status-pill.unknown { background: #e9e9e9; color: #555; }
+    .timeline { margin-top: 25px; padding-top: 20px; border-top: 1px solid #d5e6d0; }
+    .timeline h3 { margin: 0 0 20px; font-size: 18px; }
+    .timeline-step { position: relative; display: flex; gap: 14px; padding-bottom: 25px; }
+    .timeline-step:last-child { padding-bottom: 0; }
+    .timeline-step:not(:last-child)::before { content: ""; position: absolute; left: 15px; top: 32px; bottom: 0; width: 2px; background: #d4dfd1; }
+    .timeline-step.completed:not(:last-child)::before { background: #237a3b; }
+    .step-icon { position: relative; z-index: 1; flex: 0 0 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: #e1e8de; color: #798479; font-size: 15px; font-weight: bold; }
+    .timeline-step.completed .step-icon { background: #237a3b; color: #fff; }
+    .timeline-step.current .step-icon { box-shadow: 0 0 0 4px #cde8cd; }
+    .step-text { padding-top: 3px; }
+    .step-text b { display: block; font-size: 14px; color: #829084; }
+    .step-text small { display: block; color: #89958b; margin-top: 4px; font-size: 12px; line-height: 1.5; }
+    .timeline-step.completed .step-text b { color: #215c31; }
+    .timeline-step.current .step-text b { color: #176c32; }
+    .notice { margin-top: 18px; padding: 13px; border-radius: 10px; background: #fff1f1; color: #a32929; font-size: 14px; line-height: 1.5; }
+    .notice.neutral { background: #f3f4f2; color: #555; }
+    footer { text-align: center; color: #758075; padding: 25px; font-size: 13px; }
+    @media (max-width: 480px) { main { margin: 24px auto; } .card { padding: 25px 18px; } h1 { font-size: 24px; } }
   </style>
 </head>
-
 <body>
-
 <header>
   <div class="brand">🌿 Green Basket</div>
   <a href="index.html">← Back to Shopping</a>
 </header>
-
 <main>
   <div class="card">
     <h1>📦 Track My Order</h1>
-
-    <p class="subtitle">
-      Enter your Order ID and registered mobile number
-      to check your latest order status.
-    </p>
-
+    <p class="subtitle">Enter your Order ID and registered mobile number to check your latest order status.</p>
     <form id="trackingForm">
       <label for="orderId">Order ID</label>
-      <input
-        id="orderId"
-        type="text"
-        placeholder="GB-WEB_..."
-        autocomplete="off"
-        maxlength="103"
-        required
-      >
-
+      <input id="orderId" type="text" placeholder="GB-WEB_..." autocomplete="off" maxlength="103" required>
       <label for="mobile">Registered Mobile Number</label>
-      <input
-        id="mobile"
-        type="tel"
-        inputmode="numeric"
-        pattern="[6-9][0-9]{9}"
-        maxlength="10"
-        placeholder="Enter 10-digit mobile number"
-        autocomplete="tel"
-        required
-      >
-
-      <button id="trackButton" type="submit">
-        Track My Order
-      </button>
+      <input id="mobile" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="Enter 10-digit mobile number" autocomplete="tel" required>
+      <button id="trackButton" type="submit">Track My Order</button>
     </form>
-
     <div id="message" class="message" role="status" aria-live="polite"></div>
-
     <div id="result" class="result">
       <h2>Order Details</h2>
-
-      <div class="detail">
-        <strong>Order ID</strong>
-        <span id="resultOrderId"></span>
+      <div class="detail"><strong>Order ID</strong><span id="resultOrderId"></span></div>
+      <div class="detail"><strong>Order Status</strong><span id="resultStatus" class="status-pill"></span></div>
+      <div class="detail"><strong>Expected Delivery Date</strong><span id="resultDelivery"></span></div>
+      <div id="timeline" class="timeline" hidden>
+        <h3>🚚 Order Progress</h3>
+        <div id="timelineSteps"></div>
       </div>
-
-      <div class="detail">
-        <strong>Order Status</strong>
-        <span id="resultStatus"></span>
-      </div>
-
-      <div class="detail">
-        <strong>Expected Delivery Date</strong>
-        <span id="resultDelivery"></span>
-      </div>
+      <div id="statusNotice" class="notice" hidden></div>
     </div>
   </div>
 </main>
-
-<footer>
-  Fresh from farm to your doorstep 🌱
-</footer>
-
+<footer>Fresh from farm to your doorstep 🌱</footer>
 <script>
   const SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbyH8HEJ1fF2MMRp6sg0isIMiinbMSbnr3OHwPPsqko4W0gvCNiQuSzuAOdzac0KSirnfw/exec";
@@ -223,20 +86,82 @@
   const button = document.getElementById("trackButton");
   const message = document.getElementById("message");
   const resultBox = document.getElementById("result");
+  const timeline = document.getElementById("timeline");
+  const timelineSteps = document.getElementById("timelineSteps");
+  const statusNotice = document.getElementById("statusNotice");
+
+  const stages = [
+    { name: "Order Placed", description: "Your order has been received" },
+    { name: "Processing", description: "We're preparing your fresh products" },
+    { name: "Packed", description: "Your basket is ready" },
+    { name: "Out for Delivery", description: "Your order is on its way" },
+    { name: "Delivered", description: "Freshness at your doorstep" }
+  ];
+
+  function showProgress(rawStatus) {
+    const status = String(rawStatus || "").trim();
+    const key = status.toLowerCase().replace(/[\s_-]+/g, " ");
+    const statusElement = document.getElementById("resultStatus");
+    statusElement.textContent = status || "Status unavailable";
+    statusElement.className = "status-pill";
+    timeline.hidden = true;
+    timelineSteps.replaceChildren();
+    statusNotice.hidden = true;
+    statusNotice.className = "notice";
+    statusNotice.textContent = "";
+
+    if (key === "cancelled" || key === "canceled") {
+      statusElement.classList.add("cancelled");
+      statusNotice.textContent = "This order has been cancelled. Please contact Green Basket if you need help.";
+      statusNotice.hidden = false;
+      return;
+    }
+
+    const stageIndex = {
+      "new": 0, "order placed": 0, "placed": 0, "confirmed": 0,
+      "processing": 1, "preparing": 1,
+      "packed": 2, "ready": 2,
+      "out for delivery": 3, "dispatched": 3, "shipped": 3,
+      "delivered": 4
+    }[key];
+
+    if (stageIndex === undefined) {
+      statusElement.classList.add("unknown");
+      statusNotice.textContent = "Your latest order status is shown above. Progress details are not available for this status.";
+      statusNotice.classList.add("neutral");
+      statusNotice.hidden = false;
+      return;
+    }
+
+    stages.forEach(function (stage, index) {
+      const row = document.createElement("div");
+      row.className = "timeline-step";
+      if (index <= stageIndex) row.classList.add("completed");
+      if (index === stageIndex) row.classList.add("current");
+
+      const icon = document.createElement("span");
+      icon.className = "step-icon";
+      icon.textContent = index <= stageIndex ? "✓" : String(index + 1);
+
+      const content = document.createElement("div");
+      content.className = "step-text";
+      const title = document.createElement("b");
+      title.textContent = stage.name;
+      const description = document.createElement("small");
+      description.textContent = stage.description;
+      content.append(title, description);
+      row.append(icon, content);
+      timelineSteps.appendChild(row);
+    });
+    timeline.hidden = false;
+  }
 
   let activeRequest = null;
-
   form.addEventListener("submit", function (event) {
     event.preventDefault();
-
-    const fullOrderId =
-      document.getElementById("orderId").value.trim();
-
-    const mobile =
-      document.getElementById("mobile").value.trim();
-
+    const fullOrderId = document.getElementById("orderId").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
     const requestId = fullOrderId.replace(/^GB-/i, "");
-
     resultBox.style.display = "none";
     message.textContent = "";
 
@@ -244,32 +169,22 @@
       message.textContent = "Please enter a valid Order ID.";
       return;
     }
-
     if (!/^[6-9][0-9]{9}$/.test(mobile)) {
       message.textContent = "Enter a valid 10-digit mobile number.";
       return;
     }
-
-    if (activeRequest) {
-      activeRequest.cleanup();
-    }
+    if (activeRequest) activeRequest.cleanup();
 
     button.disabled = true;
     button.textContent = "Checking...";
     message.textContent = "Finding your order...";
 
-    const callbackName =
-      "gbOrderStatus_" +
-      Date.now() + "_" +
-      Math.random().toString(36).slice(2, 12);
-
+    const callbackName = "gbOrderStatus_" + Date.now() + "_" + Math.random().toString(36).slice(2, 12);
     const script = document.createElement("script");
     let finished = false;
-
     const timeout = setTimeout(function () {
-      finish();
-      message.textContent =
-        "Connection timed out. Please try again.";
+      if (!finish()) return;
+      message.textContent = "Connection timed out. Please try again.";
     }, 15000);
 
     function cleanup() {
@@ -277,7 +192,6 @@
       delete window[callbackName];
       script.remove();
     }
-
     function finish() {
       if (finished) return false;
       finished = true;
@@ -287,46 +201,32 @@
       button.textContent = "Track My Order";
       return true;
     }
-
     activeRequest = { cleanup: finish };
 
     window[callbackName] = function (data) {
       if (!finish()) return;
-
       if (!data || !data.success || !data.found) {
-        message.textContent =
-          "Order not found. Check your Order ID and mobile number.";
+        message.textContent = "Order not found. Check your Order ID and mobile number.";
         return;
       }
-
-      document.getElementById("resultOrderId").textContent =
-        data.orderId || fullOrderId;
-
-      document.getElementById("resultStatus").textContent =
-        data.orderStatus || "Processing";
-
-      document.getElementById("resultDelivery").textContent =
-        data.deliveryDate || "To be confirmed";
-
+      document.getElementById("resultOrderId").textContent = data.orderId || fullOrderId;
+      document.getElementById("resultDelivery").textContent = data.deliveryDate || "To be confirmed";
+      showProgress(data.orderStatus);
       resultBox.style.display = "block";
       message.textContent = "Order found successfully!";
     };
-
     script.onerror = function () {
       if (!finish()) return;
-      message.textContent =
-        "Unable to connect. Please try again.";
+      message.textContent = "Unable to connect. Please try again.";
     };
 
     const url = new URL(SCRIPT_URL);
     url.searchParams.set("requestId", requestId);
     url.searchParams.set("mobile", mobile);
     url.searchParams.set("callback", callbackName);
-
     script.src = url.toString();
     document.body.appendChild(script);
   });
 </script>
-
 </body>
 </html>
