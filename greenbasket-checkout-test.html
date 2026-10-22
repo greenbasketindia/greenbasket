@@ -982,10 +982,31 @@ function showVerifiedCheckout(requestId){
     const whatsappBtn = document.createElement('button');
     whatsappBtn.type = 'button';
     whatsappBtn.textContent = '📲 Send Order on WhatsApp';
-    whatsappBtn.disabled = true;
-    whatsappBtn.title = 'WhatsApp number setup pending';
+   
+const GREEN_BASKET_WHATSAPP = '919772821229';
 
-    whatsappBox.appendChild(whatsappBtn);
+const whatsappMessage = [
+  '🛒 GREEN BASKET - NEW ORDER',
+  'Order ID: GB-' + requestId,
+  order ? 'Customer: ' + order.name : '',
+  order ? 'Mobile: ' + order.mobile : '',
+  order ? 'Address: ' + order.address : '',
+  order ? 'Payment: ' + order.payment : '',
+  totals ? 'Total: ₹' + totals.total : '',
+  'Expected Delivery: ' + checkoutDeliveryDate()
+].filter(Boolean).join('\n');
+
+whatsappBtn.disabled = false;
+whatsappBtn.onclick = function(){
+  const url = 'https://wa.me/' +
+    GREEN_BASKET_WHATSAPP +
+    '?text=' + encodeURIComponent(whatsappMessage);
+
+  window.open(url, '_blank', 'noopener,noreferrer');
+};
+
+whatsappBox.appendChild(whatsappBtn);
+
   }
 
   checkoutPending = null;
