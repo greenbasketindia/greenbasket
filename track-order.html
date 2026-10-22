@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track My Order | Green Basket</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f9f3;
+      color: #263b2a;
+    }
+
+    header {
+      background: #ffffff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #e4ece1;
+    }
+
+    .brand {
+      color: #237a3b;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    header a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #237a3b;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 480px;
+      margin: 45px auto;
+      padding: 0 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px 24px;
+      box-shadow: 0 8px 30px rgba(30, 70, 30, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 27px;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #657267;
+      text-align: center;
+      line-height: 1.5;
+      margin-bottom: 28px;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 18px 0 8px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #d7e2d4;
+      border-radius: 11px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #288b48;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 16px;
+      border: 0;
+      border-radius: 12px;
+      background: #237a3b;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    .message {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .result {
+      display: none;
+      margin-top: 24px;
+      padding: 20px;
+      background: #f0f8ed;
+      border: 1px solid #d9ebd4;
+      border-radius: 14px;
+    }
+
+    .result h2 {
+      margin-top: 0;
+      color: #237a3b;
+      font-size: 20px;
+    }
+
+    .detail {
+      margin-top: 14px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .detail strong {
+      display: block;
+      font-size: 13px;
+      color: #607263;
+    }
+
+    footer {
+      text-align: center;
+      color: #758075;
+      padding: 25px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">🌿 Green Basket</div>
+  <a href="index.html">← Back to Shopping</a>
+</header>
+
+<main>
+  <div class="card">
+    <h1>📦 Track My Order</h1>
+
+    <p class="subtitle">
+      Enter your Order ID and registered mobile number
+      to check your latest order status.
+    </p>
+
+    <form id="trackingForm">
+      <label for="orderId">Order ID</label>
+      <input
+        id="orderId"
+        type="text"
+        placeholder="GB-WEB_..."
+        autocomplete="off"
+        maxlength="103"
+        required
+      >
+
+      <label for="mobile">Registered Mobile Number</label>
+      <input
+        id="mobile"
+        type="tel"
+        inputmode="numeric"
+        pattern="[6-9][0-9]{9}"
+        maxlength="10"
+        placeholder="Enter 10-digit mobile number"
+        autocomplete="tel"
+        required
+      >
+
+      <button id="trackButton" type="submit">
+        Track My Order
+      </button>
+    </form>
+
+    <div id="message" class="message" role="status" aria-live="polite"></div>
+
+    <div id="result" class="result">
+      <h2>Order Details</h2>
+
+      <div class="detail">
+        <strong>Order ID</strong>
+        <span id="resultOrderId"></span>
+      </div>
+
+      <div class="detail">
+        <strong>Order Status</strong>
+        <span id="resultStatus"></span>
+      </div>
+
+      <div class="detail">
+        <strong>Expected Delivery Date</strong>
+        <span id="resultDelivery"></span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Fresh from farm to your doorstep 🌱
+</footer>
+
+<script>
+  const SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbyH8HEJ1fF2MMRp6sg0isIMiinbMSbnr3OHwPPsqko4W0gvCNiQuSzuAOdzac0KSirnfw/exec";
+
+  const form = document.getElementById("trackingForm");
+  const button = document.getElementById("trackButton");
+  const message = document.getElementById("message");
+  const resultBox = document.getElementById("result");
+
+  let activeRequest = null;
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const fullOrderId =
+      document.getElementById("orderId").value.trim();
+
+    const mobile =
+      document.getElementById("mobile").value.trim();
+
+    const requestId = fullOrderId.replace(/^GB-/i, "");
+
+    resultBox.style.display = "none";
+    message.textContent = "";
+
+    if (!/^[a-zA-Z0-9_-]{16,100}$/.test(requestId)) {
+      message.textContent = "Please enter a valid Order ID.";
+      return;
+    }
+
+    if (!/^[6-9][0-9]{9}$/.test(mobile)) {
+      message.textContent = "Enter a valid 10-digit mobile number.";
+      return;
+    }
+
+    if (activeRequest) {
+      activeRequest.cleanup();
+    }
+
+    button.disabled = true;
+    button.textContent = "Checking...";
+    message.textContent = "Finding your order...";
+
+    const callbackName =
+      "gbOrderStatus_" +
+      Date.now() + "_" +
+      Math.random().toString(36).slice(2, 12);
+
+    const script = document.createElement("script");
+    let finished = false;
+
+    const timeout = setTimeout(function () {
+      finish();
+      message.textContent =
+        "Connection timed out. Please try again.";
+    }, 15000);
+
+    function cleanup() {
+      clearTimeout(timeout);
+      delete window[callbackName];
+      script.remove();
+    }
+
+    function finish() {
+      if (finished) return false;
+      finished = true;
+      cleanup();
+      activeRequest = null;
+      button.disabled = false;
+      button.textContent = "Track My Order";
+      return true;
+    }
+
+    activeRequest = { cleanup: finish };
+
+    window[callbackName] = function (data) {
+      if (!finish()) return;
+
+      if (!data || !data.success || !data.found) {
+        message.textContent =
+          "Order not found. Check your Order ID and mobile number.";
+        return;
+      }
+
+      document.getElementById("resultOrderId").textContent =
+        data.orderId || fullOrderId;
+
+      document.getElementById("resultStatus").textContent =
+        data.orderStatus || "Processing";
+
+      document.getElementById("resultDelivery").textContent =
+        data.deliveryDate || "To be confirmed";
+
+      resultBox.style.display = "block";
+      message.textContent = "Order found successfully!";
+    };
+
+    script.onerror = function () {
+      if (!finish()) return;
+      message.textContent =
+        "Unable to connect. Please try again.";
+    };
+
+    const url = new URL(SCRIPT_URL);
+    url.searchParams.set("requestId", requestId);
+    url.searchParams.set("mobile", mobile);
+    url.searchParams.set("callback", callbackName);
+
+    script.src = url.toString();
+    document.body.appendChild(script);
+  });
+</script>
+
+</body>
+</html>
