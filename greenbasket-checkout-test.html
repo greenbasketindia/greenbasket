@@ -876,12 +876,22 @@ $("#yr").textContent=new Date().getFullYear();
 
 /* ===== Checkout: server independently verifies product prices and delivery ===== */
 let checkoutPending = null;
+
 function checkoutTotals(){
-  const lines=cart.map(lineEstimate);
-  if(!cart.length||lines.some(v=>v===null)) return null;
-  const subtotal=lines.reduce((a,b)=>a+b,0);
-  return {subtotal,delivery:subtotal>299?0:30,total:subtotal+(subtotal>299?0:30)};
+  const lines = cart.map(lineEstimate);
+
+  if (!cart.length || lines.some(v => v === null)) return null;
+
+  const subtotal = Math.round(
+    lines.reduce((a, b) => a + b, 0) * 100
+  ) / 100;
+
+  const delivery = subtotal >= 300 ? 0 : 20;
+  const total = Math.round((subtotal + delivery) * 100) / 100;
+
+  return { subtotal, delivery, total };
 }
+
 function checkoutDeliveryDate(){
   const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',hourCycle:'h23'}).formatToParts(new Date());
   const f=k=>Number(parts.find(p=>p.type===k).value);
