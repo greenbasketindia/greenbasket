@@ -903,7 +903,7 @@ function checkoutOpen(){
   const totals=checkoutTotals();
   if(!totals){alert('Checkout requires current prices for all items. Please contact Green Basket on WhatsApp.');return;}
   closeCart();
-  $('#checkoutSummary').innerHTML=`<div><span>Subtotal (estimate)</span><b>${money(totals.subtotal)}</b></div><div><span>Delivery</span><b>${totals.delivery?money(totals.delivery):'FREE'}</b></div><div><strong>Total (estimate)</strong><strong>${money(totals.total)}</strong></div><div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div><small>Free delivery above ₹299. Cutoff 11 PM IST. Final amount/date verified by server.</small>`;
+  $('#checkoutSummary').innerHTML=`<div><span>Subtotal (estimate)</span><b>${money(totals.subtotal)}</b></div><div><span>Delivery</span><b>${totals.delivery?money(totals.delivery):'FREE'}</b></div><div><strong>Total (estimate)</strong><strong>${money(totals.total)}</strong></div><div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div><small>Minimum order ₹150. Delivery ₹20 below ₹300; FREE at ₹300 or more. Cutoff 11 PM IST. Final amount/date verified by server.</small>`;
   $('#checkoutOv').classList.add('show');$('#checkout').classList.add('show');$('#checkout').setAttribute('aria-hidden','false');document.body.classList.add('lock');
   recoverPendingCheckout();
 }
