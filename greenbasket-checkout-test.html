@@ -1018,6 +1018,33 @@ whatsappBtn.onclick = function(){
 whatsappBox.appendChild(whatsappBtn);
 
   }
+  
+  // Green Basket: Track Order button after verification
+  let trackBtn = document.getElementById('gbTrackOrderBtn');
+
+  if (!trackBtn) {
+    trackBtn = document.createElement('button');
+    trackBtn.id = 'gbTrackOrderBtn';
+    trackBtn.type = 'button';
+    trackBtn.className = 'btn btn-o';
+    trackBtn.style.width = '100%';
+    trackBtn.style.marginTop = '10px';
+
+    document.getElementById('checkoutWhatsApp')
+      .insertAdjacentElement('afterend', trackBtn);
+  }
+
+  trackBtn.textContent = '📦 Track Your Order';
+  trackBtn.hidden = false;
+
+  const confirmedOrderId = 'GB-' + requestId;
+
+  trackBtn.onclick = function () {
+    window.location.href =
+      'track-order.html?orderId=' +
+      encodeURIComponent(confirmedOrderId);
+  };
+
 
   checkoutPending = null;
 
