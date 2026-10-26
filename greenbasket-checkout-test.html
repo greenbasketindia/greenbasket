@@ -1076,6 +1076,21 @@ async function submitCheckoutOrder(){
   }
   const form=$('#checkoutForm');if(!form.reportValidity())return;
   const totals=checkoutTotals();if(!totals){alert('Prices unavailable. Please contact us.');return;}
+  
+  // Green Basket: minimum order ₹150
+  if (totals.subtotal < 150) {
+    const status = document.getElementById('checkoutStatus');
+
+    status.textContent =
+      '❌ Minimum order is ₹150. Please add products worth ₹' +
+      (150 - totals.subtotal).toFixed(2) +
+      ' more to continue.';
+
+    status.style.color = '#b42318';
+    status.style.whiteSpace = 'normal';
+    return;
+  }
+
   const fd=new FormData(form);
   const note=String(fd.get('note')||'').trim();
   
