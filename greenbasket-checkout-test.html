@@ -334,6 +334,58 @@ body.has-bar .fab{display:none}
 #checkout .checkout-foot button{width:100%}
 #checkout .status{font-size:12px;color:#8a4900;line-height:1.5}
 @media(max-width:560px){#checkout{inset:0;border-radius:0}#checkout .fields2{grid-template-columns:1fr}}
+  
+/* Green Basket: Professional order confirmation */
+#checkout.confirmed .checkout-body {
+  display: none;
+}
+
+#checkout.confirmed .checkout-foot {
+  flex: 1;
+  overflow-y: auto;
+  align-content: center;
+  gap: 12px;
+  padding: 24px;
+}
+
+#checkout.confirmed #checkoutStatus {
+  background: #f1f9ef;
+  border: 1px solid #d4e9d0;
+  border-radius: 18px;
+  padding: 28px 20px;
+  text-align: center;
+  color: #0c5f1d;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 2;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+#checkout.confirmed #placeOrder {
+  background: #e5f3e3;
+  color: #0c5f1d;
+  cursor: default;
+}
+
+#checkout.confirmed #gbTrackOrderBtn {
+  background: #0c5f1d;
+  color: white;
+  border: none;
+}
+
+#checkout.confirmed #checkoutWhatsApp {
+  background: #25d366;
+  border-radius: 14px;
+  padding: 4px;
+}
+
+#checkout.confirmed #checkoutWhatsApp button {
+  width: 100%;
+  min-height: 42px;
+  font-weight: 600;
+}
+
 </style>
 </head>
 <body>
@@ -922,6 +974,7 @@ $('#checkoutForm').addEventListener('change',()=>{const upi=$('#checkoutForm').e
 function verifySavedOrder(requestId){
   return new Promise(resolve=>{
     const callback='gbOrderStatus_'+Array.from(crypto.getRandomValues(new Uint8Array(12)),b=>b.toString(16).padStart(2,'0')).join('');
+    
     const script=document.createElement('script');
     let settled=false;
     let timer;
@@ -973,7 +1026,7 @@ function showVerifiedCheckout(requestId){
 
   message += 'Expected Delivery: ' + checkoutDeliveryDate() + '\n';
   message += 'Final delivery details will be confirmed by Green Basket.';
-
+document.getElementById('checkout').classList.add('confirmed');
   const status = $('#checkoutStatus');
   status.textContent = message;
   status.style.whiteSpace = 'pre-line';
