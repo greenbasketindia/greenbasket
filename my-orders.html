@@ -35,6 +35,8 @@ async function testFirebaseIdToken() {
     console.error("Firebase token test failed:", error.code || error.message);
   }
 }
-  onAuthStateChanged(auth,user=>{const yes=!!user;$('login').classList.toggle('hidden',yes);$('verified').classList.toggle('hidden',!yes);$('verifiedPhone').textContent=yes?'Verified number: '+(user.phoneNumber||''):'';if(yes)msg('Logged in securely. Order history will be connected next.')});
+  onAuthStateChanged(auth,user=>{
+    if (user) testFirebaseIdToken();
+    const yes=!!user;$('login').classList.toggle('hidden',yes);$('verified').classList.toggle('hidden',!yes);$('verifiedPhone').textContent=yes?'Verified number: '+(user.phoneNumber||''):'';if(yes)msg('Logged in securely. Order history will be connected next.')});
 $('logout').addEventListener('click',async()=>{await signOut(auth);location.reload()});
 </script></body></html>
