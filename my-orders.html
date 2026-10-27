@@ -13,6 +13,28 @@ const busy=(yes)=>{$('send').disabled=yes;$('confirm').disabled=yes};
 async function ensureRecaptcha(){if(!verifier){verifier=new RecaptchaVerifier(auth,'recaptcha-container',{size:'normal','expired-callback':()=>msg('reCAPTCHA expired. Please complete it again.',true)});await verifier.render()}return verifier}
 $('send').addEventListener('click',async()=>{const number=$('mobile').value.trim();if(!/^[6-9]\d{9}$/.test(number)){msg('Enter a valid 10-digit Indian mobile number.',true);return}busy(true);msg('Complete reCAPTCHA to request the code.');try{const captcha=await ensureRecaptcha();confirmationResult=await signInWithPhoneNumber(auth,'+91'+number,captcha);$('verify').classList.remove('hidden');msg('OTP requested. For a Firebase fictional test number, enter your configured test code.')}catch(e){msg('Could not request OTP: '+(e.code||e.message),true);if(verifier){verifier.clear();verifier=null;$('recaptcha-container').replaceChildren()}}finally{busy(false)}});
 $('confirm').addEventListener('click',async()=>{if(!confirmationResult){msg('Request an OTP first.',true);return}const code=$('code').value.trim();if(!/^\d{6}$/.test(code)){msg('Enter the 6-digit code.',true);return}busy(true);try{await confirmationResult.confirm(code);msg('Phone verified successfully.')}catch(e){msg('Verification failed: '+(e.code||e.message),true)}finally{busy(false)}});
-onAuthStateChanged(auth,user=>{const yes=!!user;$('login').classList.toggle('hidden',yes);$('verified').classList.toggle('hidden',!yes);$('verifiedPhone').textContent=yes?'Verified number: '+(user.phoneNumber||''):'';if(yes)msg('Logged in securely. Order history will be connected next.')});
+// Green Basket TEST: Check Firebase ID token availability
+async function testFirebaseIdToken() {
+  const user = auth.currentUser;
+
+  if (!user) {
+    console.log("TEST: Customer not logged in");
+    return;
+  }
+
+  try {
+    const token = await user.getIdToken();
+
+    console.log(
+      "PASS: Firebase ID token available:",
+      typeof token === "string" && token.length > 100
+    );
+
+    // Never print the actual token.
+  } catch (error) {
+    console.error("Firebase token test failed:", error.code || error.message);
+  }
+}
+  onAuthStateChanged(auth,user=>{const yes=!!user;$('login').classList.toggle('hidden',yes);$('verified').classList.toggle('hidden',!yes);$('verifiedPhone').textContent=yes?'Verified number: '+(user.phoneNumber||''):'';if(yes)msg('Logged in securely. Order history will be connected next.')});
 $('logout').addEventListener('click',async()=>{await signOut(auth);location.reload()});
 </script></body></html>
