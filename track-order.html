@@ -155,6 +155,16 @@
     });
     timeline.hidden = false;
   }
+  
+  // Green Basket: Automatically fill Order ID from checkout
+  const trackingParams = new URLSearchParams(window.location.search);
+  const linkedOrderId = trackingParams.get("orderId");
+
+  if (linkedOrderId && /^GB-[a-zA-Z0-9_-]{16,100}$/.test(linkedOrderId)) {
+    document.getElementById("orderId").value = linkedOrderId;
+    document.getElementById("mobile").focus();
+  }
+
 
   let activeRequest = null;
   form.addEventListener("submit", function (event) {
