@@ -23,7 +23,7 @@ async function testFirebaseIdToken() {
   }
 
   try {
-    const token = await user.getIdToken();
+    const token = await user.getIdToken(true);
 
     console.log(
       "PASS: Firebase ID token available:",
