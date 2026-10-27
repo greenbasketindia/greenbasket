@@ -1008,6 +1008,9 @@ function showCheckoutWhatsApp(order,totals){
 
   
 function showVerifiedCheckout(requestId){
+  
+document.getElementById('checkout').classList.add('confirmed');
+
   const btn = $('#placeOrder');
 
   const order = checkoutPending?.order;
