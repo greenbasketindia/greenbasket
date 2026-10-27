@@ -1013,23 +1013,59 @@ function showVerifiedCheckout(requestId){
   const order = checkoutPending?.order;
   const totals = checkoutPending?.totals;
 
-  let message = '✅ Order Confirmed!\n';
-  message += 'Order ID: GB-' + requestId + '\n';
-
-  if (totals) {
-    message += 'Total Amount: ₹' + totals.total + '\n';
-  }
-
-  if (order) {
-    message += 'Payment Method: ' + order.payment + '\n';
-  }
-
-  message += 'Expected Delivery: ' + checkoutDeliveryDate() + '\n';
-  message += 'Final delivery details will be confirmed by Green Basket.';
-document.getElementById('checkout').classList.add('confirmed');
+  
+  // Green Basket: Professional confirmation receipt
   const status = $('#checkoutStatus');
-  status.textContent = message;
-  status.style.whiteSpace = 'pre-line';
+  status.replaceChildren();
+
+  const heading = document.createElement('h2');
+  heading.textContent = '✅ Order Confirmed!';
+  heading.style.cssText =
+    'font-size:23px;color:#0c5f1d;margin:0 0 8px;text-align:center';
+
+  const thanks = document.createElement('p');
+  thanks.textContent = 'Thank you for shopping with Green Basket!';
+  thanks.style.cssText =
+    'font-size:12px;color:#607263;text-align:center;margin-bottom:20px';
+
+  status.append(heading, thanks);
+
+  function addReceiptRow(label, value, highlight = false) {
+    const row = document.createElement('div');
+    row.style.cssText =
+      'display:flex;justify-content:space-between;align-items:flex-start;' +
+      'gap:12px;padding:12px 0;border-bottom:1px solid #dce9d8;' +
+      'text-align:left;line-height:1.5';
+
+    const name = document.createElement('span');
+    name.textContent = label;
+    name.style.cssText =
+      'color:#647366;font-size:12px;flex-shrink:0';
+
+    const detail = document.createElement('strong');
+    detail.textContent = value;
+    detail.style.cssText =
+      'font-size:' + (highlight ? '20px' : '12px') +
+      ';color:#0c5f1d;text-align:right;overflow-wrap:anywhere';
+
+    row.append(name, detail);
+    status.appendChild(row);
+  }
+
+  addReceiptRow('Order ID', 'GB-' + requestId);
+  addReceiptRow('Payment', order?.payment === 'COD'
+    ? 'Cash on Delivery' : 'UPI');
+  addReceiptRow('Expected Delivery', checkoutDeliveryDate());
+  addReceiptRow('Total Amount',
+    totals ? '₹' + totals.total : 'To be confirmed', true);
+
+  const note = document.createElement('p');
+  note.textContent =
+    '🌿 Final delivery details will be confirmed by Green Basket.';
+  note.style.cssText =
+    'font-size:12px;color:#607263;text-align:center;margin-top:18px';
+
+  status.appendChild(note);
   status.style.color = '#0c5f1d';
 
   btn.disabled = true;
