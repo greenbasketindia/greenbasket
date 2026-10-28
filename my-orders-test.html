@@ -11,6 +11,31 @@ import {getDatabase, ref, get} from 'https://www.gstatic.com/firebasejs/12.4.0/f
   const firebaseConfig={apiKey:'AIzaSyCO44jbPyRtHEviHlKscT5zAYDeKudu3pQ',
                       databaseURL: 'https://green-basket-f404f-default-rtdb.asia-southeast1.firebasedatabase.app',authDomain:'green-basket-f404f.firebaseapp.com',projectId:'green-basket-f404f',storageBucket:'green-basket-f404f.firebasestorage.app',messagingSenderId:'551361935382',appId:'1:551361935382:web:f056173756688da8275d37',measurementId:'G-DE3D2NLLWX'};
 const auth=getAuth(initializeApp(firebaseConfig));auth.languageCode='en';
+  
+const db = getDatabase(auth.app);
+
+async function testCustomerDatabaseRead(user) {
+  if (!user) return;
+
+  try {
+    const orderPath = 'customerOrders/' + user.uid;
+    const snapshot = await get(ref(db, orderPath));
+
+    if (snapshot.exists()) {
+      console.log('PASS: Customer database read successful');
+      console.log('Order records found:', snapshot.size);
+    } else {
+      console.log('PASS: Customer database read allowed');
+      console.log('No orders stored for this customer yet');
+    }
+  } catch (error) {
+    console.error(
+      'FAIL: Customer database read:',
+      error.code || error.message
+    );
+  }
+}
+
 const $=id=>document.getElementById(id);let confirmationResult=null;let verifier=null;
 const msg=(s,error=false)=>{$('message').textContent=s;$('message').className=error?'error':'success'};
 const busy=(yes)=>{$('send').disabled=yes;$('confirm').disabled=yes};
