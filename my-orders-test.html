@@ -5,7 +5,10 @@
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js';
 import {getAuth,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js';
-const firebaseConfig={apiKey:'AIzaSyCO44jbPyRtHEviHlKscT5zAYDeKudu3pQ',
+
+import {getDatabase, ref, get} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js';
+
+  const firebaseConfig={apiKey:'AIzaSyCO44jbPyRtHEviHlKscT5zAYDeKudu3pQ',
                       databaseURL: 'https://green-basket-f404f-default-rtdb.asia-southeast1.firebasedatabase.app',authDomain:'green-basket-f404f.firebaseapp.com',projectId:'green-basket-f404f',storageBucket:'green-basket-f404f.firebasestorage.app',messagingSenderId:'551361935382',appId:'1:551361935382:web:f056173756688da8275d37',measurementId:'G-DE3D2NLLWX'};
 const auth=getAuth(initializeApp(firebaseConfig));auth.languageCode='en';
 const $=id=>document.getElementById(id);let confirmationResult=null;let verifier=null;
