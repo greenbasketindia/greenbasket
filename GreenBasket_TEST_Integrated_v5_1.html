@@ -1188,7 +1188,8 @@ function showPendingCheckout(order,totals){
   $('#checkoutWhatsApp').hidden=true; // Never send an unconfirmed TEST order to business WhatsApp.
   btn.textContent='Open My Orders (TEST)';
  btn.onclick=()=>{ window.location.href='https://script.google.com/macros/s/AKfycbzstju0kNmWRLTVnQQUsr5gMH2RbJx2GplnXn4rwI-DRSOKwK-DnwAYvTtrV0xpRCgaRw/exec'; };
-function recoverPendingCheckout(){
+}
+  function recoverPendingCheckout(){
   if(CHECKOUT_DEMO_MODE){
     const btn=$('#placeOrder');
     btn.disabled=true;
