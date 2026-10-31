@@ -1,109 +1,28 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My Orders | Green Basket</title><style>
-:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#183522;background:#f4f8f1}*{box-sizing:border-box}body{margin:0}header{background:#0c5f1d;color:white;padding:19px 20px;font-weight:750;font-size:21px}header a{color:white;text-decoration:none}main{max-width:460px;margin:48px auto;padding:0 16px}.card{background:white;border:1px solid #dfebd9;border-radius:22px;padding:28px;box-shadow:0 12px 35px #123f1710}h1{font-size:25px;margin:0 0 10px}p{color:#637465;line-height:1.55;font-size:14px}label{font-size:13px;font-weight:650;display:block;margin:23px 0 8px}.phone{display:flex;align-items:center;border:1px solid #bacfba;border-radius:12px;overflow:hidden}.phone span{padding:13px;background:#f3f8f0}.phone input{border:0;min-width:0;flex:1;padding:13px;font:inherit;outline:none}#code{width:100%;border:1px solid #bacfba;border-radius:12px;padding:13px;font:inherit;letter-spacing:4px}button{width:100%;padding:14px;border:0;border-radius:12px;background:#0c5f1d;color:white;font:inherit;font-weight:700;margin-top:17px;cursor:pointer}button:disabled{opacity:.55;cursor:wait}.secondary{background:#e8f2e4;color:#0c5f1d}.hidden{display:none}#message{min-height:22px;font-size:13px;margin-top:15px;overflow-wrap:anywhere}.success{color:#0c5f1d}.error{color:#b42318}.demo{margin-top:22px;border-top:1px solid #e1eadd;padding-top:18px}.demo h2{font-size:18px;margin:0 0 6px}.demo-tag{font-size:11px;font-weight:700;color:#775300;background:#fff4ce;border-radius:20px;padding:4px 9px;display:inline-block;margin-bottom:10px}.order{border:1px solid #dbe9d8;border-radius:14px;padding:15px;margin-top:12px;background:#fff}.order-top,.order-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}.order-id{font-size:13px;font-weight:750}.status-pill{font-size:11px;background:#e8f5e8;color:#126126;border-radius:20px;padding:5px 9px}.status-pill.pending{background:#fff2dc;color:#805200}.items{font-size:12px;color:#637465;margin:10px 0}.amount{font-size:17px;font-weight:800;color:#0c5f1d}.demo-track{font-size:12px;color:#637465}.note{font-size:12px;background:#f1f8ed;border-radius:10px;padding:12px;margin-top:22px}#recaptcha-container{margin-top:14px;overflow:hidden}a.back{display:inline-block;margin-top:20px;color:#0c5f1d;font-size:13px} @media(max-width:500px){main{margin:24px auto}.card{padding:22px}}
-</style></head><body><header><a href="greenbasket-checkout-test.html">🧺 GREEN BASKET</a></header><main><div class="card"><h1>My Orders</h1><p>Verify your mobile number to access your Green Basket account.</p><div id="login"><label for="mobile">Mobile number</label><div class="phone"><span>+91</span><input id="mobile" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit mobile number"></div><div id="recaptcha-container"></div><button id="send" type="button">Send OTP</button><div id="verify" class="hidden"><label for="code">Verification code</label><input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit OTP"><button id="confirm" type="button">Verify OTP</button></div></div><div id="verified" class="hidden"><p class="success">✓ Mobile number verified successfully.</p><p id="verifiedPhone"></p><p class="note">Real order history is not enabled. The orders below are sample data only. We will connect actual orders after secure server-side Firebase token verification.</p> 
-<section id="realOrders" class="demo hidden" aria-label="Real test orders"></section>
-<button id="logout" class="secondary" type="button">Sign out</button></div><p id="message" role="status" aria-live="polite"></p><p class="note">Testing: use only the fictional phone number and code configured in Firebase. No real SMS is needed for that number.</p><a class="back" href="greenbasket-checkout-test.html">← Back to shop</a></div></main>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My Orders | Green Basket TEST</title>
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#183522;background:#f4f8f1}*{box-sizing:border-box}body{margin:0}header{background:#0c5f1d;color:#fff;padding:19px 20px;font-weight:750;font-size:21px}header a{color:#fff;text-decoration:none}main{max-width:520px;margin:35px auto;padding:0 16px}.card{background:#fff;border:1px solid #dfebd9;border-radius:22px;padding:25px;box-shadow:0 12px 35px #123f1710}h1{font-size:25px;margin:0 0 10px}p{color:#637465;line-height:1.5;font-size:14px}label{font-size:13px;font-weight:650;display:block;margin:23px 0 8px}.phone{display:flex;align-items:center;border:1px solid #bacfba;border-radius:12px;overflow:hidden}.phone span{padding:13px;background:#f3f8f0}.phone input{border:0;min-width:0;flex:1;padding:13px;font:inherit;outline:none}#code{width:100%;border:1px solid #bacfba;border-radius:12px;padding:13px;font:inherit;letter-spacing:4px}button{width:100%;padding:14px;border:0;border-radius:12px;background:#0c5f1d;color:#fff;font:inherit;font-weight:700;margin-top:14px;cursor:pointer}button:disabled{opacity:.55;cursor:wait}.secondary{background:#e8f2e4;color:#0c5f1d}.hidden{display:none!important}#message{min-height:22px;font-size:13px;margin-top:15px;overflow-wrap:anywhere}.success{color:#0c5f1d}.error{color:#b42318}.order{border:1px solid #dbe9d8;border-radius:15px;padding:16px;margin-top:14px;background:#fff}.order-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.order-id{font-size:13px;font-weight:750;overflow-wrap:anywhere}.status-pill{font-size:12px;font-weight:700;background:#e8f5e8;color:#126126;border-radius:20px;padding:6px 10px}.status-pill.pending{background:#fff2dc;color:#805200}.status-pill.failed{background:#ffe8e8;color:#9b2222}.amount{font-size:19px;font-weight:800;color:#0c5f1d;margin:8px 0}.note{font-size:12px;background:#f1f8ed;border-radius:10px;padding:12px;margin-top:20px}#recaptcha-container{margin-top:14px;overflow:hidden}a.back{display:inline-block;margin-top:20px;color:#0c5f1d;font-size:13px}.section-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:24px}.section-heading h2{font-size:18px;margin:0}.section-heading button{width:auto;margin:0;padding:9px 12px;font-size:12px}.track{display:flex;justify-content:space-between;position:relative;gap:4px;margin:19px 0 8px}.track:before{content:"";position:absolute;top:10px;left:10%;right:10%;height:3px;background:#e0e9dc}.step{position:relative;z-index:1;flex:1;text-align:center;font-size:10px;color:#829083}.dot{width:21px;height:21px;margin:0 auto 7px;border-radius:50%;background:#e0e9dc;border:3px solid #fff;box-shadow:0 0 0 1px #d7e4d2}.step.done .dot{background:#0c5f1d;box-shadow:0 0 0 1px #0c5f1d}.step.done{color:#0c5f1d;font-weight:700}.muted{font-size:12px}.empty{padding:18px;background:#f5f9f2;border-radius:12px;margin-top:12px}@media(max-width:500px){main{margin:24px auto}.card{padding:20px}.step{font-size:9px}}
+</style></head><body><header><a href="greenbasket-checkout-test.html">🧺 GREEN BASKET <small style="font-size:11px">TEST</small></a></header><main><div class="card"><h1>My Orders</h1><p>Verify your mobile number to securely view your TEST orders.</p>
+<div id="login"><label for="mobile">Mobile number</label><div class="phone"><span>+91</span><input id="mobile" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit mobile number"></div><div id="recaptcha-container"></div><button id="send" type="button">Send OTP</button><div id="verify" class="hidden"><label for="code">Verification code</label><input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit OTP"><button id="confirm" type="button">Verify OTP</button></div></div>
+<div id="verified" class="hidden"><p class="success">✓ Mobile number verified successfully.</p><p id="verifiedPhone"></p><div class="section-heading"><h2>My Actual TEST Orders</h2><button id="refresh" class="secondary" type="button">↻ Refresh Status</button></div><p id="ordersInfo" class="muted" role="status">Loading orders…</p><section id="realOrders" aria-label="Real test orders"></section><button id="logout" class="secondary" type="button">Sign out</button></div>
+<p id="message" role="status" aria-live="polite"></p><p class="note">TEST environment only. Status reflects the latest data available in Firebase. If an order was updated in Google Sheets but not synced to Firebase yet, the update may not appear here.</p><a class="back" href="greenbasket-checkout-test.html">← Back to shop</a></div></main>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js';
 import {getAuth,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js';
-
-import {getDatabase, ref, get} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js';
-
-  const firebaseConfig={apiKey:'AIzaSyCO44jbPyRtHEviHlKscT5zAYDeKudu3pQ',
-                      databaseURL: 'https://green-basket-f404f-default-rtdb.asia-southeast1.firebasedatabase.app',authDomain:'green-basket-f404f.firebaseapp.com',projectId:'green-basket-f404f',storageBucket:'green-basket-f404f.firebasestorage.app',messagingSenderId:'551361935382',appId:'1:551361935382:web:f056173756688da8275d37',measurementId:'G-DE3D2NLLWX'};
-const auth=getAuth(initializeApp(firebaseConfig));auth.languageCode='en';
-  
-const db = getDatabase(auth.app);
-
-async function testCustomerDatabaseRead(user) {
-  if (!user) return;
-
-  try {
-    const orderPath = 'customerOrders/' + user.uid;
-    const snapshot = await get(ref(db, orderPath));
-
-    if (snapshot.exists()) {
-      console.log('PASS: Customer database read successful');
-      console.log('Order records found:', snapshot.size);
-      
-const container = document.getElementById('realOrders');
-container.replaceChildren();
-
-const heading = document.createElement('h2');
-heading.textContent = 'My Actual TEST Orders';
-container.appendChild(heading);
-
-snapshot.forEach(orderSnapshot => {
-  const order = orderSnapshot.val();
-
-  const article = document.createElement('article');
-  article.className = 'order';
-
-  const orderId = document.createElement('p');
-  orderId.className = 'order-id';
-  orderId.textContent = orderSnapshot.key;
-
-  const status = document.createElement('p');
-  status.textContent = 'Status: ' + (order.status || 'Pending');
-
-  const amount = document.createElement('p');
-  amount.className = 'amount';
-  amount.textContent = '₹' + (order.total ?? '—');
-
-  const payment = document.createElement('p');
-  payment.textContent = 'Payment: ' + (order.paymentMethod || '—');
-
-  article.append(orderId, status, amount, payment);
-  container.appendChild(article);
-});
-
-container.classList.remove('hidden');
-
-    } else {
-      console.log('PASS: Customer database read allowed');
-      console.log('No orders stored for this customer yet');
-    }
-  } catch (error) {
-    console.error(
-      'FAIL: Customer database read:',
-      error.code || error.message
-    );
-  }
-}
-
-const $=id=>document.getElementById(id);let confirmationResult=null;let verifier=null;
+import {getDatabase,ref,get} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js';
+const firebaseConfig={apiKey:'AIzaSyCO44jbPyRtHEviHlKscT5zAYDeKudu3pQ',databaseURL:'https://green-basket-f404f-default-rtdb.asia-southeast1.firebasedatabase.app',authDomain:'green-basket-f404f.firebaseapp.com',projectId:'green-basket-f404f',storageBucket:'green-basket-f404f.firebasestorage.app',messagingSenderId:'551361935382',appId:'1:551361935382:web:f056173756688da8275d37',measurementId:'G-DE3D2NLLWX'};
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getDatabase(app);auth.languageCode='en';
+const $=id=>document.getElementById(id);let confirmationResult=null,verifier=null,loadSerial=0;
 const msg=(s,error=false)=>{$('message').textContent=s;$('message').className=error?'error':'success'};
-const busy=(yes)=>{$('send').disabled=yes;$('confirm').disabled=yes};
+const busy=yes=>{$('send').disabled=yes;$('confirm').disabled=yes};
+const stages=['Placed','Confirmed','Packed','Out for Delivery','Delivered'];
+function stageIndex(status){const s=String(status||'').trim().toLowerCase().replace(/[_-]/g,' ').replace(/\s+/g,' ');if(['placed','pending','new','received','order placed'].includes(s))return 0;if(['confirmed','accepted','processing'].includes(s))return 1;if(['packed','ready','ready for dispatch'].includes(s))return 2;if(['out for delivery','out for shipment','shipped','dispatched'].includes(s))return 3;if(['delivered','completed'].includes(s))return 4;return -1}
+function showOrders(data){const container=$('realOrders');container.replaceChildren();const entries=Object.entries(data||{}).filter(([,v])=>v&&typeof v==='object');entries.sort((a,b)=>Number(b[1].createdAt||b[1].timestamp||0)-Number(a[1].createdAt||a[1].timestamp||0));$('ordersInfo').textContent=entries.length?`${entries.length} TEST order(s) found. Status is read from Firebase.`:'No TEST orders found for this verified account.';for(const [key,order] of entries){const article=document.createElement('article');article.className='order';const top=document.createElement('div');top.className='order-top';const id=document.createElement('span');id.className='order-id';id.textContent=order.orderId||key;const status=document.createElement('span');const current=String(order.status||'Pending');status.className='status-pill'+(/cancel|fail|reject/i.test(current)?' failed':stageIndex(current)<2?' pending':'');status.textContent=current;top.append(id,status);article.append(top);const amount=document.createElement('p');amount.className='amount';const total=Number(order.total);amount.textContent=Number.isFinite(total)?'₹'+total.toLocaleString('en-IN'):'Amount unavailable';article.append(amount);const payment=document.createElement('p');payment.className='muted';payment.textContent='Payment: '+(order.paymentMethod||'—');article.append(payment);const index=stageIndex(current);if(index>=0){const track=document.createElement('div');track.className='track';track.setAttribute('aria-label','Tracking progress: '+current);stages.forEach((name,i)=>{const step=document.createElement('div');step.className='step'+(i<=index?' done':'');const dot=document.createElement('div');dot.className='dot';const label=document.createElement('div');label.textContent=name;step.append(dot,label);track.append(step)});article.append(track)}else{const note=document.createElement('p');note.className='muted';note.textContent='Current status: '+current;article.append(note)}container.append(article)}}
+async function loadOrders(user){if(!user)return;const serial=++loadSerial;$('refresh').disabled=true;$('ordersInfo').textContent='Checking latest Firebase order status…';try{const snap=await get(ref(db,'customerOrders/'+user.uid));if(serial!==loadSerial||auth.currentUser?.uid!==user.uid)return;showOrders(snap.exists()?snap.val():null)}catch(e){if(serial!==loadSerial)return;$('ordersInfo').textContent='Unable to load orders: '+(e.code||e.message);msg('Order status could not be refreshed. Please try again.',true)}finally{if(serial===loadSerial)$('refresh').disabled=false}}
 async function ensureRecaptcha(){if(!verifier){verifier=new RecaptchaVerifier(auth,'recaptcha-container',{size:'normal','expired-callback':()=>msg('reCAPTCHA expired. Please complete it again.',true)});await verifier.render()}return verifier}
-$('send').addEventListener('click',async()=>{const number=$('mobile').value.trim();if(!/^[6-9]\d{9}$/.test(number)){msg('Enter a valid 10-digit Indian mobile number.',true);return}busy(true);msg('Complete reCAPTCHA to request the code.');try{const captcha=await ensureRecaptcha();confirmationResult=await signInWithPhoneNumber(auth,'+91'+number,captcha);$('verify').classList.remove('hidden');msg('OTP requested. For a Firebase fictional test number, enter your configured test code.')}catch(e){msg('Could not request OTP: '+(e.code||e.message),true);if(verifier){verifier.clear();verifier=null;$('recaptcha-container').replaceChildren()}}finally{busy(false)}});
+$('send').addEventListener('click',async()=>{const number=$('mobile').value.trim();if(!/^[6-9]\d{9}$/.test(number)){msg('Enter a valid 10-digit Indian mobile number.',true);return}busy(true);msg('Complete reCAPTCHA to request the code.');try{confirmationResult=await signInWithPhoneNumber(auth,'+91'+number,await ensureRecaptcha());$('verify').classList.remove('hidden');msg('OTP requested. For a Firebase fictional test number, enter your configured test code.')}catch(e){msg('Could not request OTP: '+(e.code||e.message),true);if(verifier){verifier.clear();verifier=null;$('recaptcha-container').replaceChildren()}}finally{busy(false)}});
 $('confirm').addEventListener('click',async()=>{if(!confirmationResult){msg('Request an OTP first.',true);return}const code=$('code').value.trim();if(!/^\d{6}$/.test(code)){msg('Enter the 6-digit code.',true);return}busy(true);try{await confirmationResult.confirm(code);msg('Phone verified successfully.')}catch(e){msg('Verification failed: '+(e.code||e.message),true)}finally{busy(false)}});
-// Green Basket TEST: Check Firebase ID token availability
-async function testFirebaseIdToken() {
-  const user = auth.currentUser;
-
-  if (!user) {
-    console.log("TEST: Customer not logged in");
-    return;
-  }
-
-  try {
-    const token = await user.getIdToken(true);
-
-    console.log(
-      "PASS: Firebase ID token available:",
-      typeof token === "string" && token.length > 100
-    );
-
-    // Never print the actual token.
-  } catch (error) {
-    console.error("Firebase token test failed:", error.code || error.message);
-  }
-}
-  onAuthStateChanged(auth,user=>{
-    if (user) testFirebaseIdToken();
-    if (user) testCustomerDatabaseRead(user);
-    const yes=!!user;$('login').classList.toggle('hidden',yes);$('verified').classList.toggle('hidden',!yes);$('verifiedPhone').textContent=yes?'Verified number: '+(user.phoneNumber||''):'';if(yes)msg('Logged in securely. Order history will be connected next.')});
-$('logout').addEventListener('click',async()=>{await signOut(auth);location.reload()});
+$('refresh').addEventListener('click',()=>loadOrders(auth.currentUser));
+onAuthStateChanged(auth,user=>{const yes=!!user;$('login').classList.toggle('hidden',yes);$('verified').classList.toggle('hidden',!yes);$('verifiedPhone').textContent=yes?'Verified number: '+(user.phoneNumber||''):'';if(yes){msg('Logged in securely.');loadOrders(user)}else{++loadSerial;$('realOrders').replaceChildren();$('ordersInfo').textContent=''}});
+$('logout').addEventListener('click',async()=>{try{await signOut(auth);location.reload()}catch(e){msg('Sign out failed: '+(e.code||e.message),true)}});
 </script></body></html>
-<!-- Green Basket TEST: Pages redeploy -->
