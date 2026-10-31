@@ -1188,8 +1188,7 @@ function showPendingCheckout(order,totals){
   $('#checkoutStatus').textContent='TEST request sent. Check TEST My Orders / TEST Sheet to confirm it was saved. Do NOT submit twice or pay again. Request ID: GB-'+order.requestId;
   $('#checkoutWhatsApp').hidden=true; // Never send an unconfirmed TEST order to business WhatsApp.
   btn.textContent='Open My Orders (TEST)';
-  btn.onclick=()=>{ window.location.href='my-orders-test.html'; };
-}
+ btn.onclick=()=>{ window.location.href='https://script.google.com/macros/s/AKfycbzstju0kNmWRLTVnQQUsr5gMH2RbJx2GplnXn4rwI-DRSOKwK-DnwAYvTtrV0xpRCgaRw/exec'; };
 function recoverPendingCheckout(){
   if(CHECKOUT_DEMO_MODE){
     const btn=$('#placeOrder');
