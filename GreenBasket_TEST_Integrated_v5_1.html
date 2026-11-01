@@ -1206,8 +1206,7 @@ function showPendingCheckout(order,totals){
   if(saved&&saved.order&&/^[a-zA-Z0-9_-]{16,100}$/.test(saved.order.requestId)){
     checkoutPending=saved;
     showPendingCheckout(saved.order,saved.totals||checkoutTotals());
-    // A previous submission must be checked, never automatically posted again.
-    $('#placeOrder').click();
+  
   }else{
     $('#checkoutStatus').textContent='Your order will be confirmed after successful verification. Please do not submit twice.';$('#checkoutStatus').style.color='#8a4900';
     const btn=$('#placeOrder');btn.disabled=CHECKOUT_DEMO_MODE;btn.textContent=CHECKOUT_DEMO_MODE ? 'TEST endpoint not configured — submissions disabled' : 'Submit TEST order';
