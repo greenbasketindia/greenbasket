@@ -625,6 +625,7 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQhc_shbh
 /* Folder with product photos. In the sheet write only the file name (e.g. p-mango.jpg). */
 const IMG_DIR = "images/images/";
 const CART_KEY = "gb_cart_v1";
+const CHECKOUT_REQUEST_KEY = "gb_test_checkout_pending_v51";
 const ORDERS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyULj3I2ImCkZEPqe86moVJ2057bXn9nrYjEJT7O24-Gjn2vtA-78prBjva5imjFFc3/exec";
   // Paste ONLY your newly deployed TEST Apps Script /exec URL here.
 const GB_TEST_ORDERS_URL = "https://script.google.com/macros/s/AKfycbyULj3I2ImCkZEPqe86moVJ2057bXn9nrYjEJT7O24-Gjn2vtA-78prBjva5imjFFc3/exec";
@@ -1003,36 +1004,97 @@ function checkoutMessage(order,totals){
 $('#csend').addEventListener('click',e=>{e.preventDefault();window.gbRequireCheckoutLogin();});
 $('#checkoutClose').onclick=checkoutClose;$('#checkoutOv').onclick=checkoutClose;
 $('#checkoutForm').addEventListener('change',()=>{const upi=$('#checkoutForm').elements.payment.value==='UPI';$('#upiDetails').hidden=!upi;$('#checkoutForm').elements.utr.required=upi;});
-/* Verify a saved order via Apps Script JSONP. A POST no-cors response is not proof of saving. */
-function verifySavedOrder(requestId){
-  return new Promise(resolve=>{
-    const callback='gbOrderStatus_'+Array.from(crypto.getRandomValues(new Uint8Array(12)),b=>b.toString(16).padStart(2,'0')).join('');
-    
-    const script=document.createElement('script');
-    let settled=false;
-    let timer;
-    function finish(result){
-      if(settled)return;
-      settled=true;
-      clearTimeout(timer);
-      script.remove();
-      // Avoid deleting the callback immediately: a delayed script must remain harmless.
-      window[callback]=()=>{};
-      resolve(result);
+/* TEST only: nonce-bound, Firebase-authenticated verification via Apps Script HTMLService. */
+let gbVerificationInProgress = false;
+function verifySavedOrder(requestId) {
+  return new Promise(async resolve => {
+    if (!/^[a-zA-Z0-9_-]{16,100}$/.test(String(requestId || ""))) {
+      resolve(false); return;
     }
-    window[callback]=data=>finish(data&&data.success===true&&data.found===true&&data.orderId==='GB-'+requestId);
-    script.onerror=()=>finish(false);
-    timer=setTimeout(()=>finish(false),10000);
-    script.src=ORDERS_WEB_APP_URL+'?requestId='+encodeURIComponent(requestId)+'&callback='+encodeURIComponent(callback)+'&t='+Date.now();
-    document.head.appendChild(script);
+    const user = window.gbCheckoutVerifiedUser;
+    if (!user || typeof user.getIdToken !== "function") {
+      resolve(false); return;
+    }
+    let idToken;
+    try { idToken = await user.getIdToken(); }
+    catch (_) { resolve(false); return; }
+
+    const nonce = Array.from(crypto.getRandomValues(new Uint8Array(16)),
+      x => x.toString(16).padStart(2, "0")).join("");
+    const frame = document.createElement("iframe");
+    frame.title = "Green Basket TEST order verification";
+    frame.hidden = true;
+    frame.setAttribute("aria-hidden", "true");
+    frame.src = GB_TEST_ORDERS_URL +
+      "?action=orderVerificationTest&nonce=" + encodeURIComponent(nonce);
+    let finished = false;
+    let trustedSource = null;
+    let trustedOrigin = null;
+    let timer;
+    function finish(ok) {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timer);
+      window.removeEventListener("message", onMessage);
+      frame.remove();
+      idToken = null;
+      resolve(Boolean(ok));
+    }
+    function onMessage(event) {
+      const data = event.data;
+      if (!data || typeof data !== "object" || data.nonce !== nonce) return;
+      // Apps Script uses a nested googleusercontent iframe, so the sender
+      // is not the outer frame.contentWindow. Bind to its nonce + WindowProxy.
+      let hostname;
+      try { hostname = new URL(event.origin).hostname; } catch (_) { return; }
+      if (new URL(event.origin).protocol !== "https:" ||
+          !hostname.endsWith("-script.googleusercontent.com")) return;
+      if (!event.source || event.source === window) return;
+      if (data.type === "GREEN_BASKET_TEST_READY" && !trustedSource) {
+        trustedSource = event.source;
+        trustedOrigin = event.origin;
+        event.source.postMessage({
+          type: "GREEN_BASKET_VERIFY_ORDER", nonce, requestId, idToken
+        }, event.origin);
+        return;
+      }
+      if (data.type === "GREEN_BASKET_VERIFY_RESULT" &&
+          event.source === trustedSource && event.origin === trustedOrigin &&
+          data.requestId === requestId) {
+        finish(data.verified === true);
+      }
+    }
+    window.addEventListener("message", onMessage);
+    timer = setTimeout(() => finish(false), 15000);
+    document.body.appendChild(frame);
   });
 }
-async function verifyWithRetries(requestId){
-  for(let attempt=0;attempt<4;attempt++){
-    if(await verifySavedOrder(requestId))return true;
-    if(attempt<3)await new Promise(resolve=>setTimeout(resolve,2000));
-  }
-  return false;
+async function verifyWithRetries(requestId) {
+  if (gbVerificationInProgress) return false;
+  gbVerificationInProgress = true;
+  try {
+    for (let attempt = 0; attempt < 4; attempt++) {
+      if (!checkoutPending || checkoutPending.order?.requestId !== requestId) return false;
+      if (await verifySavedOrder(requestId)) {
+        if (checkoutPending?.order?.requestId === requestId) {
+          showVerifiedCheckout(requestId);
+          return true;
+        }
+        return false;
+      }
+      if (attempt < 3) await new Promise(r => setTimeout(r, 2000));
+    }
+    return false;
+  } finally { gbVerificationInProgress = false; }
+}
+async function checkPendingTestOrder() {
+  if (!checkoutPending || gbVerificationInProgress) return;
+  const id = checkoutPending.order?.requestId;
+  const btn = $('#placeOrder');
+  btn.disabled = true;
+  btn.textContent = 'Checking TEST order…';
+  const verified = await verifyWithRetries(id);
+  if (!verified && checkoutPending) showPendingCheckout(checkoutPending.order, checkoutPending.totals);
 }
 function showCheckoutWhatsApp(order,totals){
   $('#checkoutWhatsApp').hidden=false;
@@ -1186,8 +1248,8 @@ function showPendingCheckout(order,totals){
   $('#checkoutStatus').style.color='#8a4900';
   $('#checkoutStatus').textContent='TEST request sent. Check TEST My Orders / TEST Sheet to confirm it was saved. Do NOT submit twice or pay again. Request ID: GB-'+order.requestId;
   $('#checkoutWhatsApp').hidden=true; // Never send an unconfirmed TEST order to business WhatsApp.
-  btn.textContent='Open My Orders (TEST)';
- btn.onclick=()=>{ window.location.href='https://script.google.com/macros/s/AKfycbzstju0kNmWRLTVnQQUsr5gMH2RbJx2GplnXn4rwI-DRSOKwK-DnwAYvTtrV0xpRCgaRw/exec'; };
+  btn.textContent='Check order status again';
+  btn.onclick=checkPendingTestOrder;
 }
   function recoverPendingCheckout(){
   if(CHECKOUT_DEMO_MODE){
@@ -1206,7 +1268,8 @@ function showPendingCheckout(order,totals){
   if(saved&&saved.order&&/^[a-zA-Z0-9_-]{16,100}$/.test(saved.order.requestId)){
     checkoutPending=saved;
     showPendingCheckout(saved.order,saved.totals||checkoutTotals());
-  
+    // Never automatically resubmit a pending order.
+    void checkPendingTestOrder();
   }else{
     $('#checkoutStatus').textContent='Your order will be confirmed after successful verification. Please do not submit twice.';$('#checkoutStatus').style.color='#8a4900';
     const btn=$('#placeOrder');btn.disabled=CHECKOUT_DEMO_MODE;btn.textContent=CHECKOUT_DEMO_MODE ? 'TEST endpoint not configured — submissions disabled' : 'Submit TEST order';
@@ -1278,24 +1341,18 @@ async function submitCheckoutOrder(){
   $('#checkoutStatus').style.color='#8a4900';
   $('#checkoutStatus').textContent='Sending order request. Please wait…';
   checkoutPending={order,totals};
- try {
-  const safePending = {
-    order: { ...order },
-    totals: totals
-  };
-
-  delete safePending.order.idToken;
-
-  sessionStorage.setItem(
-    CHECKOUT_REQUEST_KEY,
-    JSON.stringify(safePending)
-  );
-} catch(e) {} try{
+  try{
+    const storedOrder = {...order};
+    delete storedOrder.idToken;
+    sessionStorage.setItem(CHECKOUT_REQUEST_KEY, JSON.stringify({order:storedOrder,totals}));
+  }catch(e){}
+  try{
     await fetch(GB_TEST_ORDERS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(order)});
     $('#checkoutStatus').textContent='TEST request sent. Verify in TEST Google Sheet or My Orders; browser cannot read no-cors response.';
     // The existing public GET endpoint intentionally refuses order lookup.
     // A no-cors POST cannot prove an order was saved; never show false confirmation.
     showPendingCheckout(order,totals);
+    void checkPendingTestOrder();
   }catch(err){
     showPendingCheckout(order,totals);
   }
