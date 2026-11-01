@@ -1278,8 +1278,19 @@ async function submitCheckoutOrder(){
   $('#checkoutStatus').style.color='#8a4900';
   $('#checkoutStatus').textContent='Sending order request. Please wait…';
   checkoutPending={order,totals};
-  try{sessionStorage.setItem(CHECKOUT_REQUEST_KEY,JSON.stringify(checkoutPending));}catch(e){}
-  try{
+ try {
+  const safePending = {
+    order: { ...order },
+    totals: totals
+  };
+
+  delete safePending.order.idToken;
+
+  sessionStorage.setItem(
+    CHECKOUT_REQUEST_KEY,
+    JSON.stringify(safePending)
+  );
+} catch(e) {} try{
     await fetch(GB_TEST_ORDERS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(order)});
     $('#checkoutStatus').textContent='TEST request sent. Verify in TEST Google Sheet or My Orders; browser cannot read no-cors response.';
     // The existing public GET endpoint intentionally refuses order lookup.
