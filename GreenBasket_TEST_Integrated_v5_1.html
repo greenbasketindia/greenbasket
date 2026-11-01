@@ -626,7 +626,6 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQhc_shbh
 const IMG_DIR = "images/images/";
 const CART_KEY = "gb_cart_v1";
 const CHECKOUT_REQUEST_KEY = "gb_test_checkout_pending_v51";
-const ORDERS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyULj3I2ImCkZEPqe86moVJ2057bXn9nrYjEJT7O24-Gjn2vtA-78prBjva5imjFFc3/exec";
   // Paste ONLY your newly deployed TEST Apps Script /exec URL here.
 const GB_TEST_ORDERS_URL = "https://script.google.com/macros/s/AKfycbyULj3I2ImCkZEPqe86moVJ2057bXn9nrYjEJT7O24-Gjn2vtA-78prBjva5imjFFc3/exec";
 const CHECKOUT_DEMO_MODE = !/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(GB_TEST_ORDERS_URL);
@@ -1005,6 +1004,7 @@ $('#csend').addEventListener('click',e=>{e.preventDefault();window.gbRequireChec
 $('#checkoutClose').onclick=checkoutClose;$('#checkoutOv').onclick=checkoutClose;
 $('#checkoutForm').addEventListener('change',()=>{const upi=$('#checkoutForm').elements.payment.value==='UPI';$('#upiDetails').hidden=!upi;$('#checkoutForm').elements.utr.required=upi;});
 /* TEST only: nonce-bound, Firebase-authenticated verification via Apps Script HTMLService. */
+window.GB_TEST_BUILD = "secure-iframe-2026-11-01-v2";
 let gbVerificationInProgress = false;
 function verifySavedOrder(requestId) {
   return new Promise(async resolve => {
