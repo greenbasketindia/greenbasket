@@ -1004,7 +1004,7 @@ $('#csend').addEventListener('click',e=>{e.preventDefault();window.gbRequireChec
 $('#checkoutClose').onclick=checkoutClose;$('#checkoutOv').onclick=checkoutClose;
 $('#checkoutForm').addEventListener('change',()=>{const upi=$('#checkoutForm').elements.payment.value==='UPI';$('#upiDetails').hidden=!upi;$('#checkoutForm').elements.utr.required=upi;});
 /* TEST only: nonce-bound, Firebase-authenticated verification via Apps Script HTMLService. */
-window.GB_TEST_BUILD = "secure-iframe-2026-11-01-v2";
+window.GB_TEST_BUILD = "receipt-auto-open-2026-11-01-v3";
 let gbVerificationInProgress = false;
 function verifySavedOrder(requestId) {
   return new Promise(async resolve => {
@@ -1103,8 +1103,14 @@ function showCheckoutWhatsApp(order,totals){
 
   
 function showVerifiedCheckout(requestId){
-  
-document.getElementById('checkout').classList.add('confirmed');
+  // Called only after a successful authenticated order verification.
+  // Keep the receipt visible even when verification completes after closing checkout.
+  closeCart();
+  const checkoutDialog = document.getElementById('checkout');
+  checkoutDialog.classList.add('confirmed', 'show');
+  checkoutDialog.setAttribute('aria-hidden', 'false');
+  document.getElementById('checkoutOv').classList.add('show');
+  document.body.classList.add('lock');
 
   const btn = $('#placeOrder');
 
@@ -1152,10 +1158,12 @@ document.getElementById('checkout').classList.add('confirmed');
 
   addReceiptRow('Order ID', 'GB-' + requestId);
   addReceiptRow('Payment', order?.payment === 'COD'
-    ? 'Cash on Delivery' : 'UPI');
+    ? 'Cash on Delivery' : order?.payment === 'UPI'
+      ? 'UPI (payment verification pending)' : 'Not available');
   addReceiptRow('Expected Delivery', checkoutDeliveryDate());
-  addReceiptRow('Total Amount',
-    totals ? '₹' + totals.total : 'To be confirmed', true);
+  addReceiptRow('Estimated Total',
+    totals && Number.isFinite(Number(totals.total))
+      ? '₹' + Number(totals.total).toFixed(2) : 'Not available', true);
 
   const note = document.createElement('p');
   note.textContent =
@@ -1173,7 +1181,7 @@ document.getElementById('checkout').classList.add('confirmed');
   const whatsappBox = $('#checkoutWhatsApp');
 
   if (whatsappBox) {
-    whatsappBox.hidden = false;
+    whatsappBox.hidden = !order;
     whatsappBox.innerHTML = '';
 
     const whatsappBtn = document.createElement('button');
@@ -1232,6 +1240,7 @@ whatsappBox.appendChild(whatsappBtn);
 };
 
 
+  // Never retain the Firebase token after confirmation.
   checkoutPending = null;
 
   try {
