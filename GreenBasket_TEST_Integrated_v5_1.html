@@ -386,6 +386,20 @@ body.has-bar .fab{display:none}
   font-weight: 600;
 }
 
+/* Product search and sort — TEST website only */
+.gb-searchbar{display:flex;gap:10px;align-items:stretch;margin:18px 0 10px}
+.gb-searchinput{display:flex;align-items:center;gap:10px;flex:1;min-width:0;background:#fff;border:1px solid #cbdcc9;border-radius:12px;padding:0 14px;color:#45634b}
+.gb-searchinput:focus-within{border-color:#08742d;box-shadow:0 0 0 3px #08742d18}
+.gb-searchinput input{width:100%;min-width:0;border:0;outline:0;padding:14px 0;font:inherit;background:transparent;color:#17341c}
+.gb-filterbtn{width:48px;border:1px solid #cbdcc9;border-radius:12px;background:#fff;color:#075c25;font-size:24px;cursor:pointer}
+.gb-filterbtn[aria-expanded="true"]{background:#eaf5eb}
+.gb-filterpanel{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px 14px;margin-bottom:8px;border:1px solid #dce9da;border-radius:12px;background:#f8fbf7;font-size:13px}
+.gb-filterpanel[hidden]{display:none}
+.gb-filterpanel label{display:flex;align-items:center;gap:8px}
+.gb-filterpanel select{padding:8px;border:1px solid #cbdcc9;border-radius:8px;background:white}
+.gb-filterpanel button{border:0;background:transparent;color:#075c25;font:inherit;cursor:pointer;text-decoration:underline}
+.gb-searchcount{font-size:12px;color:#55705a;margin:0 0 12px}
+@media(max-width:560px){.gb-searchinput input{font-size:13px}.gb-filterpanel{align-items:stretch}.gb-filterpanel label{flex-wrap:wrap}}
 </style>
 <style>
 #gbLoginOverlay{position:fixed;inset:0;z-index:200;background:rgba(5,30,12,.72);display:none;align-items:center;justify-content:center;padding:14px}
@@ -513,6 +527,16 @@ body.has-bar .fab{display:none}
 <section id="shop"><div class="wrap">
  <div class="sh"><div><h2>Fresh picks of the day</h2><p>Choose a quantity, add to cart and complete your order using website checkout. Review your order total before submitting.</p></div>
   <div class="r"><span>Order today for <b>tomorrow morning</b></span></div></div>
+ <div class="gb-searchbar" role="search" aria-label="Search products">
+  <label class="gb-searchinput"><span aria-hidden="true">⌕</span><input id="gbProductSearch" type="search" placeholder="Search fruits, vegetables, groceries..." aria-label="Search products" autocomplete="off"></label>
+  <button id="gbFilterToggle" class="gb-filterbtn" type="button" aria-label="Show sorting and filters" aria-expanded="false" aria-controls="gbFilterPanel" title="Sort &amp; filter">☷</button>
+ </div>
+ <div id="gbFilterPanel" class="gb-filterpanel" hidden>
+  <label>Sort by <select id="gbProductSort"><option value="default">Default order</option><option value="name">Name A–Z</option><option value="priceLow">Price: low to high</option><option value="priceHigh">Price: high to low</option></select></label>
+  <label class="gb-stockfilter"><input id="gbAvailableOnly" type="checkbox"> Available products only</label>
+  <button id="gbClearFilters" type="button">Reset filters</button>
+ </div>
+ <p id="gbSearchCount" class="gb-searchcount" aria-live="polite"></p>
  <div class="grid" id="grid"></div>
 </div></section>
 
@@ -779,6 +803,7 @@ async function loadProducts(){
 
 /* ===== State ===== */
 let PRODUCTS=[], CATS=[], active="All";
+let gbSearchText="", gbSort="default", gbAvailableOnly=false;
 let cart=[], note="";          /* cart = [{name, qty}] , one line per product */
 const chosen={};               /* quantity currently picked on each card */
 let cartOpen=false, lastFocus=null;
@@ -862,7 +887,12 @@ function renderCats(){
   $("#cats").innerHTML = CATS.map(c=>`<button class="cat ${active===c.name?'on':''}" data-cat="${esc(c.name)}" type="button"><img src="${esc(c.img)}" alt="" loading="lazy">${esc(c.name)}</button>`).join("");
 }
 function renderGrid(){
-  const list=PRODUCTS.filter(p=>active==="All"||p.cat===active);
+  const term=gbSearchText.trim().toLocaleLowerCase();
+  const list=PRODUCTS.filter(p=>(active==="All"||p.cat===active) && (!gbAvailableOnly||p.available) && (!term||[p.name,p.cat,p.desc||""].some(v=>String(v).toLocaleLowerCase().includes(term))));
+  if(gbSort==="name") list.sort((a,b)=>a.name.localeCompare(b.name));
+  if(gbSort==="priceLow") list.sort((a,b)=>(a.price??Infinity)-(b.price??Infinity));
+  if(gbSort==="priceHigh") list.sort((a,b)=>(b.price??-Infinity)-(a.price??-Infinity));
+  $("#gbSearchCount").textContent=(term||gbAvailableOnly||gbSort!=="default"||active!=="All")?`${list.length} product${list.length===1?"":"s"} found`:"";
   $("#grid").innerHTML = list.length ? list.map(p=>{
     const it=cart.find(i=>i.name===p.name);
     const cur=chosen[p.name]||(it&&it.qty)||p.options[p.def];
@@ -878,7 +908,7 @@ function renderGrid(){
      <button class="btn" type="button" data-add="${esc(p.name)}">${CARTI}<span class="bl">${it?"Update cart":"Add to cart"}</span></button>`
      :`<a class="btn" href="${waLink(askMsg(p.name))}" target="_blank" rel="noopener">${WAI}Ask Support</a>`}
     </article>`;
-  }).join("") : '<p class="empty">No products in this category yet.</p>';
+  }).join("") : '<p class="empty">No matching products found. Try another search or reset filters.</p>';
 }
 function renderCart(){
   const n=cart.length;
@@ -943,6 +973,11 @@ document.addEventListener("change",e=>{
   const q=e.target.closest("[data-q]"); if(q){ chosen[q.dataset.q]=q.value; return; }
   const c=e.target.closest("[data-cq]"); if(c){ setQty(c.dataset.cq,c.value); }
 });
+$("#gbProductSearch").addEventListener("input",e=>{ gbSearchText=e.target.value; renderGrid(); });
+$("#gbFilterToggle").addEventListener("click",()=>{const panel=$("#gbFilterPanel");panel.hidden=!panel.hidden;$("#gbFilterToggle").setAttribute("aria-expanded",String(!panel.hidden));});
+$("#gbProductSort").addEventListener("change",e=>{gbSort=e.target.value;renderGrid();});
+$("#gbAvailableOnly").addEventListener("change",e=>{gbAvailableOnly=e.target.checked;renderGrid();});
+$("#gbClearFilters").addEventListener("click",()=>{gbSearchText="";gbSort="default";gbAvailableOnly=false;$("#gbProductSearch").value="";$("#gbProductSort").value="default";$("#gbAvailableOnly").checked=false;renderGrid();});
 $("#cnote").addEventListener("input",e=>{ note=e.target.value.slice(0,200); saveCart(); updateWaLinks(); });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ closeCart(); $("#nav").classList.remove("open"); } });
 
