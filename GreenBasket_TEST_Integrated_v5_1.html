@@ -587,7 +587,9 @@ body.has-bar .fab{display:none}
 <section id="checkout" role="dialog" aria-modal="true" aria-label="Green Basket checkout" aria-hidden="true">
  <div class="ch"><h2>Secure checkout</h2><button class="cx" id="checkoutClose" type="button" aria-label="Close checkout">✕</button></div>
  <form id="checkoutForm" class="checkout-body">
-  <div class="fields2"><label>Full name<input name="name" maxlength="100" required autocomplete="name"></label><label>Mobile number<input name="mobile" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" required autocomplete="tel"></label></div>
+  <div class="fields2"><label>Full name<input name="name" maxlength="100" required autocomplete="name"></label><label>Firebase verified mobile number<input name="mobile" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" required readonly autocomplete="off" style="background:#f1f6ef;cursor:not-allowed" aria-describedby="verifiedPhoneHelp"></label></div>
+  <p id="verifiedPhoneHelp" class="pnote" style="margin:5px 0 9px">Verified login number cannot be edited.</p>
+  <label>Alternate delivery contact (optional)<input name="alternateMobile" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="off" placeholder="10-digit delivery contact number"></label>
   <label>Full delivery address<textarea name="address" maxlength="500" required autocomplete="street-address"></textarea></label>
   <div class="fields2"><label>Landmark (optional)<input name="landmark" maxlength="150"></label><label>PIN code<input name="pin" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="postal-code"></label></div>
   <div class="summary" id="checkoutSummary"></div>
@@ -975,6 +977,12 @@ function checkoutDeliveryDate(){
   const d=new Date(Date.UTC(f('year'),f('month')-1,f('day')+(f('hour')>=23?2:1)));
   return new Intl.DateTimeFormat('en-IN',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}).format(d);
 }
+function syncVerifiedCheckoutPhone(){
+  const input=$('#checkoutForm').elements.mobile;
+  const user=window.gbCheckoutVerifiedUser;
+  input.value=user?.phoneNumber ? user.phoneNumber.replace(/\D/g,'').slice(-10) : '';
+  input.readOnly=true;
+}
 function checkoutOpen(){
   if(!window.gbCheckoutVerifiedUser || !window.gbCheckoutVerifiedUser.phoneNumber){
     if(typeof window.gbRequireCheckoutLogin==='function') window.gbRequireCheckoutLogin();
@@ -988,6 +996,7 @@ document.getElementById('checkout').classList.remove('confirmed');
   const totals=checkoutTotals();
   if(!totals){alert('Checkout requires current prices for all items. Please contact Green Basket on WhatsApp.');return;}
   closeCart();
+  syncVerifiedCheckoutPhone();
   $('#checkoutSummary').innerHTML=`<div><span>Subtotal (estimate)</span><b>${money(totals.subtotal)}</b></div><div><span>Delivery</span><b>${totals.delivery?money(totals.delivery):'FREE'}</b></div><div><strong>Total (estimate)</strong><strong>${money(totals.total)}</strong></div><div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div><small>Minimum order ₹150. Delivery ₹20 below ₹300; FREE at ₹300 or more. Cutoff 11 PM IST. Final amount/date verified by server.</small>`;
   $('#checkoutOv').classList.add('show');$('#checkout').classList.add('show');$('#checkout').setAttribute('aria-hidden','false');document.body.classList.add('lock');
   recoverPendingCheckout();
@@ -1306,7 +1315,8 @@ async function submitCheckoutOrder(){
   }
 
   const fd=new FormData(form);
-  const note=String(fd.get('note')||'').trim();
+  const alternateMobile=String(fd.get('alternateMobile')||'').trim();
+  const note=[String(fd.get('note')||'').trim(), alternateMobile ? 'Alternate delivery contact: '+alternateMobile : ''].filter(Boolean).join(' | ');
   
   // Green Basket: delivery PIN-code restriction
   const deliveryPin = String(fd.get('pin') || '').trim();
@@ -1332,6 +1342,9 @@ async function submitCheckoutOrder(){
     alert('Verify your mobile number before ordering.');return;
   }
   const verifiedPhone=verifiedUser.phoneNumber.replace(/\D/g,'').slice(-10);
+  if(alternateMobile && !/^[6-9]\d{9}$/.test(alternateMobile)){
+    $('#checkoutStatus').textContent='Enter a valid 10-digit alternate delivery number.';return;
+  }
   if(String(fd.get('mobile')).trim()!==verifiedPhone){
     $('#checkoutStatus').textContent='Checkout mobile must match verified Firebase number: '+verifiedPhone;
     return;
@@ -1395,6 +1408,7 @@ window.gbRequireCheckoutLogin=()=>{
 onAuthStateChanged(auth,user=>{
  currentUser=user&&user.phoneNumber?user:null;authReady=true;
  window.gbCheckoutVerifiedUser=currentUser;
+ syncVerifiedCheckoutPhone();
  el('gbSessionState').textContent=currentUser?'| Logged in: '+currentUser.phoneNumber:'| Signed out';
  el('gbTestSignOut').hidden=!currentUser;
  if(currentUser&&waiting){waiting=false;hideLogin();checkoutOpen()}
