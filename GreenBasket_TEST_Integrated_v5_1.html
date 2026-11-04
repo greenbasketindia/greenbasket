@@ -1206,14 +1206,14 @@ function showVerifiedCheckout(requestId){
   addReceiptRow('Payment', order?.payment === 'COD'
     ? 'Cash on Delivery' : order?.payment === 'UPI'
       ? 'UPI (payment verification pending)' : 'Not available');
-  addReceiptRow('Expected Delivery', checkoutDeliveryDate());
-  addReceiptRow('Estimated Total',
+  addReceiptRow('Delivery Date', 'To be confirmed in My Orders');
+  addReceiptRow('Estimated Total (at checkout)',
     totals && Number.isFinite(Number(totals.total))
       ? '₹' + Number(totals.total).toFixed(2) : 'Not available', true);
 
   const note = document.createElement('p');
   note.textContent =
-    '🌿 Final delivery details will be confirmed by Green Basket.';
+    '🌿 Your order was verified. Check My Orders for the latest status, final amount and delivery details.';
   note.style.cssText =
     'font-size:12px;color:#607263;text-align:center;margin-top:18px';
 
