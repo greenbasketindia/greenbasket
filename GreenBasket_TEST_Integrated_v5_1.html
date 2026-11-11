@@ -1467,7 +1467,14 @@ el('gbSendOtp').onclick=async()=>{
   if(!verifier){verifier=new RecaptchaVerifier(auth,'gbRecaptcha',{size:'normal','expired-callback':()=>message('reCAPTCHA expired. Please retry.')});await verifier.render()}
   confirmation=await signInWithPhoneNumber(auth,'+91'+phone,verifier);
   el('gbOtpStep').hidden=false;message('OTP requested. Enter the configured Firebase test code.');
- }catch(e){message('Could not send OTP: '+(e.code||e.message));if(verifier){verifier.clear();verifier=null;el('gbRecaptcha').replaceChildren()}}
+ }catch(e){message('Could not send OTP: '+(e.code||e.message));if (verifier) {
+  try {
+    verifier.clear();
+  } catch (cleanupError) {
+    console.warn('reCAPTCHA cleanup:', cleanupError);
+  }
+  verifier = null;
+}
  finally{setBusy(false)}
 };
 el('gbVerifyOtp').onclick=async()=>{
