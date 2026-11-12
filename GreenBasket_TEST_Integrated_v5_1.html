@@ -1427,17 +1427,17 @@ loadProducts().then(list=>{
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js';
 import {getAuth,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js';
 
-const config = {
-  apiKey: "AIzaSyAE6CtdJuxFBr6b2XZwjX1pUWGT-I5-BiQ",
-  authDomain: "green-basket-testing.firebaseapp.com",
-  databaseURL: "https://green-basket-testing-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "green-basket-testing",
-  storageBucket: "green-basket-testing.firebasestorage.app",
-  messagingSenderId: "777035733434",
-  appId: "1:777035733434:web:f2efffcdaa996cb6dd2583",
-  measurementId: "G-NDMFMLJC5P"
-};
 
+const config = {
+  apiKey: "AIzaSyCO44jbPyRtHEviHlKscT5zAYDeKudu3pQ",
+  authDomain: "green-basket-f404f.firebaseapp.com",
+  databaseURL: "https://green-basket-f404f-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "green-basket-f404f",
+  storageBucket: "green-basket-f404f.firebasestorage.app",
+  messagingSenderId: "551361935382",
+  appId: "1:551361935382:web:f056173756688da8275d37",
+  measurementId: "G-DE3D2NLLWX"
+};
 const auth=getAuth(initializeApp(config));auth.languageCode='en';
 const el=id=>document.getElementById(id);
 let verifier=null,confirmation=null,currentUser=null,authReady=false,waiting=false;
