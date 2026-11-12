@@ -1460,25 +1460,49 @@ onAuthStateChanged(auth,user=>{
  if(currentUser&&waiting){waiting=false;hideLogin();checkoutOpen()}
 });
 el('gbCancelLogin').onclick=()=>{waiting=false;hideLogin()};
-el('gbSendOtp').onclick=async()=>{
- const phone=el('gbLoginPhone').value.trim();if(!/^[6-9]\d{9}$/.test(phone)){message('Enter a valid 10-digit Indian number.');return}
- setBusy(true);
- try{
-  if(!verifier){verifier=new RecaptchaVerifier(auth,'gbRecaptcha',{size:'normal','expired-callback':()=>message('reCAPTCHA expired. Please retry.')});await verifier.render()}
-  confirmation=await signInWithPhoneNumber(auth,'+91'+phone,verifier);
-  el('gbOtpStep').hidden=false;message('OTP requested. Enter the configured Firebase test code.');
- }catch(e){message('Could not send OTP: '+(e.code||e.message));if (verifier) {
-  try {
-    verifier.clear();
-  } catch (cleanupError) {
-    console.warn('reCAPTCHA cleanup:', cleanupError);
+el('gbSendOtp').onclick = async () => {
+  const phone = el('gbLoginPhone').value.trim();
+
+  if (!/^[6-9]\d{9}$/.test(phone)) {
+    message('Enter a valid 10-digit Indian number.');
+    return;
   }
-  verifier = null;
-}
-}
- finally{setBusy(false)}
+
+  setBusy(true);
+
+  try {
+    if (!verifier) {
+      verifier = new RecaptchaVerifier(auth, 'gbRecaptcha', {
+        size: 'normal',
+        'expired-callback': () => message('reCAPTCHA expired. Please retry.')
+      });
+
+      await verifier.render();
+    }
+
+    confirmation = await signInWithPhoneNumber(auth, '+91' + phone, verifier);
+
+    el('gbOtpStep').hidden = false;
+    message('OTP requested. Enter the configured Firebase test code.');
+
+  } catch (e) {
+    message('Could not send OTP: ' + (e.code || e.message));
+
+    if (verifier) {
+      try {
+        verifier.clear();
+      } catch (cleanupError) {
+        console.warn('reCAPTCHA cleanup:', cleanupError);
+      }
+
+      verifier = null;
+    }
+
+  } finally {
+    setBusy(false);
+  }
 };
-el('gbVerifyOtp').onclick=async()=>{
+  el('gbVerifyOtp').onclick=async()=>{
  if(!confirmation){message('Send OTP first.');return}
  const code=el('gbLoginOtp').value.trim();if(!/^\d{6}$/.test(code)){message('Enter a 6-digit OTP.');return}
  setBusy(true);
