@@ -1000,7 +1000,7 @@ function checkoutTotals(){
     lines.reduce((a, b) => a + b, 0) * 100
   ) / 100;
 
-  const delivery = subtotal >= 300 ? 0 : 20;
+  const delivery = subtotal >= 300 ? 0 : 30;
   const total = Math.round((subtotal + delivery) * 100) / 100;
 
   return { subtotal, delivery, total };
