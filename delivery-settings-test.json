@@ -3,6 +3,6 @@
   "deliveryCharge": 30,
   "freeDeliveryAbove": 300,
   "minimumOrder": 199,
-  "mode": "TEST",
+  "mode": "INVALID",
   "version": 1
 }
