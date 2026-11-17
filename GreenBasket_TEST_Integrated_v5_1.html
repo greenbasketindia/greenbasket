@@ -991,6 +991,31 @@ $("#yr").textContent=new Date().getFullYear();
 /* ===== Checkout: server independently verifies product prices and delivery ===== */
 let checkoutPending = null;
 
+// TEST ONLY: publicly readable configuration, never a source of payment/order authority.
+let gbDeliverySettingsTEST = null;
+const gbDeliverySettingsReadyTEST = (async function () {
+  try {
+    const response = await fetch('./delivery-settings-test.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Delivery settings HTTP ' + response.status);
+    const data = await response.json();
+    if (data.mode !== 'TEST' || data.version !== 1 ||
+        !Number.isSafeInteger(data.deliveryCharge) || data.deliveryCharge < 0 ||
+        !Number.isSafeInteger(data.freeDeliveryAbove) || data.freeDeliveryAbove < 0 ||
+        !Number.isSafeInteger(data.minimumOrder) || data.minimumOrder < 1) {
+      throw new Error('Invalid TEST delivery settings');
+    }
+    gbDeliverySettingsTEST = Object.freeze({
+      deliveryCharge: data.deliveryCharge,
+      freeDeliveryAbove: data.freeDeliveryAbove,
+      minimumOrder: data.minimumOrder
+    });
+    renderCart();
+  } catch (error) {
+    gbDeliverySettingsTEST = null;
+    console.error('TEST checkout disabled: delivery settings unavailable', error);
+  }
+})();
+
 function checkoutTotals(){
   const lines = cart.map(lineEstimate);
 
@@ -1000,7 +1025,9 @@ function checkoutTotals(){
     lines.reduce((a, b) => a + b, 0) * 100
   ) / 100;
 
-  const delivery = subtotal >= 300 ? 0 : 30;
+  if (!gbDeliverySettingsTEST) return null;
+  const delivery = subtotal >= gbDeliverySettingsTEST.freeDeliveryAbove
+    ? 0 : gbDeliverySettingsTEST.deliveryCharge;
   const total = Math.round((subtotal + delivery) * 100) / 100;
 
   return { subtotal, delivery, total };
@@ -1029,10 +1056,10 @@ document.getElementById('checkout').classList.remove('confirmed');
 
   $('#checkoutStatus').style.color='#8a4900';
   const totals=checkoutTotals();
-  if(!totals){alert('Checkout requires current prices for all items. Please contact Green Basket on WhatsApp.');return;}
+  if(!totals){alert('TEST checkout unavailable: delivery settings or prices could not be loaded. Please try again later.');return;}
   closeCart();
   syncVerifiedCheckoutPhone();
-  $('#checkoutSummary').innerHTML=`<div><span>Subtotal (estimate)</span><b>${money(totals.subtotal)}</b></div><div><span>Delivery</span><b>${totals.delivery?money(totals.delivery):'FREE'}</b></div><div><strong>Total (estimate)</strong><strong>${money(totals.total)}</strong></div><div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div><small>Minimum order ₹199. Delivery ₹30 below ₹300; FREE at ₹300 or more. Cutoff 11 PM IST. Final amount/date verified by server.</small>`;
+  $('#checkoutSummary').innerHTML=`<div><span>Subtotal (estimate)</span><b>${money(totals.subtotal)}</b></div><div><span>Delivery</span><b>${totals.delivery?money(totals.delivery):'FREE'}</b></div><div><strong>Total (estimate)</strong><strong>${money(totals.total)}</strong></div><div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div><small>Minimum order ₹${gbDeliverySettingsTEST.minimumOrder}. Delivery ₹${gbDeliverySettingsTEST.deliveryCharge} below ₹${gbDeliverySettingsTEST.freeDeliveryAbove}; FREE at ₹${gbDeliverySettingsTEST.freeDeliveryAbove} or more. Cutoff 11 PM IST. Final amount/date must be verified by server.</small>`;
   $('#checkoutOv').classList.add('show');$('#checkout').classList.add('show');$('#checkout').setAttribute('aria-hidden','false');document.body.classList.add('lock');
   recoverPendingCheckout();
 }
@@ -1335,13 +1362,17 @@ async function submitCheckoutOrder(){
   const form=$('#checkoutForm');if(!form.reportValidity())return;
   const totals=checkoutTotals();if(!totals){alert('Prices unavailable. Please contact us.');return;}
   
-  // Green Basket: minimum order ₹150
-  if (totals.subtotal < 150) {
+  // TEST checkout must have validated settings before any order submission.
+  if (!gbDeliverySettingsTEST) {
+    alert('TEST checkout disabled: delivery settings unavailable.');
+    return;
+  }
+  if (totals.subtotal < gbDeliverySettingsTEST.minimumOrder) {
     const status = document.getElementById('checkoutStatus');
 
     status.textContent =
-      '❌ Minimum order is ₹150. Please add products worth ₹' +
-      (150 - totals.subtotal).toFixed(2) +
+      '❌ Minimum order is ₹' + gbDeliverySettingsTEST.minimumOrder + '. Please add products worth ₹' +
+      (gbDeliverySettingsTEST.minimumOrder - totals.subtotal).toFixed(2) +
       ' more to continue.';
 
     status.style.color = '#b42318';
