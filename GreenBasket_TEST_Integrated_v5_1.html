@@ -1016,6 +1016,34 @@ const gbDeliverySettingsReadyTEST = (async function () {
   }
 })();
 
+// Revalidate the public TEST config at each checkout boundary; fail closed.
+async function gbRefreshDeliverySettingsTEST() {
+  gbDeliverySettingsTEST = null;
+  try {
+    const url = new URL('./delivery-settings-test.json', window.location.href);
+    url.searchParams.set('_gb_check', String(Date.now()));
+    const response = await fetch(url.toString(), { cache: 'no-store' });
+    if (!response.ok) throw new Error('Delivery settings HTTP ' + response.status);
+    const data = await response.json();
+    if (data.mode !== 'TEST' || data.version !== 1 ||
+        !Number.isSafeInteger(data.deliveryCharge) || data.deliveryCharge < 0 ||
+        !Number.isSafeInteger(data.freeDeliveryAbove) || data.freeDeliveryAbove < 0 ||
+        !Number.isSafeInteger(data.minimumOrder) || data.minimumOrder < 1) {
+      throw new Error('Invalid TEST delivery settings');
+    }
+    gbDeliverySettingsTEST = Object.freeze({
+      deliveryCharge: data.deliveryCharge,
+      freeDeliveryAbove: data.freeDeliveryAbove,
+      minimumOrder: data.minimumOrder
+    });
+    return true;
+  } catch (error) {
+    gbDeliverySettingsTEST = null;
+    console.error('TEST checkout disabled: invalid or unavailable delivery settings', error);
+    return false;
+  }
+}
+
 function checkoutTotals(){
   const lines = cart.map(lineEstimate);
 
@@ -1045,13 +1073,18 @@ function syncVerifiedCheckoutPhone(){
   input.value=user?.phoneNumber ? user.phoneNumber.replace(/\D/g,'').slice(-10) : '';
   input.readOnly=true;
 }
-function checkoutOpen(){
+async function checkoutOpen(){
   if(!window.gbCheckoutVerifiedUser || !window.gbCheckoutVerifiedUser.phoneNumber){
     if(typeof window.gbRequireCheckoutLogin==='function') window.gbRequireCheckoutLogin();
     else alert('Firebase login is loading. Please try again.');
     return;
   }
-  
+  // Always fetch current TEST settings before opening checkout.
+  if (!(await gbRefreshDeliverySettingsTEST())) {
+    alert('TEST checkout blocked: delivery settings invalid or unavailable.');
+    return;
+  }
+
 document.getElementById('checkout').classList.remove('confirmed');
 
   $('#checkoutStatus').style.color='#8a4900';
@@ -1360,6 +1393,10 @@ async function submitCheckoutOrder(){
     return;
   }
   const form=$('#checkoutForm');if(!form.reportValidity())return;
+  if (!(await gbRefreshDeliverySettingsTEST())) {
+    alert('TEST order blocked: delivery settings invalid or unavailable.');
+    return;
+  }
   const totals=checkoutTotals();if(!totals){alert('Prices unavailable. Please contact us.');return;}
   
   // TEST checkout must have validated settings before any order submission.
