@@ -991,55 +991,49 @@ $("#yr").textContent=new Date().getFullYear();
 /* ===== Checkout: server independently verifies product prices and delivery ===== */
 let checkoutPending = null;
 
-// TEST ONLY: publicly readable configuration, never a source of payment/order authority.
+// TEST checkout: read the same Firestore document as the authenticated order backend.
+// The server independently verifies all prices and delivery rules before saving.
 let gbDeliverySettingsTEST = null;
-const gbDeliverySettingsReadyTEST = (async function () {
-  try {
-    const response = await fetch('./delivery-settings-test.json', { cache: 'no-store' });
-    if (!response.ok) throw new Error('Delivery settings HTTP ' + response.status);
-    const data = await response.json();
-    if (data.mode !== 'TEST' || data.version !== 1 ||
-        !Number.isSafeInteger(data.deliveryCharge) || data.deliveryCharge < 0 ||
-        !Number.isSafeInteger(data.freeDeliveryAbove) || data.freeDeliveryAbove < 0 ||
-        !Number.isSafeInteger(data.minimumOrder) || data.minimumOrder < 1) {
-      throw new Error('Invalid TEST delivery settings');
-    }
-    gbDeliverySettingsTEST = Object.freeze({
-      deliveryCharge: data.deliveryCharge,
-      freeDeliveryAbove: data.freeDeliveryAbove,
-      minimumOrder: data.minimumOrder
-    });
-    renderCart();
-  } catch (error) {
-    gbDeliverySettingsTEST = null;
-    console.error('TEST checkout disabled: delivery settings unavailable', error);
-  }
-})();
+const GB_DELIVERY_DOCUMENT_URL =
+  'https://firestore.googleapis.com/v1/projects/green-basket-f404f/databases/(default)/documents/settings/delivery';
 
-// Revalidate the public TEST config at each checkout boundary; fail closed.
 async function gbRefreshDeliverySettingsTEST() {
   gbDeliverySettingsTEST = null;
   try {
-    const url = new URL('./delivery-settings-test.json', window.location.href);
-    url.searchParams.set('_gb_check', String(Date.now()));
-    const response = await fetch(url.toString(), { cache: 'no-store' });
-    if (!response.ok) throw new Error('Delivery settings HTTP ' + response.status);
-    const data = await response.json();
-    if (data.mode !== 'TEST' || data.version !== 1 ||
-        !Number.isSafeInteger(data.deliveryCharge) || data.deliveryCharge < 0 ||
-        !Number.isSafeInteger(data.freeDeliveryAbove) || data.freeDeliveryAbove < 0 ||
-        !Number.isSafeInteger(data.minimumOrder) || data.minimumOrder < 1) {
-      throw new Error('Invalid TEST delivery settings');
+    const user = window.gbCheckoutVerifiedUser;
+    if (!user || typeof user.getIdToken !== 'function' || !user.phoneNumber) {
+      throw new Error('Verified Firebase login required');
     }
-    gbDeliverySettingsTEST = Object.freeze({
-      deliveryCharge: data.deliveryCharge,
-      freeDeliveryAbove: data.freeDeliveryAbove,
-      minimumOrder: data.minimumOrder
+    const idToken = await user.getIdToken(true);
+    const response = await fetch(GB_DELIVERY_DOCUMENT_URL, {
+      method: 'GET',
+      headers: { Authorization: 'Bearer ' + idToken },
+      cache: 'no-store'
     });
+    if (!response.ok) throw new Error('Firestore delivery settings HTTP ' + response.status);
+    const document = await response.json();
+    if (!document || !document.fields) throw new Error('Delivery settings document missing');
+    const settings = {};
+    for (const key of ['deliveryCharge', 'freeDeliveryAbove', 'minimumOrder']) {
+      const field = document.fields[key];
+      if (!field || !Object.prototype.hasOwnProperty.call(field, 'integerValue')) {
+        throw new Error('Missing Firestore delivery setting: ' + key);
+      }
+      const raw = String(field.integerValue);
+      if (!/^(0|[1-9]\d*)$/.test(raw)) throw new Error('Invalid Firestore delivery setting: ' + key);
+      const amount = Number(raw);
+      if (!Number.isSafeInteger(amount) || amount > 1000000 ||
+          (key === 'minimumOrder' && amount < 1)) {
+        throw new Error('Out-of-range Firestore delivery setting: ' + key);
+      }
+      settings[key] = amount;
+    }
+    gbDeliverySettingsTEST = Object.freeze(settings);
+    renderCart();
     return true;
   } catch (error) {
     gbDeliverySettingsTEST = null;
-    console.error('TEST checkout disabled: invalid or unavailable delivery settings', error);
+    console.error('TEST checkout blocked: live Firestore delivery settings unavailable', error);
     return false;
   }
 }
@@ -1079,9 +1073,9 @@ async function checkoutOpen(){
     else alert('Firebase login is loading. Please try again.');
     return;
   }
-  // Always fetch current TEST settings before opening checkout.
+  // Always fetch live Firestore settings before opening checkout.
   if (!(await gbRefreshDeliverySettingsTEST())) {
-    alert('TEST checkout blocked: delivery settings invalid or unavailable.');
+    alert('TEST checkout blocked: live Firebase delivery settings unavailable. Please sign in and try again.');
     return;
   }
 
@@ -1394,7 +1388,7 @@ async function submitCheckoutOrder(){
   }
   const form=$('#checkoutForm');if(!form.reportValidity())return;
   if (!(await gbRefreshDeliverySettingsTEST())) {
-    alert('TEST order blocked: delivery settings invalid or unavailable.');
+    alert('TEST order blocked: live Firebase delivery settings unavailable. Please try again.');
     return;
   }
   const totals=checkoutTotals();if(!totals){alert('Prices unavailable. Please contact us.');return;}
