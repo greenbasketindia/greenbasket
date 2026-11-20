@@ -504,14 +504,14 @@ body.gb-auth-pending .gb-auth-content{
    <div id="gbSignupView" hidden>
      <div class="gb-signup-head"><h2>Create New Account</h2><p>Join Green Basket for fresh fruits, vegetables and groceries at your doorstep.</p></div>
      <div class="gb-signup-field"><label for="gbSignupName">Full Name</label><input id="gbSignupName" autocomplete="name" placeholder="Enter your full name" maxlength="80"></div>
-     <div class="gb-signup-field"><label for="gbSignupPhone">Mobile Number</label><div class="gb-signup-phone"><input id="gbSignupPhone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit mobile number"><button type="button" id="gbSignupGetOtp" disabled title="Signup OTP backend not connected">Get OTP</button></div></div>
-     <div class="gb-signup-field"><label for="gbSignupOtp">Enter OTP</label><input id="gbSignupOtp" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit verification code" disabled></div>
+     <div class="gb-signup-field"><label for="gbSignupPhone">Mobile Number</label><div class="gb-signup-phone"><input id="gbSignupPhone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit mobile number"><button type="button" id="gbSignupGetOtp" title="Send Firebase TEST OTP">Get OTP</button></div></div>
+     <div id="gbSignupRecaptcha" style="margin:12px 0"></div><div class="gb-signup-field"><label for="gbSignupOtp">Enter OTP</label><input id="gbSignupOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit verification code" disabled></div><button id="gbSignupVerifyOtp" type="button" disabled>Verify Mobile OTP</button><p id="gbSignupStatus" class="gb-signup-status" role="status" aria-live="polite"></p>
      <div class="gb-signup-field"><label for="gbSignupPassword">Create Password</label><input id="gbSignupPassword" type="password" autocomplete="new-password" placeholder="Minimum 8 characters" minlength="8" disabled></div>
      <div class="gb-signup-field"><label for="gbSignupConfirm">Confirm Password</label><input id="gbSignupConfirm" type="password" autocomplete="new-password" placeholder="Confirm your password" disabled></div>
-     <p class="gb-signup-help">Signup preview only: OTP verification and secure password account creation will be enabled after backend setup. No password is collected or stored in this TEST preview.</p>
+     <p class="gb-signup-help">Firebase TEST phone verification is enabled. Password setup and Create Account remain disabled until secure backend integration. No password is collected or stored.</p>
      <button class="gb-signup-submit" type="button" disabled>Create Account</button>
      <p class="gb-signup-back">Already have an account? <button id="gbBackToSignin" type="button" class="gb-text-link">Sign In</button></p>
-     <p class="gb-auth-test">TEST MODE: Use configured fictional phone numbers for the existing OTP sign-in.</p>
+     <p class="gb-auth-test">TEST MODE: Use only configured fictional Firebase test numbers. OTP verification may create a Firebase test phone identity, but does not create a Green Basket customer profile.</p>
    </div>
 
   </div>
@@ -1591,7 +1591,7 @@ loadProducts().then(list=>{
 </script>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js';
-import {getAuth,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js';
+import {getAuth,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut,setPersistence,inMemoryPersistence} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js';
 
 
 const config = {
@@ -1647,6 +1647,60 @@ el('gbBackToSignin').onclick=()=>{
  el('gbLoginTitle').textContent='Sign In';
  message('Sign in using your configured Firebase TEST mobile number.');
  el('gbLoginPhone').focus();
+};
+// Isolated signup TEST verification: never changes the storefront's primary login session.
+const signupAuth=getAuth(initializeApp(config,'gb-signup-otp-test'));
+signupAuth.languageCode='en';
+const signupReady=setPersistence(signupAuth,inMemoryPersistence);
+let signupVerifier=null,signupConfirmation=null,signupPhone='',signupBusy=false,signupVerified=false;
+const signupStatus=s=>{el('gbSignupStatus').textContent=s};
+function signupSetBusy(b){signupBusy=b;el('gbSignupGetOtp').disabled=b;el('gbSignupVerifyOtp').disabled=b||!signupConfirmation||signupVerified}
+el('gbSignupGetOtp').onclick=async()=>{
+ const name=el('gbSignupName').value.trim();
+ const phone=el('gbSignupPhone').value.trim();
+ if(name.length<2||name.length>80){signupStatus('Enter your full name (2–80 characters).');return}
+ if(!/^[6-9]\d{9}$/.test(phone)){signupStatus('Enter a valid 10-digit Indian mobile number.');return}
+ signupSetBusy(true);
+ try{
+  await signupReady;
+  // Recreate verifier after errors; changing the number invalidates an earlier code.
+  signupConfirmation=null;signupVerified=false;signupPhone='';
+  el('gbSignupOtp').disabled=true;el('gbSignupOtp').value='';
+  if(!signupVerifier){
+   signupVerifier=new RecaptchaVerifier(signupAuth,'gbSignupRecaptcha',{
+    size:'normal','expired-callback':()=>signupStatus('reCAPTCHA expired. Request OTP again.')
+   });
+   await signupVerifier.render();
+  }
+  signupConfirmation=await signInWithPhoneNumber(signupAuth,'+91'+phone,signupVerifier);
+  signupPhone=phone;el('gbSignupOtp').disabled=false;
+  signupStatus('TEST OTP requested. Enter your Firebase-configured fictional verification code.');
+ }catch(e){
+  signupStatus('Could not request TEST OTP: '+(e.code||e.message));
+  if(signupVerifier){try{signupVerifier.clear()}catch(_){ }signupVerifier=null}
+ }finally{signupSetBusy(false)}
+};
+el('gbSignupPhone').addEventListener('input',()=>{
+ if(signupPhone&&el('gbSignupPhone').value.trim()!==signupPhone){
+  signupConfirmation=null;signupVerified=false;el('gbSignupOtp').disabled=true;
+  signupStatus('Number changed. Request a new TEST OTP.');signupSetBusy(false)
+ }
+});
+el('gbSignupVerifyOtp').onclick=async()=>{
+ if(!signupConfirmation||signupVerified)return;
+ const code=el('gbSignupOtp').value.trim();
+ if(!/^\d{6}$/.test(code)){signupStatus('Enter the 6-digit TEST OTP.');return}
+ signupSetBusy(true);
+ try{
+  const result=await signupConfirmation.confirm(code);
+  if(result.user.phoneNumber!=='+91'+signupPhone)throw new Error('Verified phone mismatch');
+  signupVerified=true;signupConfirmation=null;
+  el('gbSignupOtp').disabled=true;
+  signupStatus('Mobile verified in Firebase TEST. Password account creation is not enabled yet; no Green Basket customer profile was created.');
+  // Secondary app sign-out does not sign out the existing storefront session.
+  await signOut(signupAuth);
+ }catch(e){signupStatus('TEST OTP verification failed: '+(e.code||e.message))}
+ finally{signupSetBusy(false)}
 };
 el('gbSendOtp').onclick = async () => {
   const phone = el('gbLoginPhone').value.trim();
