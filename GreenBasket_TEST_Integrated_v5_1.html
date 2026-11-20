@@ -494,9 +494,9 @@ body.gb-auth-pending .gb-auth-content{
    <p>Welcome back to Green Basket</p>
    <label for="gbLoginPhone">Mobile number</label><input id="gbLoginPhone" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="Enter 10-digit mobile number">
    <div class="gb-password-row"><label for="gbPasswordPreview">Password</label><button type="button" id="gbForgotPasswordPreview" class="gb-text-link">Forgot password?</button></div>
-   <input id="gbPasswordPreview" type="password" autocomplete="off" placeholder="Password login coming soon" disabled aria-describedby="gbAuthMethodNote">
-   <p id="gbAuthMethodNote" class="gb-auth-note">For this TEST website, sign in securely using mobile OTP. Password sign-in will be enabled after backend authentication is configured.</p>
-   <div id="gbRecaptcha"></div><button id="gbSendOtp" type="button">Continue with Mobile OTP</button>
+   <input id="gbPasswordPreview" type="password" autocomplete="off" placeholder="Enter your password" aria-describedby="gbAuthMethodNote">
+   <p id="gbAuthMethodNote" class="gb-auth-note">TEST: Sign in with your password or use mobile OTP.</p>
+   <button id="gbPasswordLogin" type="button">Sign In with Password</button><div id="gbRecaptcha"></div><button id="gbSendOtp" type="button">Continue with Mobile OTP</button>
    <div id="gbOtpStep" hidden><label for="gbLoginOtp">6-digit verification code</label><input id="gbLoginOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Enter OTP"><button id="gbVerifyOtp" type="button">Verify OTP &amp; Sign In</button></div>
    <div id="gbLoginMessage" role="status" aria-live="polite"></div>
    <p class="gb-auth-create">New to Green Basket? <button id="gbCreateAccountPreview" type="button" class="gb-text-link">Create New Account</button></p>
@@ -509,10 +509,10 @@ body.gb-auth-pending .gb-auth-content{
      <div id="gbSignupRecaptcha" style="margin:12px 0"></div><div class="gb-signup-field"><label for="gbSignupOtp">Enter OTP</label><input id="gbSignupOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit verification code" disabled></div><button id="gbSignupVerifyOtp" type="button" disabled>Verify Mobile OTP</button><p id="gbSignupStatus" class="gb-signup-status" role="status" aria-live="polite"></p>
      <div class="gb-signup-field"><label for="gbSignupPassword">Create Password</label><input id="gbSignupPassword" type="password" autocomplete="new-password" placeholder="Minimum 8 characters" minlength="8" disabled></div>
      <div class="gb-signup-field"><label for="gbSignupConfirm">Confirm Password</label><input id="gbSignupConfirm" type="password" autocomplete="new-password" placeholder="Confirm your password" disabled></div>
-     <p class="gb-signup-help">Firebase TEST phone verification is enabled. Password setup and Create Account remain disabled until secure backend integration. No password is collected or stored.</p>
-     <button class="gb-signup-submit" type="button" disabled>Create Account</button>
+     <p class="gb-signup-help">TEST only: Verify your mobile OTP before setting a password. Passwords are handled by Firebase Authentication, not Google Sheets.</p>
+     <button id="gbSignupSubmit" class="gb-signup-submit" type="button" disabled>Create Account</button>
      <p class="gb-signup-back">Already have an account? <button id="gbBackToSignin" type="button" class="gb-text-link">Sign In</button></p>
-     <p class="gb-auth-test">TEST MODE: Use only configured fictional Firebase test numbers. OTP verification may create a Firebase test phone identity, but does not create a Green Basket customer profile.</p>
+     <p class="gb-auth-test">TEST MODE: Use only configured fictional Firebase test numbers. Use fictional Firebase test numbers only. Do not register real customers.</p>
    </div>
 
   </div>
@@ -1610,13 +1610,14 @@ loadProducts().then(list=>{
     if(!target)return;
     event.preventDefault();
     event.stopImmediatePropagation();
+    if(target.id==='gbCreateAccountPreview' && typeof window.gbSignupSetMode==='function')window.gbSignupSetMode('create');
     showSignup(target.id==='gbCreateAccountPreview');
   },true);
 })();
 </script>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js';
-import {getAuth,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut,setPersistence,inMemoryPersistence} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js';
+import {getAuth,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut,setPersistence,inMemoryPersistence,EmailAuthProvider,linkWithCredential,signInWithEmailAndPassword,updatePassword,updateProfile} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js';
 
 
 const config = {
@@ -1659,8 +1660,37 @@ onAuthStateChanged(auth,user=>{
  }
 });
 el('gbCancelLogin').onclick=()=>{message('Sign in to continue shopping.');};
-el('gbForgotPasswordPreview').onclick=()=>message('Password reset is not enabled in TEST yet. Please use mobile OTP sign-in.');
+let signupMode='create';
+// This alias is an internal Firebase email/password identifier, never a customer email.
+// TEST ONLY: must be replaced with a verified, controlled authentication domain before production.
+const aliasForPhone=phone=>'phone-'+phone+'@greenbasketindia.github.io';
+const signupSubmit=el('gbSignupSubmit');
+function setSignupMode(mode){
+ signupMode=mode;
+ el('gbSignupHeading').textContent=mode==='reset'?'Reset Password':'Create New Account';
+ signupSubmit.textContent=mode==='reset'?'Reset Password':'Create Account';
+ el('gbSignupName').closest('.gb-signup-field').hidden=mode==='reset';
+ signupStatus(mode==='reset'?'Verify your phone with Firebase TEST OTP to reset your password.':'Verify your mobile with Firebase TEST OTP.');
+}
+window.gbSignupSetMode=setSignupMode;
+el('gbForgotPasswordPreview').onclick=()=>{
+ setSignupMode('reset');el('gbSigninView').hidden=true;el('gbSignupView').hidden=false;
+ el('gbSignupPhone').focus();
+};
+el('gbPasswordLogin').onclick=async()=>{
+ const phone=el('gbLoginPhone').value.trim(),password=el('gbPasswordPreview').value;
+ if(!/^[6-9]\d{9}$/.test(phone)){message('Enter a valid 10-digit Indian mobile number.');return}
+ if(!password){message('Enter your password.');return}
+ el('gbPasswordLogin').disabled=true;
+ try{
+  const result=await signInWithEmailAndPassword(auth,aliasForPhone(phone),password);
+  if(result.user.phoneNumber!=='+91'+phone){await signOut(auth);throw new Error('Account phone mismatch')}
+  el('gbPasswordPreview').value='';message('Signed in successfully.');
+ }catch(e){message('Password sign-in failed: '+(e.code||e.message))}
+ finally{el('gbPasswordLogin').disabled=false}
+};
 el('gbCreateAccountPreview').onclick=()=>{
+  setSignupMode('create');
  el('gbSigninView').hidden=true;
  el('gbSignupView').hidden=false;
  el('gbLoginTitle').textContent='Create New Account';
@@ -1683,13 +1713,14 @@ function signupSetBusy(b){signupBusy=b;el('gbSignupGetOtp').disabled=b;el('gbSig
 el('gbSignupGetOtp').onclick=async()=>{
  const name=el('gbSignupName').value.trim();
  const phone=el('gbSignupPhone').value.trim();
- if(name.length<2||name.length>80){signupStatus('Enter your full name (2–80 characters).');return}
+ if(signupMode==='create'&&(name.length<2||name.length>80)){signupStatus('Enter your full name (2–80 characters).');return}
  if(!/^[6-9]\d{9}$/.test(phone)){signupStatus('Enter a valid 10-digit Indian mobile number.');return}
  signupSetBusy(true);
  try{
   await signupReady;
   // Recreate verifier after errors; changing the number invalidates an earlier code.
   signupConfirmation=null;signupVerified=false;signupPhone='';
+  el('gbSignupPassword').disabled=true;el('gbSignupConfirm').disabled=true;signupSubmit.disabled=true;
   el('gbSignupOtp').disabled=true;el('gbSignupOtp').value='';
   if(!signupVerifier){
    signupVerifier=new RecaptchaVerifier(signupAuth,'gbSignupRecaptcha',{
@@ -1708,6 +1739,7 @@ el('gbSignupGetOtp').onclick=async()=>{
 el('gbSignupPhone').addEventListener('input',()=>{
  if(signupPhone&&el('gbSignupPhone').value.trim()!==signupPhone){
   signupConfirmation=null;signupVerified=false;el('gbSignupOtp').disabled=true;
+   el('gbSignupPassword').disabled=true;el('gbSignupConfirm').disabled=true;signupSubmit.disabled=true;
   signupStatus('Number changed. Request a new TEST OTP.');signupSetBusy(false)
  }
 });
@@ -1721,11 +1753,39 @@ el('gbSignupVerifyOtp').onclick=async()=>{
   if(result.user.phoneNumber!=='+91'+signupPhone)throw new Error('Verified phone mismatch');
   signupVerified=true;signupConfirmation=null;
   el('gbSignupOtp').disabled=true;
-  signupStatus('Mobile verified in Firebase TEST. Password account creation is not enabled yet; no Green Basket customer profile was created.');
-  // Secondary app sign-out does not sign out the existing storefront session.
-  await signOut(signupAuth);
+  signupStatus('Mobile verified in Firebase TEST. Set a password (at least 8 characters).');
+  el('gbSignupPassword').disabled=false;el('gbSignupConfirm').disabled=false;signupSubmit.disabled=false;
+  // Keep the verified phone session on the isolated secondary Auth instance until submit.
  }catch(e){signupStatus('TEST OTP verification failed: '+(e.code||e.message))}
  finally{signupSetBusy(false)}
+};
+signupSubmit.onclick=async()=>{
+ if(!signupVerified||!signupAuth.currentUser||signupAuth.currentUser.phoneNumber!=='+91'+signupPhone){signupStatus('Verify your phone OTP first.');return}
+ const pass=el('gbSignupPassword').value,confirm=el('gbSignupConfirm').value;
+ if(pass.length<8||pass.length>128){signupStatus('Password must be 8–128 characters.');return}
+ if(pass!==confirm){signupStatus('Passwords do not match.');return}
+ signupSetBusy(true);signupSubmit.disabled=true;
+ try{
+  const user=signupAuth.currentUser;
+  const linkedPassword=user.providerData.some(p=>p.providerId==='password');
+  if(signupMode==='create'){
+   if(linkedPassword){signupStatus('This number already has a password account. Use Sign In or Forgot password.');return}
+   const credential=EmailAuthProvider.credential(aliasForPhone(signupPhone),pass);
+   await linkWithCredential(user,credential);
+   await updateProfile(user,{displayName:el('gbSignupName').value.trim()});
+  }else{
+   if(!linkedPassword){signupStatus('No password account found for this number. Use Create New Account.');return}
+   await updatePassword(user,pass);
+  }
+  const phone=signupPhone;
+  await signOut(signupAuth);
+  signupVerified=false;el('gbSignupPassword').value='';el('gbSignupConfirm').value='';
+  el('gbSignupPassword').disabled=true;el('gbSignupConfirm').disabled=true;
+  el('gbSignupView').hidden=true;el('gbSigninView').hidden=false;
+  el('gbLoginPhone').value=phone;el('gbPasswordPreview').value='';
+  message(signupMode==='create'?'TEST account created. Sign in using your mobile and password.':'Password reset. Sign in using your new password.');
+ }catch(e){signupStatus('Could not save password: '+(e.code||e.message))}
+ finally{signupSetBusy(false);signupSubmit.disabled=!signupVerified}
 };
 el('gbSendOtp').onclick = async () => {
   const phone = el('gbLoginPhone').value.trim();
