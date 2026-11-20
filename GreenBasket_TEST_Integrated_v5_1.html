@@ -1751,7 +1751,7 @@ el('gbSendOtp').onclick = async () => {
  try{await confirmation.confirm(code);message('Phone verified. Opening Green Basket…')}
  catch(e){message('Invalid OTP: '+(e.code||e.message))}
  finally{setBusy(false)}
-}; 
+};
 </script>
 </body>
 </html>
