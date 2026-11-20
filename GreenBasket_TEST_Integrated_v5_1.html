@@ -1444,6 +1444,32 @@ whatsappBox.appendChild(whatsappBtn);
   clearCart();
 }
 
+// Single transport for TEST orders. A no-cors response is opaque and NEVER proves a save.
+// If fetch is rejected before completion, try a text/plain sendBeacon with the SAME ID.
+// A beacon queued successfully also does NOT prove server receipt; verification is mandatory.
+async function gbSendTestOrderTransport(order) {
+  const payload = JSON.stringify(order);
+  try {
+    await fetch(GB_TEST_ORDERS_URL, {
+      method: 'POST', mode: 'no-cors', redirect: 'follow',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: payload
+    });
+    return 'fetch-opaque';
+  } catch (fetchError) {
+    let queued = false;
+    try {
+      if (navigator.sendBeacon) {
+        queued = navigator.sendBeacon(
+          GB_TEST_ORDERS_URL,
+          new Blob([payload], {type: 'text/plain;charset=utf-8'})
+        );
+      }
+    } catch (_) {}
+    if (queued) return 'beacon-queued';
+    throw new Error('Browser could not send the order request: ' + String(fetchError?.message || fetchError));
+  }
+}
 // TEST recovery: retry only the SAME request ID after checking the TEST sheet.
 // Never create a new ID or silently resend an order.
 async function gbRetrySamePendingTEST(){
@@ -1461,12 +1487,8 @@ async function gbRetrySamePendingTEST(){
   const btn=$('#gbRetryPendingTEST');
   if(btn){btn.disabled=true;btn.textContent='Retrying same request…';}
   try{
-    await fetch(GB_TEST_ORDERS_URL,{
-      method:'POST',mode:'no-cors',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body:JSON.stringify(order)
-    });
-    $('#checkoutStatus').textContent='Same TEST request resent (GB-'+requestId+'). Save is NOT confirmed; checking securely. Do not send again.';
+    const transport=await gbSendTestOrderTransport(order);
+    $('#checkoutStatus').textContent='TEST request attempted via '+transport+' (GB-'+requestId+'). Save is NOT confirmed; checking securely. Do not send again.';
   }catch(e){
     $('#checkoutStatus').textContent='Network error while retrying GB-'+requestId+'. Save status unknown; check TEST Sheet / My Orders.';
   }finally{
@@ -1608,14 +1630,15 @@ async function submitCheckoutOrder(){
     sessionStorage.setItem(CHECKOUT_REQUEST_KEY, JSON.stringify({order:storedOrder,totals}));
   }catch(e){}
   try{
-    await fetch(GB_TEST_ORDERS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(order)});
-    $('#checkoutStatus').textContent='TEST request sent. Verify in TEST Google Sheet or My Orders; browser cannot read no-cors response.';
+    const transport=await gbSendTestOrderTransport(order);
+    $('#checkoutStatus').textContent='TEST request attempted via '+transport+'. Checking saved order; browser cannot confirm a no-cors response.';
     // The existing public GET endpoint intentionally refuses order lookup.
     // A no-cors POST cannot prove an order was saved; never show false confirmation.
     showPendingCheckout(order,totals);
     void checkPendingTestOrder();
   }catch(err){
     showPendingCheckout(order,totals);
+    $('#checkoutStatus').textContent='Browser could not send this TEST order. Save status unknown. Check TEST Sheet / My Orders before retrying. '+String(err?.message||err);
   }
 }
 document.getElementById('gbApplyCoupon').addEventListener('click',()=>{
