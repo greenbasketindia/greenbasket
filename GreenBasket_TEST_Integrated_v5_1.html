@@ -427,9 +427,14 @@ body.has-bar .fab{display:none}
 #gbLoginBox input:disabled{background:#f4f6f3;color:#89968a}
 @media(max-width:650px){#gbLoginBox{display:block;width:min(420px,100%)}.gb-auth-art{min-height:130px;padding:18px 22px;background-position:center 55%}.gb-auth-brand{font-size:20px}.gb-auth-content{padding:22px}}
 #gbRecaptcha{margin-top:12px;overflow:hidden}#gbTestRibbon{position:fixed;top:0;left:0;right:0;z-index:210;text-align:center;background:#ffefc3;color:#5a3900;font:600 12px system-ui;padding:3px;pointer-events:none}
+/* Login-first TEST gate: storefront remains hidden until Firebase session check succeeds. */
+body.gb-auth-pending > :not(#gbTestRibbon):not(#gbLoginOverlay):not(script){visibility:hidden!important}
+body.gb-auth-pending #gbLoginOverlay{visibility:visible!important;display:flex!important;background:#f8f8f2!important}
+body.gb-auth-pending #gbLoginBox{box-shadow:0 16px 60px rgba(14,57,26,.13)}
+body.gb-auth-pending #gbCancelLogin{display:none!important}
 </style>
 </head>
-<body>
+<body class="gb-auth-pending">
 <div id="gbTestRibbon">GREEN BASKET TEST — TEST SHEET ONLY · NOT LIVE <span id="gbSessionState">| Checking login…</span> <button id="gbTestSignOut" type="button" hidden style="pointer-events:auto;background:#fff;border:1px solid #997a32;border-radius:6px;padding:1px 8px;margin-left:8px;font-size:11px">Sign out</button></div>
 <div id="gbLoginOverlay" role="dialog" aria-modal="true" aria-labelledby="gbLoginTitle">
  <div id="gbLoginBox">
@@ -445,7 +450,7 @@ body.has-bar .fab{display:none}
    <div id="gbOtpStep" hidden><label for="gbLoginOtp">6-digit verification code</label><input id="gbLoginOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Enter OTP"><button id="gbVerifyOtp" type="button">Verify OTP &amp; Sign In</button></div>
    <div id="gbLoginMessage" role="status" aria-live="polite"></div>
    <p class="gb-auth-create">New to Green Basket? <button id="gbCreateAccountPreview" type="button" class="gb-text-link">Create New Account</button></p>
-   <button id="gbCancelLogin" class="gbCancel" type="button">Back to cart</button>
+   <button id="gbCancelLogin" class="gbCancel" type="button" hidden>Back to cart</button>
    <p class="gb-auth-test">TEST MODE: Only Firebase-configured fictional test numbers and OTPs should be used.</p>
   </div>
  </div>
@@ -1541,8 +1546,8 @@ const el=id=>document.getElementById(id);
 let verifier=null,confirmation=null,currentUser=null,authReady=false,waiting=false;
 const message=s=>{el('gbLoginMessage').textContent=s};
 const setBusy=b=>{el('gbSendOtp').disabled=b;el('gbVerifyOtp').disabled=b};
-el('gbTestSignOut').onclick=async()=>{try{await signOut(auth);window.gbCheckoutVerifiedUser=null;checkoutClose();message('Signed out. Please verify OTP to checkout.')}catch(e){alert('Sign out failed: '+(e.code||e.message))}};
-function hideLogin(){el('gbLoginOverlay').classList.remove('open');document.body.classList.remove('lock')}
+el('gbTestSignOut').onclick=async()=>{try{await signOut(auth);window.gbCheckoutVerifiedUser=null;checkoutClose();message('Signed out. Sign in to continue.')}catch(e){alert('Sign out failed: '+(e.code||e.message))}};
+function hideLogin(){el('gbLoginOverlay').classList.remove('open');document.body.classList.remove('lock');document.body.classList.remove('gb-auth-pending')}
 window.gbCheckoutVerifiedUser=null;
 window.gbRequireCheckoutLogin=()=>{
  if(!authReady){alert('Checking login session. Please try again.');return}
@@ -1555,9 +1560,17 @@ onAuthStateChanged(auth,user=>{
  syncVerifiedCheckoutPhone();
  el('gbSessionState').textContent=currentUser?'| Logged in: '+currentUser.phoneNumber:'| Signed out';
  el('gbTestSignOut').hidden=!currentUser;
- if(currentUser&&waiting){waiting=false;hideLogin();checkoutOpen()}
+ if(currentUser){
+   const resumeCheckout=waiting;
+   waiting=false;hideLogin();
+   if(resumeCheckout)checkoutOpen();
+ }else{
+   document.body.classList.add('gb-auth-pending');
+   el('gbLoginOverlay').classList.add('open');
+   message('Sign in with your configured Firebase TEST phone number.');
+ }
 });
-el('gbCancelLogin').onclick=()=>{waiting=false;hideLogin()};
+el('gbCancelLogin').onclick=()=>{message('Sign in to continue shopping.');};
 el('gbForgotPasswordPreview').onclick=()=>message('Password reset is not enabled in TEST yet. Please use mobile OTP sign-in.');
 el('gbCreateAccountPreview').onclick=()=>message('New account registration with password is being built. For now, use the configured TEST mobile OTP.');
 el('gbSendOtp').onclick = async () => {
@@ -1606,7 +1619,7 @@ el('gbSendOtp').onclick = async () => {
  if(!confirmation){message('Send OTP first.');return}
  const code=el('gbLoginOtp').value.trim();if(!/^\d{6}$/.test(code)){message('Enter a 6-digit OTP.');return}
  setBusy(true);
- try{await confirmation.confirm(code);message('Phone verified. Opening checkout…')}
+ try{await confirmation.confirm(code);message('Phone verified. Opening Green Basket…')}
  catch(e){message('Invalid OTP: '+(e.code||e.message))}
  finally{setBusy(false)}
 };
