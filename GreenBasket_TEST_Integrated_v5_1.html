@@ -432,10 +432,41 @@ body.gb-auth-pending > :not(#gbTestRibbon):not(#gbLoginOverlay):not(script){visi
 body.gb-auth-pending #gbLoginOverlay{visibility:visible!important;display:flex!important;background:#f8f8f2!important}
 body.gb-auth-pending #gbLoginBox{box-shadow:0 16px 60px rgba(14,57,26,.13)}
 body.gb-auth-pending #gbCancelLogin{display:none!important}
+/* Hide the visual TEST banner only; TEST mode and Firebase safety remain unchanged. */
+#gbTestRibbon{display:none!important}
+#gbTestSignOut{border:1px solid #d9e6d8!important;background:#fff!important;color:#0c5f1d!important;border-radius:9px!important;padding:8px 10px!important;font-size:12px!important;font-weight:600!important;white-space:nowrap}
+@media(max-width:560px){#gbTestSignOut{padding:7px!important;font-size:11px!important}}
+
+/* Full viewport login-first screen. Does not alter authentication or TEST backend. */
+#gbTestRibbon{display:none!important}
+body.gb-auth-pending{min-height:100dvh;overflow:hidden}
+body.gb-auth-pending #gbLoginOverlay{
+ position:fixed!important;inset:0!important;width:100vw;height:100dvh;
+ padding:0!important;margin:0!important;border-radius:0!important;
+ display:flex!important;align-items:stretch!important;justify-content:stretch!important;
+ background:#f8f8f2!important;overflow-y:auto!important;
+}
+body.gb-auth-pending #gbLoginBox{
+ width:100%!important;max-width:none!important;min-height:100dvh!important;
+ max-height:none!important;border-radius:0!important;margin:0!important;
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ overflow:visible!important;box-shadow:none!important;
+}
+body.gb-auth-pending .gb-auth-art{min-height:100dvh!important;padding:clamp(30px,5vw,90px)!important;background-position:center!important}
+body.gb-auth-pending .gb-auth-content{
+ align-self:center!important;justify-self:center!important;width:min(100%,520px)!important;
+ padding:clamp(22px,4vw,58px)!important;
+}
+@media(max-width:650px){
+ body.gb-auth-pending #gbLoginOverlay{overflow-y:auto!important}
+ body.gb-auth-pending #gbLoginBox{display:flex!important;flex-direction:column!important;min-height:100dvh!important}
+ body.gb-auth-pending .gb-auth-art{min-height:180px!important;flex:0 0 180px!important;padding:24px!important}
+ body.gb-auth-pending .gb-auth-content{align-self:stretch!important;margin:auto!important;width:100%!important;padding:24px!important}
+}
 </style>
 </head>
 <body class="gb-auth-pending">
-<div id="gbTestRibbon">GREEN BASKET TEST — TEST SHEET ONLY · NOT LIVE <span id="gbSessionState">| Checking login…</span> <button id="gbTestSignOut" type="button" hidden style="pointer-events:auto;background:#fff;border:1px solid #997a32;border-radius:6px;padding:1px 8px;margin-left:8px;font-size:11px">Sign out</button></div>
+<div id="gbTestRibbon"><span id="gbSessionState">| Checking login…</span> </div>
 <div id="gbLoginOverlay" role="dialog" aria-modal="true" aria-labelledby="gbLoginTitle">
  <div id="gbLoginBox">
   <div class="gb-auth-art" aria-hidden="true"><div class="gb-auth-brand">GREEN BASKET</div><div class="gb-auth-tag">Fresh fruits · Vegetables · Groceries</div></div>
@@ -497,6 +528,7 @@ body.gb-auth-pending #gbCancelLogin{display:none!important}
   </ul></nav>
   <div class="deliver"><svg class="ic"><use href="#i-pin"/></svg><span>Deliver to<b>Hanumangarh</b></span></div>
   <a class="btn btn-wa btn-sm" data-wa="general" href="#"><svg class="ic f"><use href="#i-wa"/></svg>Customer Support</a>
+  <button id="gbTestSignOut" type="button" hidden aria-label="Sign out of Green Basket">Sign out</button>
   <button class="cartbtn" id="cartBtn" type="button" aria-label="Open cart"><svg class="ic"><use href="#i-cart"/></svg><span class="n" id="cn" hidden>0</span></button>
   <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
  </div>
