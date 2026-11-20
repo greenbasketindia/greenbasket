@@ -1435,6 +1435,7 @@ whatsappBox.appendChild(whatsappBtn);
 
   // Never retain the Firebase token after confirmation.
   checkoutPending = null;
+  const retry=document.getElementById('gbRetryPendingTEST'); if(retry) retry.hidden=true;
 
   try {
     sessionStorage.removeItem(CHECKOUT_REQUEST_KEY);
@@ -1443,6 +1444,50 @@ whatsappBox.appendChild(whatsappBtn);
   clearCart();
 }
 
+// TEST recovery: retry only the SAME request ID after checking the TEST sheet.
+// Never create a new ID or silently resend an order.
+async function gbRetrySamePendingTEST(){
+  if(!checkoutPending || gbVerificationInProgress) return;
+  const pending=checkoutPending;
+  const requestId=pending.order?.requestId;
+  if(!requestId || !/^[a-zA-Z0-9_-]{16,100}$/.test(requestId)) return;
+  if(!confirm('Only continue if GB-'+requestId+' is NOT in My Orders or the TEST Orders sheet. This retries the SAME request ID, not a new order. Continue?')) return;
+  const user=window.gbCheckoutVerifiedUser;
+  if(!user || !user.phoneNumber){ alert('Please sign in with your verified mobile again.'); return; }
+  let token;
+  try{ token=await user.getIdToken(true); }
+  catch(e){ alert('Firebase session expired. Sign in again.'); return; }
+  const order={...pending.order,idToken:token};
+  const btn=$('#gbRetryPendingTEST');
+  if(btn){btn.disabled=true;btn.textContent='Retrying same request…';}
+  try{
+    await fetch(GB_TEST_ORDERS_URL,{
+      method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(order)
+    });
+    $('#checkoutStatus').textContent='Same TEST request resent (GB-'+requestId+'). Save is NOT confirmed; checking securely. Do not send again.';
+  }catch(e){
+    $('#checkoutStatus').textContent='Network error while retrying GB-'+requestId+'. Save status unknown; check TEST Sheet / My Orders.';
+  }finally{
+    token=null;
+    if(btn){btn.disabled=false;btn.textContent='Retry same TEST request';}
+  }
+  await checkPendingTestOrder();
+}
+function gbShowPendingRecoveryTEST(){
+  let b=document.getElementById('gbRetryPendingTEST');
+  if(!b){
+    b=document.createElement('button');
+    b.id='gbRetryPendingTEST'; b.type='button';
+    b.className='btn btn-o';
+    b.style.cssText='width:100%;margin-top:10px';
+    b.textContent='Retry same TEST request';
+    b.onclick=gbRetrySamePendingTEST;
+    $('#placeOrder').insertAdjacentElement('afterend',b);
+  }
+  b.hidden=false;
+}
 function showPendingCheckout(order,totals){
   const btn=$('#placeOrder');
   btn.disabled=false;
@@ -1452,6 +1497,7 @@ function showPendingCheckout(order,totals){
   $('#checkoutWhatsApp').hidden=true; // Never send an unconfirmed TEST order to business WhatsApp.
   btn.textContent='Check order status again';
   btn.onclick=checkPendingTestOrder;
+  gbShowPendingRecoveryTEST();
 }
   function recoverPendingCheckout(){
   if(CHECKOUT_DEMO_MODE){
@@ -1476,6 +1522,7 @@ function showPendingCheckout(order,totals){
     $('#checkoutStatus').textContent='Your order will be confirmed after successful verification. Please do not submit twice.';$('#checkoutStatus').style.color='#8a4900';
     const btn=$('#placeOrder');btn.disabled=CHECKOUT_DEMO_MODE;btn.textContent=CHECKOUT_DEMO_MODE ? 'TEST endpoint not configured — submissions disabled' : 'Submit TEST order';
     btn.onclick=submitCheckoutOrder;
+    const retry=document.getElementById('gbRetryPendingTEST'); if(retry) retry.hidden=true;
     $('#checkoutWhatsApp').hidden=true;
   }
 }
