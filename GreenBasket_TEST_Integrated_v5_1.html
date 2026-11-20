@@ -400,6 +400,10 @@ body.has-bar .fab{display:none}
 .gb-filterpanel button{border:0;background:transparent;color:#075c25;font:inherit;cursor:pointer;text-decoration:underline}
 .gb-searchcount{font-size:12px;color:#55705a;margin:0 0 12px}
 @media(max-width:560px){.gb-searchinput input{font-size:13px}.gb-filterpanel{align-items:stretch}.gb-filterpanel label{flex-wrap:wrap}}
+#checkout .gb-coupon-panel{border:1px solid #dbe7d8;border-radius:14px;padding:14px;background:#fbfdf9;display:grid;gap:8px}
+#checkout .gb-coupon-row{display:flex;gap:8px}#checkout .gb-coupon-row input{min-width:0;flex:1;text-transform:uppercase}
+#checkout #gbApplyCoupon{border-radius:9px;padding:0 20px;background:#155f32;color:white;font-weight:600}
+#checkout #gbCouponMessage{font-size:11px;color:#657466;line-height:1.5}
 </style>
 <style>
 #gbLoginOverlay{position:fixed;inset:0;z-index:200;background:rgba(5,30,12,.72);display:none;align-items:center;justify-content:center;padding:14px}
@@ -411,18 +415,39 @@ body.has-bar .fab{display:none}
 #gbLoginBox button{display:block;width:100%;background:#0c5f1d;color:#fff;border-radius:10px;padding:12px;margin-top:12px;font-weight:600}
 #gbLoginBox button:disabled{opacity:.5}#gbLoginBox .gbCancel{background:#e8f3dc;color:#0c5f1d}
 #gbOtpStep[hidden]{display:none}#gbLoginMessage{font-size:12px;color:#8a4900;overflow-wrap:anywhere;margin-top:10px}
+#gbLoginBox{width:min(790px,100%);padding:0;display:grid;grid-template-columns:.88fr 1.12fr;overflow:auto;max-height:95vh;border-radius:22px}
+.gb-auth-art{background:linear-gradient(180deg,rgba(18,59,29,.12),rgba(13,57,26,.85)),url("images/images/hero.jpg") center/cover;min-height:490px;display:flex;flex-direction:column;justify-content:flex-end;padding:30px;color:white}
+.gb-auth-brand{font-size:25px;letter-spacing:.09em;font-weight:800}.gb-auth-tag{font-size:13px;margin-top:9px;color:#f1f8ec}
+.gb-auth-content{padding:32px 34px}.gb-auth-content h2{font-size:28px!important;color:#1d4129!important}.gb-auth-content>p:first-of-type{margin-bottom:20px!important}
+#gbLoginBox .gb-password-row{display:flex;align-items:center;justify-content:space-between;margin-top:13px}
+#gbLoginBox .gb-password-row label{margin:0 0 5px}#gbLoginBox .gb-text-link{display:inline;width:auto;background:none;color:#17663b;border:0;margin:0;padding:0;font-size:12px;font-weight:700;text-decoration:underline}
+#gbLoginBox .gb-auth-note{font-size:11px;color:#69756b;line-height:1.55;margin-top:8px;margin-bottom:12px}
+#gbLoginBox .gb-auth-create{margin:18px 0 8px;text-align:center;color:#56685c}
+#gbLoginBox .gb-auth-test{font-size:10px;color:#7a827a;margin:14px 0 0;text-align:center}
+#gbLoginBox input:disabled{background:#f4f6f3;color:#89968a}
+@media(max-width:650px){#gbLoginBox{display:block;width:min(420px,100%)}.gb-auth-art{min-height:130px;padding:18px 22px;background-position:center 55%}.gb-auth-brand{font-size:20px}.gb-auth-content{padding:22px}}
 #gbRecaptcha{margin-top:12px;overflow:hidden}#gbTestRibbon{position:fixed;top:0;left:0;right:0;z-index:210;text-align:center;background:#ffefc3;color:#5a3900;font:600 12px system-ui;padding:3px;pointer-events:none}
 </style>
 </head>
 <body>
 <div id="gbTestRibbon">GREEN BASKET TEST — TEST SHEET ONLY · NOT LIVE <span id="gbSessionState">| Checking login…</span> <button id="gbTestSignOut" type="button" hidden style="pointer-events:auto;background:#fff;border:1px solid #997a32;border-radius:6px;padding:1px 8px;margin-left:8px;font-size:11px">Sign out</button></div>
 <div id="gbLoginOverlay" role="dialog" aria-modal="true" aria-labelledby="gbLoginTitle">
- <div id="gbLoginBox"><h2 id="gbLoginTitle">Welcome to Green Basket</h2><p>Verify your mobile number to continue checkout.</p>
- <label for="gbLoginPhone">Mobile number (+91)</label><input id="gbLoginPhone" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit number">
- <div id="gbRecaptcha"></div><button id="gbSendOtp" type="button">Send OTP</button>
- <div id="gbOtpStep" hidden><label for="gbLoginOtp">6-digit verification code</label><input id="gbLoginOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6"><button id="gbVerifyOtp" type="button">Verify OTP & Continue</button></div>
- <div id="gbLoginMessage" role="status" aria-live="polite"></div><button id="gbCancelLogin" class="gbCancel" type="button">Back to cart</button>
- <p style="margin-top:12px">TEST: Use the fictional number and OTP configured in Firebase. Do not use a real number yet.</p>
+ <div id="gbLoginBox">
+  <div class="gb-auth-art" aria-hidden="true"><div class="gb-auth-brand">GREEN BASKET</div><div class="gb-auth-tag">Fresh fruits · Vegetables · Groceries</div></div>
+  <div class="gb-auth-content">
+   <h2 id="gbLoginTitle">Sign In</h2>
+   <p>Welcome back to Green Basket</p>
+   <label for="gbLoginPhone">Mobile number</label><input id="gbLoginPhone" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="Enter 10-digit mobile number">
+   <div class="gb-password-row"><label for="gbPasswordPreview">Password</label><button type="button" id="gbForgotPasswordPreview" class="gb-text-link">Forgot password?</button></div>
+   <input id="gbPasswordPreview" type="password" autocomplete="off" placeholder="Password login coming soon" disabled aria-describedby="gbAuthMethodNote">
+   <p id="gbAuthMethodNote" class="gb-auth-note">For this TEST website, sign in securely using mobile OTP. Password sign-in will be enabled after backend authentication is configured.</p>
+   <div id="gbRecaptcha"></div><button id="gbSendOtp" type="button">Continue with Mobile OTP</button>
+   <div id="gbOtpStep" hidden><label for="gbLoginOtp">6-digit verification code</label><input id="gbLoginOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Enter OTP"><button id="gbVerifyOtp" type="button">Verify OTP &amp; Sign In</button></div>
+   <div id="gbLoginMessage" role="status" aria-live="polite"></div>
+   <p class="gb-auth-create">New to Green Basket? <button id="gbCreateAccountPreview" type="button" class="gb-text-link">Create New Account</button></p>
+   <button id="gbCancelLogin" class="gbCancel" type="button">Back to cart</button>
+   <p class="gb-auth-test">TEST MODE: Only Firebase-configured fictional test numbers and OTPs should be used.</p>
+  </div>
  </div>
 </div>
 
@@ -616,6 +641,11 @@ body.has-bar .fab{display:none}
   <label>Alternate delivery contact (optional)<input name="alternateMobile" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="off" placeholder="10-digit delivery contact number"></label>
   <label>Full delivery address<textarea name="address" maxlength="500" required autocomplete="street-address"></textarea></label>
   <div class="fields2"><label>Landmark (optional)<input name="landmark" maxlength="150"></label><label>PIN code<input name="pin" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required autocomplete="postal-code"></label></div>
+  <div class="gb-coupon-panel" aria-label="Apply coupon">
+   <label for="gbCouponCode">Have a coupon code?</label>
+   <div class="gb-coupon-row"><input id="gbCouponCode" type="text" maxlength="32" placeholder="Enter coupon code" autocomplete="off" spellcheck="false"><button id="gbApplyCoupon" type="button">Apply</button></div>
+   <p id="gbCouponMessage" role="status" aria-live="polite">Coupons will be applied after secure server-side validation is connected. No discount is active yet.</p>
+  </div>
   <div class="summary" id="checkoutSummary"></div>
   <strong>Payment method</strong>
   <label class="paychoice"><input type="radio" name="payment" value="COD" checked> Cash on delivery</label>
@@ -1472,6 +1502,12 @@ async function submitCheckoutOrder(){
     showPendingCheckout(order,totals);
   }
 }
+document.getElementById('gbApplyCoupon').addEventListener('click',()=>{
+ const code=document.getElementById('gbCouponCode').value.trim();
+ document.getElementById('gbCouponMessage').textContent=code
+  ? 'Coupon '+code.toUpperCase()+' was NOT applied. Secure coupon verification is not connected yet; your total is unchanged.'
+  : 'Enter a coupon code. Secure coupon validation is not connected yet.';
+});
 $('#placeOrder').onclick=CHECKOUT_DEMO_MODE ? null : submitCheckoutOrder;
 
 /* ===== Start ===== */
@@ -1522,6 +1558,8 @@ onAuthStateChanged(auth,user=>{
  if(currentUser&&waiting){waiting=false;hideLogin();checkoutOpen()}
 });
 el('gbCancelLogin').onclick=()=>{waiting=false;hideLogin()};
+el('gbForgotPasswordPreview').onclick=()=>message('Password reset is not enabled in TEST yet. Please use mobile OTP sign-in.');
+el('gbCreateAccountPreview').onclick=()=>message('New account registration with password is being built. For now, use the configured TEST mobile OTP.');
 el('gbSendOtp').onclick = async () => {
   const phone = el('gbLoginPhone').value.trim();
 
