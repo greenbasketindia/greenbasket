@@ -489,6 +489,7 @@ body.gb-auth-pending .gb-auth-content{
  <div id="gbLoginBox">
   <div class="gb-auth-art" aria-hidden="true"><div class="gb-auth-brand">GREEN BASKET</div><div class="gb-auth-tag">Fresh fruits · Vegetables · Groceries</div></div>
   <div class="gb-auth-content">
+   <div id="gbSigninView">
    <h2 id="gbLoginTitle">Sign In</h2>
    <p>Welcome back to Green Basket</p>
    <label for="gbLoginPhone">Mobile number</label><input id="gbLoginPhone" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="Enter 10-digit mobile number">
@@ -502,7 +503,7 @@ body.gb-auth-pending .gb-auth-content{
    <button id="gbCancelLogin" class="gbCancel" type="button" hidden>Back to cart</button>
    <p class="gb-auth-test">TEST MODE: Only Firebase-configured fictional test numbers and OTPs should be used.</p>   </div>
    <div id="gbSignupView" hidden>
-     <div class="gb-signup-head"><h2>Create New Account</h2><p>Join Green Basket for fresh fruits, vegetables and groceries at your doorstep.</p></div>
+     <div class="gb-signup-head"><h2 id="gbSignupHeading">Create New Account</h2><p>Join Green Basket for fresh fruits, vegetables and groceries at your doorstep.</p></div>
      <div class="gb-signup-field"><label for="gbSignupName">Full Name</label><input id="gbSignupName" autocomplete="name" placeholder="Enter your full name" maxlength="80"></div>
      <div class="gb-signup-field"><label for="gbSignupPhone">Mobile Number</label><div class="gb-signup-phone"><input id="gbSignupPhone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit mobile number"><button type="button" id="gbSignupGetOtp" title="Send Firebase TEST OTP">Get OTP</button></div></div>
      <div id="gbSignupRecaptcha" style="margin:12px 0"></div><div class="gb-signup-field"><label for="gbSignupOtp">Enter OTP</label><input id="gbSignupOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit verification code" disabled></div><button id="gbSignupVerifyOtp" type="button" disabled>Verify Mobile OTP</button><p id="gbSignupStatus" class="gb-signup-status" role="status" aria-live="polite"></p>
@@ -1588,6 +1589,30 @@ loadProducts().then(list=>{
   cart=cart.filter(i=>{ const p=findProduct(i.name); return p&&p.available; });   /* drop items removed from the sheet */
   saveCart(); renderAll();
 });
+</script>
+<script>
+// Signup navigation is independent of Firebase initialization.
+// It keeps working even if the Firebase module fails to load.
+(function(){
+  function showSignup(show){
+    var signin=document.getElementById('gbSigninView');
+    var signup=document.getElementById('gbSignupView');
+    if(!signin||!signup)return;
+    signin.hidden=show;
+    signup.hidden=!show;
+    var overlay=document.getElementById('gbLoginOverlay');
+    if(overlay)overlay.setAttribute('aria-labelledby',show?'gbSignupHeading':'gbLoginTitle');
+    var focusTarget=document.getElementById(show?'gbSignupName':'gbLoginPhone');
+    if(focusTarget)focusTarget.focus();
+  }
+  document.addEventListener('click',function(event){
+    var target=event.target.closest('#gbCreateAccountPreview, #gbBackToSignin');
+    if(!target)return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    showSignup(target.id==='gbCreateAccountPreview');
+  },true);
+})();
 </script>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js';
