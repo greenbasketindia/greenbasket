@@ -1444,6 +1444,30 @@ whatsappBox.appendChild(whatsappBtn);
   clearCart();
 }
 
+// Checkout auth preflight: paired TEST backend accepts phone OTP and password login
+// only for accounts with a Firebase-linked verified phone number.
+async function gbCheckoutAuthPreflightTEST(user) {
+  if (!user || typeof user.getIdTokenResult !== 'function' || !user.phoneNumber) {
+    return {ok:false, reason:'Verified Firebase mobile login required.'};
+  }
+  try {
+    const result = await user.getIdTokenResult(true);
+    const provider = result?.claims?.firebase?.sign_in_provider || 'unknown';
+    if (provider !== 'phone' && provider !== 'password') {
+      return {ok:false, reason:'Unsupported Firebase sign-in provider: '+provider+'. Order was NOT sent.'};
+    }
+    return {ok:true};
+  } catch(e) {
+    return {ok:false, reason:'Could not validate Firebase login for checkout. Order was NOT sent.'};
+  }
+}
+function gbCheckoutBlockedTEST(reason) {
+  const status=document.getElementById('checkoutStatus');
+  status.textContent=reason;
+  status.style.color='#b42318';
+  status.style.whiteSpace='normal';
+}
+
 // Single transport for TEST orders. A no-cors response is opaque and NEVER proves a save.
 // If fetch is rejected before completion, try a text/plain sendBeacon with the SAME ID.
 // A beacon queued successfully also does NOT prove server receipt; verification is mandatory.
@@ -1480,6 +1504,8 @@ async function gbRetrySamePendingTEST(){
   if(!confirm('Only continue if GB-'+requestId+' is NOT in My Orders or the TEST Orders sheet. This retries the SAME request ID, not a new order. Continue?')) return;
   const user=window.gbCheckoutVerifiedUser;
   if(!user || !user.phoneNumber){ alert('Please sign in with your verified mobile again.'); return; }
+  const preflight=await gbCheckoutAuthPreflightTEST(user);
+  if(!preflight.ok){gbCheckoutBlockedTEST(preflight.reason);return;}
   let token;
   try{ token=await user.getIdToken(true); }
   catch(e){ alert('Firebase session expired. Sign in again.'); return; }
@@ -1614,6 +1640,8 @@ async function submitCheckoutOrder(){
     $('#checkoutStatus').textContent='Checkout mobile must match verified Firebase number: '+verifiedPhone;
     return;
   }
+  const preflight=await gbCheckoutAuthPreflightTEST(verifiedUser);
+  if(!preflight.ok){gbCheckoutBlockedTEST(preflight.reason);return;}
   let idToken;
   try{idToken=await verifiedUser.getIdToken(true)}
   catch(e){$('#checkoutStatus').textContent='Firebase session expired. Sign in again.';return}
@@ -1910,6 +1938,6 @@ el('gbSendOtp').onclick = async () => {
 </script>
 </body>
 </html>
- 
+
 
 
