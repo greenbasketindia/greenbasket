@@ -404,6 +404,15 @@ body.has-bar .fab{display:none}
 #checkout .gb-coupon-row{display:flex;gap:8px}#checkout .gb-coupon-row input{min-width:0;flex:1;text-transform:uppercase}
 #checkout #gbApplyCoupon{border-radius:9px;padding:0 20px;background:#155f32;color:white;font-weight:600}
 #checkout #gbCouponMessage{font-size:11px;color:#657466;line-height:1.5}
+
+/* Auth boot: never flash login while Firebase restores a saved session. */
+body.gb-auth-checking #gbLoginOverlay{display:none!important;visibility:hidden!important}
+body.gb-auth-checking #gbAuthBoot{display:flex!important}
+#gbAuthBoot{display:none;position:fixed;inset:0;z-index:250;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:#f8faf5;color:#0d632b;font-family:inherit}
+#gbAuthBoot .gb-boot-mark{font-size:27px;font-weight:800;letter-spacing:-.7px}
+#gbAuthBoot .gb-boot-spinner{width:30px;height:30px;border:3px solid #d9e9d9;border-top-color:#0b7132;border-radius:50%;animation:gbBootSpin .75s linear infinite}
+@keyframes gbBootSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#gbAuthBoot .gb-boot-spinner{animation:none}}
 </style>
 <style>
 #gbLoginOverlay{position:fixed;inset:0;z-index:200;background:rgba(5,30,12,.72);display:none;align-items:center;justify-content:center;padding:14px}
@@ -483,7 +492,8 @@ body.gb-auth-pending .gb-auth-content{
 @media(max-width:650px){#gbSignupView .gb-signup-head h2{font-size:25px!important}}
 </style>
 </head>
-<body class="gb-auth-pending">
+<body class="gb-auth-pending gb-auth-checking">
+<div id="gbAuthBoot" role="status" aria-live="polite"><div class="gb-boot-mark">GREEN BASKET</div><div class="gb-boot-spinner" aria-hidden="true"></div><div>Opening your shopping experience…</div></div>
 <div id="gbTestRibbon"><span id="gbSessionState">| Checking login…</span> </div>
 <div id="gbLoginOverlay" role="dialog" aria-modal="true" aria-labelledby="gbLoginTitle">
  <div id="gbLoginBox">
@@ -1743,6 +1753,7 @@ window.gbRequireCheckoutLogin=()=>{
 };
 onAuthStateChanged(auth,user=>{
  currentUser=user&&user.phoneNumber?user:null;authReady=true;
+ document.body.classList.remove('gb-auth-checking');
  window.gbCheckoutVerifiedUser=currentUser;
  syncVerifiedCheckoutPhone();
  el('gbSessionState').textContent=currentUser?'| Logged in: '+currentUser.phoneNumber:'| Signed out';
@@ -1937,7 +1948,7 @@ el('gbSendOtp').onclick = async () => {
 };
 </script>
 </body>
-</html>  
+</html>
 
 
 
