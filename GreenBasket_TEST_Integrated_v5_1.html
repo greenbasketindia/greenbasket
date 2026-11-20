@@ -441,6 +441,18 @@ body.gb-auth-pending > :not(#gbTestRibbon):not(#gbLoginOverlay):not(script){visi
 body.gb-auth-pending #gbLoginOverlay{visibility:visible!important;display:flex!important;background:#f8f8f2!important}
 body.gb-auth-pending #gbLoginBox{box-shadow:0 16px 60px rgba(14,57,26,.13)}
 body.gb-auth-pending #gbCancelLogin{display:none!important}
+
+/* FIX: auth-checking must override the login-first pending gate until Firebase resolves.
+   The earlier pending rules have higher specificity than the initial boot CSS. */
+body.gb-auth-pending.gb-auth-checking #gbLoginOverlay,
+body.gb-auth-pending.gb-auth-checking #gbLoginOverlay.open{
+  display:none!important;visibility:hidden!important;
+}
+body.gb-auth-pending.gb-auth-checking #gbAuthBoot{
+  display:flex!important;visibility:visible!important;
+}
+body:not(.gb-auth-checking) #gbAuthBoot{display:none!important;visibility:hidden!important}
+
 /* Hide the visual TEST banner only; TEST mode and Firebase safety remain unchanged. */
 #gbTestRibbon{display:none!important}
 #gbTestSignOut{border:1px solid #d9e6d8!important;background:#fff!important;color:#0c5f1d!important;border-radius:9px!important;padding:8px 10px!important;font-size:12px!important;font-weight:600!important;white-space:nowrap}
@@ -1948,7 +1960,7 @@ el('gbSendOtp').onclick = async () => {
 };
 </script>
 </body>
-</html> 
+</html>
 
 
 
