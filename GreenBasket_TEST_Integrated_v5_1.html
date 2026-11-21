@@ -1713,9 +1713,9 @@ function gbRenderCouponPreviewTEST() {
     return;
   }
   const estimated = Math.round((totals.total - gbCouponPreviewTEST.discount) * 100) / 100;
-  panel.textContent = 'Coupon preview: −₹' + gbCouponPreviewTEST.discount.toFixed(2) +
-    ' | Potential total ₹' + estimated.toFixed(2) +
-    ' | Not applied until secure server checkout is enabled.';
+  panel.textContent = (GB_TEST_COUPON_ORDER_SUBMISSION_ENABLED ? 'Coupon applied: −₹' : 'Coupon preview: −₹') + gbCouponPreviewTEST.discount.toFixed(2) +
+    (GB_TEST_COUPON_ORDER_SUBMISSION_ENABLED ? ' | Estimated payable ₹' : ' | Potential total ₹') + estimated.toFixed(2) +
+    (GB_TEST_COUPON_ORDER_SUBMISSION_ENABLED ? ' | Final amount verified by server.' : ' | Checkout activation pending backend verification.');
   panel.hidden = false;
 }
 // REVIEW ONLY: Firestore coupon lookup and estimate. No checkout discount is applied.
@@ -1781,10 +1781,9 @@ document.getElementById('gbApplyCoupon').addEventListener('click', async () => {
    const discount = discountCents / 100;
    gbCouponPreviewTEST = {code, discount, subtotal:totals.subtotal};
    gbRenderCouponPreviewTEST();
-   message.textContent = 'Firebase lookup successful. Potential saving: ₹' + discount.toFixed(2) +
-     ' (estimated total ₹' + (totals.total - discount).toFixed(2) +
-     '). PREVIEW ONLY — coupon NOT applied; final total remains ₹' + totals.total.toFixed(2) +
-     '. Secure server checkout is not enabled.';
+   message.textContent = GB_TEST_COUPON_ORDER_SUBMISSION_ENABLED
+     ? 'Coupon selected. Estimated saving ₹' + discount.toFixed(2) + '. Server will validate again when you order.'
+     : 'Coupon verified for preview. Potential saving ₹' + discount.toFixed(2) + '. Checkout discount is not active yet.';
  } catch (error) {
    gbCouponPreviewTEST = null;
    gbRenderCouponPreviewTEST();
