@@ -735,7 +735,7 @@ body.gb-auth-pending .gb-auth-content{
   <div class="gb-coupon-panel" aria-label="Apply coupon">
    <label for="gbCouponCode">Have a coupon code?</label>
    <div class="gb-coupon-row"><input id="gbCouponCode" type="text" maxlength="32" placeholder="Enter coupon code" autocomplete="off" spellcheck="false"><button id="gbApplyCoupon" type="button">Apply</button></div>
-   <p id="gbCouponMessage" role="status" aria-live="polite">Coupons will be applied after secure server-side validation is connected. No discount is active yet.</p>
+   <p id="gbCouponMessage" role="status" aria-live="polite">Check coupon eligibility with Firebase. Preview only; checkout discounts are not enabled.</p>
   </div>
   <div class="summary" id="checkoutSummary"></div>
   <strong>Payment method</strong>
@@ -1691,11 +1691,75 @@ async function submitCheckoutOrder(){
     $('#checkoutStatus').textContent='Browser could not send this TEST order. Save status unknown. Check TEST Sheet / My Orders before retrying. '+String(err?.message||err);
   }
 }
-document.getElementById('gbApplyCoupon').addEventListener('click',()=>{
- const code=document.getElementById('gbCouponCode').value.trim();
- document.getElementById('gbCouponMessage').textContent=code
-  ? 'Coupon '+code.toUpperCase()+' was NOT applied. Secure coupon verification is not connected yet; your total is unchanged.'
-  : 'Enter a coupon code. Secure coupon validation is not connected yet.';
+// REVIEW ONLY: Firestore coupon lookup and estimate. No checkout discount is applied.
+// The order backend remains authoritative and coupon checkout is still disabled.
+document.getElementById('gbApplyCoupon').addEventListener('click', async () => {
+ const input = document.getElementById('gbCouponCode');
+ const button = document.getElementById('gbApplyCoupon');
+ const message = document.getElementById('gbCouponMessage');
+ const code = input.value.trim().toUpperCase();
+ message.textContent = '';
+ if (!/^[A-Z0-9_-]{3,30}$/.test(code)) {
+   message.textContent = 'Enter a valid coupon code (3–30 letters, numbers, _ or -).';
+   return;
+ }
+ const user = window.gbCheckoutVerifiedUser;
+ if (!user || !user.phoneNumber || typeof user.getIdToken !== 'function') {
+   message.textContent = 'Sign in with your verified mobile number to check this coupon.';
+   return;
+ }
+ const totals = checkoutTotals();
+ if (!totals) { message.textContent = 'Cart prices unavailable. Try again later.'; return; }
+ button.disabled = true;
+ button.textContent = 'Checking…';
+ try {
+   const token = await user.getIdToken(true);
+   const endpoint = 'https://firestore.googleapis.com/v1/projects/green-basket-f404f/databases/(default)/documents/coupons/' + encodeURIComponent(code);
+   const response = await fetch(endpoint, {headers: {Authorization: 'Bearer ' + token}, cache: 'no-store'});
+   if (!response.ok) throw new Error('Coupon unavailable or access denied');
+   const doc = await response.json();
+   const fields = doc.fields || {};
+   const str = k => fields[k]?.stringValue;
+   const int = k => {
+     const raw = fields[k]?.integerValue;
+     if (raw === undefined) throw new Error('Coupon configuration incomplete');
+     const n = Number(raw);
+     if (!Number.isSafeInteger(n) || n < 0) throw new Error('Invalid coupon configuration');
+     return n;
+   };
+   const type = str('type');
+   const value = int('value');
+   const minimum = int('minimum');
+   const maximum = int('maxDiscount');
+   int('usageLimit');
+   const start = str('startDate');
+   const end = str('endDate');
+   const today = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Kolkata', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date());
+   if (fields.enabled?.booleanValue !== true ||
+       !/^\d{4}-\d{2}-\d{2}$/.test(start || '') ||
+       !/^\d{4}-\d{2}-\d{2}$/.test(end || '') ||
+       today < start || today > end ||
+       (type !== 'fixed' && type !== 'percent') || value <= 0 ||
+       (type === 'percent' && value > 100) || totals.subtotal < minimum) {
+     message.textContent = 'Coupon is not eligible for this cart or date. No discount applied.';
+     return;
+   }
+   const subtotalCents = Math.round(totals.subtotal * 100);
+   let discountCents = type === 'percent' ? Math.floor(subtotalCents * value / 100) : value * 100;
+   if (maximum > 0) discountCents = Math.min(discountCents, maximum * 100);
+   discountCents = Math.min(discountCents, subtotalCents);
+   if (discountCents <= 0) throw new Error('Zero discount');
+   const discount = discountCents / 100;
+   message.textContent = 'Firebase lookup successful. Potential saving: ₹' + discount.toFixed(2) +
+     ' (estimated total ₹' + (totals.total - discount).toFixed(2) +
+     '). PREVIEW ONLY — coupon NOT applied; final total remains ₹' + totals.total.toFixed(2) +
+     '. Secure server checkout is not enabled.';
+ } catch (error) {
+   message.textContent = 'Coupon could not be verified. No discount applied. ' + String(error?.message || 'Try again later.');
+ } finally {
+   button.disabled = false;
+   button.textContent = 'Apply';
+ }
 });
 $('#placeOrder').onclick=CHECKOUT_DEMO_MODE ? null : submitCheckoutOrder;
 
