@@ -1705,21 +1705,31 @@ let gbCouponPreviewTEST = null;
 function gbRenderCouponPreviewTEST() {
   const totals = checkoutTotals();
   const panel = document.getElementById('gbCouponPreviewTotalsTEST');
-  if (!panel) return;
-  if (!totals || !gbCouponPreviewTEST || gbCouponPreviewTEST.subtotal !== totals.subtotal) {
+  const summary = document.getElementById('checkoutSummary');
+  if (!panel || !summary || !totals) return;
+  if (gbCouponPreviewTEST && gbCouponPreviewTEST.subtotal !== totals.subtotal) {
     gbCouponPreviewTEST = null;
+  }
+  const active = GB_TEST_COUPON_ORDER_SUBMISSION_ENABLED && !!gbCouponPreviewTEST;
+  const discount = active ? gbCouponPreviewTEST.discount : 0;
+  const payable = Math.max(0, Math.round((totals.total - discount) * 100) / 100);
+  summary.innerHTML = `<div><span>Subtotal (estimate)</span><b>${money(totals.subtotal)}</b></div>` +
+    `<div><span>Delivery</span><b>${totals.delivery ? money(totals.delivery) : 'FREE'}</b></div>` +
+    (active ? `<div><span>Coupon (${gbCouponPreviewTEST.code})</span><b style="color:#08783c">−${money(discount)}</b></div>` : '') +
+    `<div><strong>Total (estimate)</strong><strong>${money(payable)}</strong></div>` +
+    `<div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div>` +
+    `<small>Minimum order ₹${gbDeliverySettingsTEST.minimumOrder}. Delivery ₹${gbDeliverySettingsTEST.deliveryCharge} below ₹${gbDeliverySettingsTEST.freeDeliveryAbove}; FREE at ₹${gbDeliverySettingsTEST.freeDeliveryAbove} or more. Cutoff 11 PM IST. Final amount/date must be verified by server.</small>`;
+  if (!gbCouponPreviewTEST) {
     panel.hidden = true;
     panel.textContent = '';
     return;
   }
-  const estimated = Math.round((totals.total - gbCouponPreviewTEST.discount) * 100) / 100;
-  panel.textContent = (GB_TEST_COUPON_ORDER_SUBMISSION_ENABLED ? 'Coupon applied: −₹' : 'Coupon preview: −₹') + gbCouponPreviewTEST.discount.toFixed(2) +
-    (GB_TEST_COUPON_ORDER_SUBMISSION_ENABLED ? ' | Estimated payable ₹' : ' | Potential total ₹') + estimated.toFixed(2) +
-    (GB_TEST_COUPON_ORDER_SUBMISSION_ENABLED ? ' | Final amount verified by server.' : ' | Checkout activation pending backend verification.');
+  panel.textContent = (active ? 'Coupon selected: −₹' : 'Coupon preview: −₹') + gbCouponPreviewTEST.discount.toFixed(2) +
+    ' | Estimated payable ₹' + payable.toFixed(2) +
+    ' | Server will validate when you submit the order.';
   panel.hidden = false;
 }
-// REVIEW ONLY: Firestore coupon lookup and estimate. No checkout discount is applied.
-// The order backend remains authoritative and coupon checkout is still disabled.
+// Coupon estimate is shown at checkout; backend independently validates final discount.
 document.getElementById('gbApplyCoupon').addEventListener('click', async () => {
  const input = document.getElementById('gbCouponCode');
  const button = document.getElementById('gbApplyCoupon');
