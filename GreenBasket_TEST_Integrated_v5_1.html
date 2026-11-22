@@ -1388,14 +1388,45 @@ function showVerifiedCheckout(requestId){
   const receiptDiscount = Number(checkoutPending?.coupon?.discount || 0);
   const receiptCode = checkoutPending?.coupon?.code || '';
   const receiptBaseTotal = Number(totals?.total);
-  if (receiptCode && Number.isFinite(receiptDiscount) && receiptDiscount > 0) {
-    addReceiptRow('Coupon (' + receiptCode + ')', '−₹' + receiptDiscount.toFixed(2));
-  }
-  const receiptTotal = Number.isFinite(receiptBaseTotal)
-    ? Math.max(0, Math.round((receiptBaseTotal - (receiptCode ? receiptDiscount : 0)) * 100) / 100)
+  const validBase = totals && Number.isFinite(receiptBaseTotal) && receiptBaseTotal >= 0;
+  const validDiscount = receiptCode && Number.isFinite(receiptDiscount) && receiptDiscount > 0;
+  const appliedDiscount = validDiscount ? receiptDiscount : 0;
+  const receiptTotal = validBase
+    ? Math.max(0, Math.round((receiptBaseTotal - appliedDiscount) * 100) / 100)
     : null;
-  addReceiptRow('Estimated Total (after coupon)',
-    receiptTotal !== null ? '₹' + receiptTotal.toFixed(2) : 'Not available', true);
+
+  // This is a checkout snapshot, not the authoritative backend total.
+  const paymentSummary = document.createElement('div');
+  paymentSummary.style.cssText =
+    'margin:16px 0 4px;padding:12px;background:#fff;border:1px solid #c9dfc8;' +
+    'border-radius:14px;text-align:left;line-height:1.45';
+
+  function addPaymentLine(label, value, kind) {
+    const row = document.createElement('div');
+    row.style.cssText =
+      'display:flex;align-items:center;justify-content:space-between;gap:12px;' +
+      'padding:11px 10px;border-radius:9px;' +
+      (kind === 'discount' ? 'background:#eaf7e8;color:#17652e;' : '') +
+      (kind === 'payable' ? 'background:#086324;color:#fff;margin-top:8px;' : '');
+    const labelEl = document.createElement('span');
+    labelEl.textContent = label;
+    labelEl.style.cssText = 'font-size:12px;font-weight:' + (kind === 'payable' ? '700' : '600');
+    const valueEl = document.createElement('strong');
+    valueEl.textContent = value;
+    valueEl.style.cssText =
+      'font-size:' + (kind === 'payable' ? '19px' : '14px') +
+      ';white-space:nowrap;text-align:right';
+    row.append(labelEl, valueEl);
+    paymentSummary.appendChild(row);
+  }
+
+  addPaymentLine('Total Payment (Before Discount)',
+    validBase ? '₹' + receiptBaseTotal.toFixed(2) : 'Not available', 'base');
+  addPaymentLine(validDiscount ? 'Coupon Discount (' + receiptCode + ')' : 'Coupon Discount',
+    '−₹' + appliedDiscount.toFixed(2), 'discount');
+  addPaymentLine('Total Payable Amount (Estimate)',
+    receiptTotal !== null ? '₹' + receiptTotal.toFixed(2) : 'Not available', 'payable');
+  status.appendChild(paymentSummary);
 
   const note = document.createElement('p');
   note.textContent =
