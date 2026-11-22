@@ -1383,9 +1383,19 @@ function showVerifiedCheckout(requestId){
     ? 'Cash on Delivery' : order?.payment === 'UPI'
       ? 'UPI (payment verification pending)' : 'Not available');
   addReceiptRow('Delivery Date', 'To be confirmed in My Orders');
-  addReceiptRow('Estimated Total (at checkout)',
-    totals && Number.isFinite(Number(totals.total))
-      ? '₹' + Number(totals.total).toFixed(2) : 'Not available', true);
+  // Receipt uses the coupon snapshot captured when this exact TEST request was sent.
+  // Authenticated verification confirms the order exists, but does not return its final total.
+  const receiptDiscount = Number(checkoutPending?.coupon?.discount || 0);
+  const receiptCode = checkoutPending?.coupon?.code || '';
+  const receiptBaseTotal = Number(totals?.total);
+  if (receiptCode && Number.isFinite(receiptDiscount) && receiptDiscount > 0) {
+    addReceiptRow('Coupon (' + receiptCode + ')', '−₹' + receiptDiscount.toFixed(2));
+  }
+  const receiptTotal = Number.isFinite(receiptBaseTotal)
+    ? Math.max(0, Math.round((receiptBaseTotal - (receiptCode ? receiptDiscount : 0)) * 100) / 100)
+    : null;
+  addReceiptRow('Estimated Total (after coupon)',
+    receiptTotal !== null ? '₹' + receiptTotal.toFixed(2) : 'Not available', true);
 
   const note = document.createElement('p');
   note.textContent =
@@ -1681,11 +1691,16 @@ async function submitCheckoutOrder(){
   $('#checkoutWhatsApp').hidden=true;
   $('#checkoutStatus').style.color='#8a4900';
   $('#checkoutStatus').textContent='Sending order request. Please wait…';
-  checkoutPending={order,totals};
+  // Freeze the displayed coupon for this request, so the confirmation matches checkout.
+  const couponSnapshot = order.couponCode && gbCouponPreviewTEST &&
+    gbCouponPreviewTEST.code === order.couponCode
+    ? {code:gbCouponPreviewTEST.code, discount:gbCouponPreviewTEST.discount}
+    : null;
+  checkoutPending={order,totals,coupon:couponSnapshot};
   try{
     const storedOrder = {...order};
     delete storedOrder.idToken;
-    sessionStorage.setItem(CHECKOUT_REQUEST_KEY, JSON.stringify({order:storedOrder,totals}));
+    sessionStorage.setItem(CHECKOUT_REQUEST_KEY, JSON.stringify({order:storedOrder,totals,coupon:couponSnapshot}));
   }catch(e){}
   try{
     const transport=await gbSendTestOrderTransport(order);
