@@ -506,13 +506,16 @@ body.gb-auth-pending .gb-auth-content{
 <style>
 .gb-live-hero{padding-top:16px;padding-bottom:16px}.gb-live-card{position:relative;overflow:hidden;border-radius:18px;background:#14532d;color:white;min-height:170px;display:flex;align-items:flex-end;padding:24px;isolation:isolate}.gb-live-hero .gb-live-card{min-height:clamp(190px,30vw,380px)}.gb-live-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}.gb-live-card:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#092a15dd,transparent);z-index:-1}.gb-live-card h3{font-size:clamp(18px,2vw,28px)}.gb-live-card p{margin:6px 0}.gb-live-card a{margin-top:10px}.gb-live-controls{display:flex;justify-content:center;gap:12px;margin-top:8px}.gb-live-controls button{border:1px solid #0c5f1d;border-radius:8px;padding:6px 14px;color:#0c5f1d}#gbLiveOffers{margin-top:24px}#gbOfferCards{margin-top:12px}
 </style>
-</head>
+<style>
+.gb-auth-art{position:relative;overflow:hidden}.gb-auth-art>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#e8f3dc}.gb-has-hero .gb-auth-brand,.gb-has-hero .gb-auth-tag{visibility:hidden}#gbLoginHeroControls{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:12px}#gbLoginBox #gbLoginHeroControls button{width:42px;margin:0;background:#fff;color:#0c5f1d;padding:6px;font-size:22px}.gb-live-card{display:block;padding:18px;min-height:0}.gb-live-card:before{display:none}.gb-live-card img{position:static;width:100%;height:auto;aspect-ratio: 2.4;object-fit:contain;background:#e8f3dc}.gb-live-card.gb-has-art{padding:0;background:#e8f3dc}.gb-live-card.gb-has-art>div{padding:10px}.gb-live-card.gb-has-art h3{display:none}.gb-live-card.gb-has-art p{color:#0c5f1d}.gb-live-card.gb-has-art a{margin:0}.gb-searchbar{margin-top:0}.gb-mobile-nav{display:none}
+@media(max-width:860px){body{background:#f5f8f1;padding-bottom:66px}.top,.strip,.why,.info,.feats,.about,footer,.fab{display:none!important}.gb-mobile-nav{position:fixed;bottom:0;left:0;right:0;z-index:75;background:#fff;border-top:1px solid #dce9da;display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));font-size:11px;color:#0c5f1d}.gb-mobile-nav a,.gb-mobile-nav button{display:grid;justify-items:center;gap:3px}.gb-mobile-nav .ic{font-size:22px}#bar{bottom:58px}.cats .cat{flex:0 0 auto;padding:8px 14px;box-shadow:none;border-radius:9px}.cats .cat img{display:none}.cats .arr{display:none}#categories{padding-top:18px}#categories .sh .btn,#categories .sh p{display:none}#gbOfferCards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px}#gbOfferCards .gb-live-card{flex:0 0 100%;scroll-snap-align:start}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gb-auth-art{background-position:center}body.gb-auth-pending .gb-auth-art{min-height:220px!important;flex-basis:220px!important}}
+</style></head>
 <body class="gb-auth-pending gb-auth-checking">
 <div id="gbAuthBoot" role="status" aria-live="polite"><div class="gb-boot-mark">GREEN BASKET</div><div class="gb-boot-spinner" aria-hidden="true"></div><div>Opening your shopping experience…</div></div>
 <div id="gbTestRibbon"><span id="gbSessionState">| Checking login…</span> </div>
 <div id="gbLoginOverlay" role="dialog" aria-modal="true" aria-labelledby="gbLoginTitle">
  <div id="gbLoginBox">
-  <div class="gb-auth-art" aria-hidden="true"><div class="gb-auth-brand">GREEN BASKET</div><div class="gb-auth-tag">Fresh fruits · Vegetables · Groceries</div></div>
+  <div class="gb-auth-art" id="gbLoginArt"><img id="gbLoginHeroImage" alt="" hidden><div id="gbLoginHeroControls" hidden><button type="button" id="gbHeroPrev" aria-label="Previous banner">‹</button><button type="button" id="gbHeroNext" aria-label="Next banner">›</button></div><div class="gb-auth-brand">GREEN BASKET</div><div class="gb-auth-tag">Fresh fruits · Vegetables · Groceries</div></div>
   <div class="gb-auth-content">
    <div id="gbSigninView">
    <h2 id="gbLoginTitle">Sign In</h2>
@@ -592,27 +595,6 @@ body.gb-auth-pending .gb-auth-content{
 </header>
 
 <main id="home">
-<div id="gbLiveHero" class="gb-live-hero wrap" hidden></div>
-<div class="hero" id="gbStaticHero"><div class="wrap">
- <div class="hero-txt">
-  <h1>Order Today,<span>Fresh Tomorrow!<svg viewBox="0 0 24 24"><path d="M3 21C3 9 10 3 21 3c0 12-7 18-16 18z"/></svg></span></h1>
-  <p class="sub">Shop farm-fresh fruits and vegetables online and get them delivered to your doorstep.</p>
-  <div class="chips">
-   <div class="chip"><svg class="ic"><use href="#i-sprout"/></svg><span><b>Farm Fresh</b><small>Picked for you</small></span></div>
-   <div class="chip"><svg class="ic"><use href="#i-shield"/></svg><span><b>Quality Checked</b><small>Every order</small></span></div>
-   <div class="chip"><svg class="ic"><use href="#i-clock"/></svg><span><b>Next-Morning</b><small>Delivery</small></span></div>
-  </div>
-  <div class="cta">
-<a class="btn btn-g" href="#shop">SHOP NOW</a> 
-  </div>
-  <div class="proof"><i style="background:var(--g)"><svg class="ic"><use href="#i-shield"/></svg></i><span>Shop online, check out securely and track your orders.</span></div>
- </div>
- <div class="hero-img">
-  <img src="images/images/hero.jpg" alt="Basket of fresh vegetables and fruits" fetchpriority="high" width="936" height="640">
-  <div class="seal"><div><svg class="ic"><use href="#i-basket"/></svg>FRESH<br>TO YOUR<br>DOOR</div></div>
- </div>
-</div></div>
-
 <div class="strip"><div class="wrap">
  <span><svg class="ic"><use href="#i-truck"/></svg>Delivery in Hanumangarh</span>
  <span><svg class="ic"><use href="#i-cart"/></svg>Shop online in a few taps</span>
@@ -620,13 +602,22 @@ body.gb-auth-pending .gb-auth-content{
  <span><svg class="ic"><use href="#i-check"/></svg>View total at checkout</span>
 </div></div>
 
-<section id="categories"><div class="wrap">
+<section id="categories"><div class="wrap"> <div class="gb-searchbar" role="search" aria-label="Search products">
+  <label class="gb-searchinput"><span aria-hidden="true">⌕</span><input id="gbProductSearch" type="search" placeholder="Search fruits, vegetables, groceries..." aria-label="Search products" autocomplete="off"></label>
+  <button id="gbFilterToggle" class="gb-filterbtn" type="button" aria-label="Show sorting and filters" aria-expanded="false" aria-controls="gbFilterPanel" title="Sort &amp; filter">☷</button>
+ </div>
+ <div id="gbFilterPanel" class="gb-filterpanel" hidden>
+  <label>Sort by <select id="gbProductSort"><option value="default">Default order</option><option value="name">Name A–Z</option><option value="priceLow">Price: low to high</option><option value="priceHigh">Price: high to low</option></select></label>
+  <label class="gb-stockfilter"><input id="gbAvailableOnly" type="checkbox"> Available products only</label>
+  <button id="gbClearFilters" type="button">Reset filters</button>
+ </div>
+
  <div class="sh"><div><h2><svg class="ic"><use href="#i-leaf"/></svg>Shop by category</h2><p>Explore a wide range of fresh &amp; healthy products</p></div>
   <a class="btn btn-o btn-sm" href="#shop" data-cat="All" style="text-transform:uppercase">View all categories <svg class="ic"><use href="#i-arrow"/></svg></a></div>
  <div class="carousel"><div class="cats" id="cats"></div><button class="arr" id="arr" type="button" aria-label="Next categories"><svg class="ic"><use href="#i-chev"/></svg></button></div>
 
  <div id="gbLiveOffers" hidden><h2>Offers &amp; Promotions</h2><div class="promos" id="gbOfferCards"></div></div>
- <div class="promos" id="gbStaticOffers">
+ <div class="promos" id="gbStaticOffers" hidden>
   <div class="promo p1">
    <h3>Easy online<em>Checkout</em></h3><p>Choose your favourites, add to cart and check out on our website.</p>
    <a class="btn" href="#shop">Start shopping <svg class="ic"><use href="#i-arrow"/></svg></a>
@@ -648,15 +639,6 @@ body.gb-auth-pending .gb-auth-content{
 <section id="shop"><div class="wrap">
  <div class="sh"><div><h2>Fresh picks of the day</h2><p>Choose a quantity, add to cart and complete your order using website checkout. Review your order total before submitting.</p></div>
   <div class="r"><span>Order today for <b>tomorrow morning</b></span></div></div>
- <div class="gb-searchbar" role="search" aria-label="Search products">
-  <label class="gb-searchinput"><span aria-hidden="true">⌕</span><input id="gbProductSearch" type="search" placeholder="Search fruits, vegetables, groceries..." aria-label="Search products" autocomplete="off"></label>
-  <button id="gbFilterToggle" class="gb-filterbtn" type="button" aria-label="Show sorting and filters" aria-expanded="false" aria-controls="gbFilterPanel" title="Sort &amp; filter">☷</button>
- </div>
- <div id="gbFilterPanel" class="gb-filterpanel" hidden>
-  <label>Sort by <select id="gbProductSort"><option value="default">Default order</option><option value="name">Name A–Z</option><option value="priceLow">Price: low to high</option><option value="priceHigh">Price: high to low</option></select></label>
-  <label class="gb-stockfilter"><input id="gbAvailableOnly" type="checkbox"> Available products only</label>
-  <button id="gbClearFilters" type="button">Reset filters</button>
- </div>
  <p id="gbSearchCount" class="gb-searchcount" aria-live="polite"></p>
  <div class="grid" id="grid"></div>
 </div></section>
@@ -1923,27 +1905,20 @@ window.gbRequireCheckoutLogin=()=>{
 };
 
 // Read-only banner integration. Uses existing authenticated Firebase session.
-let gbPromoStop=null;
-function gbResetPromos(){
- for(const id of ['gbLiveHero','gbLiveOffers']) el(id).hidden=true;
- for(const id of ['gbStaticHero','gbStaticOffers']) el(id).hidden=false;
- el('gbLiveHero').replaceChildren();el('gbOfferCards').replaceChildren();
-}
+let gbPromoStop=null, gbHeroStop=null, gbHeroTimer=null;
+const promoRows=snapshot=>snapshot.docs.map(doc=>({...doc.data(),id:doc.id})).filter(b=>b.enabled===true&&typeof b.title==='string').sort((a,b)=>(Number(a.priority)||0)-(Number(b.priority)||0)||a.id.localeCompare(b.id));
+function gbResetPromos(){el('gbLiveOffers').hidden=true;el('gbStaticOffers').hidden=true;el('gbOfferCards').replaceChildren();}
 function gbPromoCard(b){
  const card=document.createElement('article');card.className='gb-live-card';
- if(typeof b.imageUrl==='string' && b.imageUrl.startsWith('https://')){
- const img=document.createElement('img');img.alt='';img.src=b.imageUrl;img.onerror=()=>img.remove();card.append(img);}
  const content=document.createElement('div');const title=document.createElement('h3');title.textContent=b.title;content.append(title);
  for(const value of [b.subtitle,b.couponCode?'Use code: '+b.couponCode:'']) if(value){const p=document.createElement('p');p.textContent=value;content.append(p);}
- const link=document.createElement('a');link.className='btn btn-g btn-sm';link.href='#shop';link.textContent='Shop now';content.append(link);card.append(content);return card;
+ const link=document.createElement('a');link.className='btn btn-g btn-sm';link.href='#shop';link.textContent='Shop now';content.append(link);card.append(content);
+ if(typeof b.imageUrl==='string' && b.imageUrl.startsWith('https://')){const img=document.createElement('img');img.alt=b.title;img.onload=()=>card.classList.add('gb-has-art');img.onerror=()=>{img.remove();card.classList.remove('gb-has-art');};img.src=b.imageUrl;card.prepend(img);}
+ return card;
 }
-function gbRenderPromos(snapshot){
- gbResetPromos();const rows=snapshot.docs.map(doc=>({...doc.data(),id:doc.id})).filter(b=>b.enabled===true&&typeof b.title==='string'&&b.title.trim()).sort((a,b)=>(Number(a.priority)||0)-(Number(b.priority)||0)||a.id.localeCompare(b.id));
- const heroes=rows.filter(b=>b.placement==='hero');const offers=rows.filter(b=>!b.placement||b.placement==='offer');
- if(heroes.length){const host=el('gbLiveHero');let i=0;const slot=document.createElement('div');host.append(slot);const show=()=>slot.replaceChildren(gbPromoCard(heroes[i]));show();if(heroes.length>1){const controls=document.createElement('div');controls.className='gb-live-controls';for(const [label,delta] of [['Previous',-1],['Next',1]]){const button=document.createElement('button');button.type='button';button.textContent=label;button.onclick=()=>{i=(i+delta+heroes.length)%heroes.length;show();};controls.append(button);}host.append(controls);}host.hidden=false;el('gbStaticHero').hidden=true;}
- if(offers.length){el('gbOfferCards').append(...offers.map(gbPromoCard));el('gbLiveOffers').hidden=false;el('gbStaticOffers').hidden=true;}
-}
-function gbListenPromos(user){if(gbPromoStop){gbPromoStop();gbPromoStop=null;}gbResetPromos();if(!user)return;gbPromoStop=onSnapshot(query(collection(getFirestore(auth.app),'promotions'),where('enabled','==',true)),gbRenderPromos,error=>{console.warn('Banner read failed',error.code);gbResetPromos();});}
+function gbResetHero(){clearInterval(gbHeroTimer);el('gbLoginHeroImage').hidden=true;el('gbLoginHeroControls').hidden=true;el('gbLoginArt').classList.remove('gb-has-hero');}
+function gbRenderHero(snapshot){gbResetHero();const rows=promoRows(snapshot).filter(b=>b.placement==='hero'&&typeof b.imageUrl==='string'&&b.imageUrl.startsWith('https://'));if(!rows.length)return;let i=0;const img=el('gbLoginHeroImage');const show=()=>{img.hidden=true;el('gbLoginArt').classList.remove('gb-has-hero');img.alt=rows[i].title;img.onload=()=>{img.hidden=false;el('gbLoginArt').classList.add('gb-has-hero');};img.onerror=()=>{img.hidden=true;el('gbLoginArt').classList.remove('gb-has-hero');};img.src=rows[i].imageUrl;};const move=d=>{i=(i+d+rows.length)%rows.length;show();};el('gbHeroPrev').onclick=()=>move(-1);el('gbHeroNext').onclick=()=>move(1);el('gbLoginHeroControls').hidden=rows.length<2;show();if(rows.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches)gbHeroTimer=setInterval(()=>move(1),6000);}
+function gbListenPromos(user){if(gbPromoStop)gbPromoStop();if(gbHeroStop)gbHeroStop();gbResetPromos();gbResetHero();const promos=collection(getFirestore(auth.app),'promotions');if(!user){gbHeroStop=onSnapshot(query(promos,where('enabled','==',true),where('placement','==','hero')),gbRenderHero,()=>gbResetHero());return;}gbPromoStop=onSnapshot(query(promos,where('enabled','==',true)),snapshot=>{gbResetPromos();const offers=promoRows(snapshot).filter(b=>!b.placement||b.placement==='offer');if(offers.length){el('gbOfferCards').append(...offers.map(gbPromoCard));el('gbLiveOffers').hidden=false;}},()=>gbResetPromos());}
 
 onAuthStateChanged(auth,user=>{
  currentUser=user&&user.phoneNumber?user:null;authReady=true;
@@ -2142,7 +2117,7 @@ el('gbSendOtp').onclick = async () => {
  finally{setBusy(false)}
 };
 </script>
-</body>
+<div class="gb-mobile-nav" aria-label="Mobile navigation"><a href="#home"><svg class="ic"><use href="#i-leaf"/></svg>Home</a><a href="#shop"><svg class="ic"><use href="#i-basket"/></svg>Shop</a><a href="MyOrders_TEST.html"><svg class="ic"><use href="#i-check"/></svg>Orders</a><button type="button" onclick="document.getElementById('cartBtn').click()"><svg class="ic"><use href="#i-cart"/></svg>Cart</button></div></body>
 </html>
 
 
