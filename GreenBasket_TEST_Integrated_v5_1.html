@@ -413,6 +413,8 @@ body.gb-auth-checking #gbAuthBoot{display:flex!important}
 #gbAuthBoot .gb-boot-spinner{width:30px;height:30px;border:3px solid #d9e9d9;border-top-color:#0b7132;border-radius:50%;animation:gbBootSpin .75s linear infinite}
 @keyframes gbBootSpin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){#gbAuthBoot .gb-boot-spinner{animation:none}}
+
+#gbPromoTop{padding-top:18px;padding-bottom:0}#gbPromoTop:has(#gbLiveOffers[hidden]){display:none}#gbLiveOffers{margin:0}#gbOfferCards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:12px;margin:0}#gbOfferCards::-webkit-scrollbar{display:none}#gbOfferCards .gb-live-card{flex:0 0 100%;scroll-snap-align:start;min-width:0;min-height:clamp(145px,19vw,260px);background:linear-gradient(110deg,#e8f5c9,#fff2b4);color:#154522;border-radius:20px;display:flex;align-items:center;justify-content:center}#gbOfferCards .gb-live-card.gb-has-art{display:block;background:#eef5e7}#gbOfferCards .gb-live-card img{display:block;width:100%;height:clamp(145px,19vw,260px);aspect-ratio:auto;object-fit:contain}#gbOfferCards .gb-live-card.gb-has-art>div{display:flex;align-items:center;justify-content:center;gap:12px;padding:6px;flex-wrap:wrap}#gbOfferCards .gb-live-card h3{font-size:clamp(20px,3vw,36px)}#gbOfferDots button{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:#b8cbb7}#gbOfferDots button[aria-current=true]{background:#0c5f1d}#categories{padding-top:20px}.deliver{display:none!important}@media(max-width:860px){.cats .cat{flex:0 0 100px;padding:7px;background:#f1f6eb}.cats .cat img{display:block;width:84px;height:68px;object-fit:contain}.cats .cat b{font-size:11px}#gbPromoTop{padding-top:12px}#gbOfferCards .gb-live-card img{height:150px}#gbOfferCards .gb-live-card{min-height:150px}#gbOfferCards .gb-live-card.gb-has-art>div{padding:4px}.gb-live-card .btn{font-size:12px}}
 </style>
 <style>
 #gbLoginOverlay{position:fixed;inset:0;z-index:200;background:rgba(5,30,12,.72);display:none;align-items:center;justify-content:center;padding:14px}
@@ -523,13 +525,13 @@ body.gb-auth-pending .gb-auth-content{
    <label for="gbLoginPhone">Mobile number</label><input id="gbLoginPhone" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="Enter 10-digit mobile number">
    <div class="gb-password-row"><label for="gbPasswordPreview">Password</label><button type="button" id="gbForgotPasswordPreview" class="gb-text-link">Forgot password?</button></div>
    <input id="gbPasswordPreview" type="password" autocomplete="off" placeholder="Enter your password" aria-describedby="gbAuthMethodNote">
-   <p id="gbAuthMethodNote" class="gb-auth-note">TEST: Sign in with your password or use mobile OTP.</p>
+   <p id="gbAuthMethodNote" class="gb-auth-note">Sign in with your password or use mobile OTP.</p>
    <button id="gbPasswordLogin" type="button">Sign In with Password</button><div id="gbRecaptcha"></div><button id="gbSendOtp" type="button">Continue with Mobile OTP</button>
    <div id="gbOtpStep" hidden><label for="gbLoginOtp">6-digit verification code</label><input id="gbLoginOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Enter OTP"><button id="gbVerifyOtp" type="button">Verify OTP &amp; Sign In</button></div>
    <div id="gbLoginMessage" role="status" aria-live="polite"></div>
    <p class="gb-auth-create">New to Green Basket? <button id="gbCreateAccountPreview" type="button" class="gb-text-link">Create New Account</button></p>
    <button id="gbCancelLogin" class="gbCancel" type="button" hidden>Back to cart</button>
-   <p class="gb-auth-test">TEST MODE: Only Firebase-configured fictional test numbers and OTPs should be used.</p>   </div>
+   <p class="gb-auth-test">Preview environment: use configured fictional numbers and OTPs only.</p>   </div>
    <div id="gbSignupView" hidden>
      <div class="gb-signup-head"><h2 id="gbSignupHeading">Create New Account</h2><p>Join Green Basket for fresh fruits, vegetables and groceries at your doorstep.</p></div>
      <div class="gb-signup-field"><label for="gbSignupName">Full Name</label><input id="gbSignupName" autocomplete="name" placeholder="Enter your full name" maxlength="80"></div>
@@ -537,10 +539,10 @@ body.gb-auth-pending .gb-auth-content{
      <div id="gbSignupRecaptcha" style="margin:12px 0"></div><div class="gb-signup-field"><label for="gbSignupOtp">Enter OTP</label><input id="gbSignupOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit verification code" disabled></div><button id="gbSignupVerifyOtp" type="button" disabled>Verify Mobile OTP</button><p id="gbSignupStatus" class="gb-signup-status" role="status" aria-live="polite"></p>
      <div class="gb-signup-field"><label for="gbSignupPassword">Create Password</label><input id="gbSignupPassword" type="password" autocomplete="new-password" placeholder="Minimum 8 characters" minlength="8" disabled></div>
      <div class="gb-signup-field"><label for="gbSignupConfirm">Confirm Password</label><input id="gbSignupConfirm" type="password" autocomplete="new-password" placeholder="Confirm your password" disabled></div>
-     <p class="gb-signup-help">TEST only: Verify your mobile OTP before setting a password. Passwords are handled by Firebase Authentication, not Google Sheets.</p>
+     <p class="gb-signup-help">Verify your mobile OTP before setting a password. Passwords are handled by Firebase Authentication, not Google Sheets.</p>
      <button id="gbSignupSubmit" class="gb-signup-submit" type="button" disabled>Create Account</button>
      <p class="gb-signup-back">Already have an account? <button id="gbBackToSignin" type="button" class="gb-text-link">Sign In</button></p>
-     <p class="gb-auth-test">TEST MODE: Use only configured fictional Firebase test numbers. Use fictional Firebase test numbers only. Do not register real customers.</p>
+     <p class="gb-auth-test">Preview environment: use configured fictional numbers only. Do not register real customers.</p>
    </div>
 
   </div>
@@ -566,11 +568,6 @@ body.gb-auth-pending .gb-auth-content{
  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12.04 2a9.9 9.9 0 00-8.5 14.9L2 22l5.25-1.38A9.9 9.9 0 1012.04 2zm0 1.8a8.1 8.1 0 11-4.2 15.03l-.3-.18-3.1.82.83-3.03-.2-.31A8.1 8.1 0 0112.04 3.8zM8.7 7.4c-.2 0-.5.07-.75.35-.25.27-.97.95-.97 2.3 0 1.36.99 2.67 1.13 2.85.14.19 1.92 3.08 4.74 4.2 2.35.93 2.82.75 3.33.7.5-.04 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33-.28-.14-1.64-.81-1.9-.9-.25-.1-.44-.14-.62.14-.19.28-.72.9-.88 1.09-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.38-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.13-.12.28-.32.42-.49.14-.16.19-.28.28-.46.1-.19.05-.35-.02-.49-.07-.14-.62-1.5-.85-2.05-.22-.54-.45-.47-.62-.48h-.53z" fill="currentColor" stroke="none"/></symbol>
 </svg>
 
-<div class="top"><div class="wrap">
- <span><svg class="ic"><use href="#i-leaf"/></svg>Order today for fresh delivery tomorrow!</span>
- <span class="r"><svg class="ic"><use href="#i-cart"/></svg>Easy website checkout</span>
-</div></div>
-
 <header>
  <div class="wrap nav">
   <a href="#home" class="logo" aria-label="GreenBasket home">
@@ -583,7 +580,7 @@ body.gb-auth-pending .gb-auth-content{
    <li><a href="#categories">Categories</a></li>
    <li><a href="#how">How It Works</a></li>
    <li><a href="about.html">About</a></li>
-   <li><a href="MyOrders_TEST.html">My Orders (TEST)</a></li>
+   <li><a href="MyOrders_TEST.html">My Orders</a></li>
    <li><a href="#contact">Contact</a></li>
   </ul></nav>
   <div class="deliver"><svg class="ic"><use href="#i-pin"/></svg><span>Deliver to<b>Hanumangarh</b></span></div>
@@ -595,13 +592,7 @@ body.gb-auth-pending .gb-auth-content{
 </header>
 
 <main id="home">
-<div class="strip"><div class="wrap">
- <span><svg class="ic"><use href="#i-truck"/></svg>Delivery in Hanumangarh</span>
- <span><svg class="ic"><use href="#i-cart"/></svg>Shop online in a few taps</span>
- <span><svg class="ic"><use href="#i-shield"/></svg>100% quality checked</span>
- <span><svg class="ic"><use href="#i-check"/></svg>View total at checkout</span>
-</div></div>
-
+<section id="gbPromoTop" class="wrap"><div id="gbLiveOffers" hidden><div class="promos" id="gbOfferCards" aria-label="Current offers"></div><div id="gbOfferDots" class="gb-live-controls"></div></div><div id="gbStaticOffers" hidden></div></section>
 <section id="categories"><div class="wrap"> <div class="gb-searchbar" role="search" aria-label="Search products">
   <label class="gb-searchinput"><span aria-hidden="true">⌕</span><input id="gbProductSearch" type="search" placeholder="Search fruits, vegetables, groceries..." aria-label="Search products" autocomplete="off"></label>
   <button id="gbFilterToggle" class="gb-filterbtn" type="button" aria-label="Show sorting and filters" aria-expanded="false" aria-controls="gbFilterPanel" title="Sort &amp; filter">☷</button>
@@ -616,24 +607,6 @@ body.gb-auth-pending .gb-auth-content{
   <a class="btn btn-o btn-sm" href="#shop" data-cat="All" style="text-transform:uppercase">View all categories <svg class="ic"><use href="#i-arrow"/></svg></a></div>
  <div class="carousel"><div class="cats" id="cats"></div><button class="arr" id="arr" type="button" aria-label="Next categories"><svg class="ic"><use href="#i-chev"/></svg></button></div>
 
- <div id="gbLiveOffers" hidden><h2>Offers &amp; Promotions</h2><div class="promos" id="gbOfferCards"></div></div>
- <div class="promos" id="gbStaticOffers" hidden>
-  <div class="promo p1">
-   <h3>Easy online<em>Checkout</em></h3><p>Choose your favourites, add to cart and check out on our website.</p>
-   <a class="btn" href="#shop">Start shopping <svg class="ic"><use href="#i-arrow"/></svg></a>
-   <div class="phone" aria-hidden="true"><div class="b">Your basket 🧺<br>• Tomato<br>• Apple</div><div class="b r">Ready for checkout ✓</div></div>
-  </div>
-  <div class="promo p2">
-   <h3>Order today.<em>Fresh tomorrow.</em></h3><p>Lock in your list and get the freshest picks next morning.</p>
-   <a class="btn" href="#shop">Shop now <svg class="ic"><use href="#i-arrow"/></svg></a>
-   <img src="images/images/crate.jpg" alt="" loading="lazy">
-  </div>
-  <div class="promo p3">
-   <h3>Quality you can<em>see &amp; trust</em></h3><p>Every item is checked before it is packed for you.</p>
-   <a class="btn" href="about.html">Our story <svg class="ic"><use href="#i-arrow"/></svg></a>
-   <div class="rosette" aria-hidden="true"><div><svg class="ic"><use href="#i-check"/></svg>QUALITY<br>CHECKED</div></div>
-  </div>
- </div>
 </div></section>
 
 <section id="shop"><div class="wrap">
@@ -1299,7 +1272,7 @@ async function checkPendingTestOrder() {
   const id = checkoutPending.order?.requestId;
   const btn = $('#placeOrder');
   btn.disabled = true;
-  btn.textContent = 'Checking TEST order…';
+  btn.textContent = 'Checking order…';
   const verified = await verifyWithRetries(id);
   if (!verified && checkoutPending) showPendingCheckout(checkoutPending.order, checkoutPending.totals);
 }
@@ -1619,7 +1592,7 @@ function showPendingCheckout(order,totals){
     void checkPendingTestOrder();
   }else{
     $('#checkoutStatus').textContent='Your order will be confirmed after successful verification. Please do not submit twice.';$('#checkoutStatus').style.color='#8a4900';
-    const btn=$('#placeOrder');btn.disabled=CHECKOUT_DEMO_MODE;btn.textContent=CHECKOUT_DEMO_MODE ? 'TEST endpoint not configured — submissions disabled' : 'Submit TEST order';
+    const btn=$('#placeOrder');btn.disabled=CHECKOUT_DEMO_MODE;btn.textContent=CHECKOUT_DEMO_MODE ? 'TEST endpoint not configured — submissions disabled' : 'Submit preview order';
     btn.onclick=submitCheckoutOrder;
     const retry=document.getElementById('gbRetryPendingTEST'); if(retry) retry.hidden=true;
     $('#checkoutWhatsApp').hidden=true;
@@ -1905,9 +1878,9 @@ window.gbRequireCheckoutLogin=()=>{
 };
 
 // Read-only banner integration. Uses existing authenticated Firebase session.
-let gbPromoStop=null, gbHeroStop=null, gbHeroTimer=null;
+let gbPromoStop=null, gbHeroStop=null, gbHeroTimer=null, gbOfferTimer=null;
 const promoRows=snapshot=>snapshot.docs.map(doc=>({...doc.data(),id:doc.id})).filter(b=>b.enabled===true&&typeof b.title==='string').sort((a,b)=>(Number(a.priority)||0)-(Number(b.priority)||0)||a.id.localeCompare(b.id));
-function gbResetPromos(){el('gbLiveOffers').hidden=true;el('gbStaticOffers').hidden=true;el('gbOfferCards').replaceChildren();}
+function gbResetPromos(){clearInterval(gbOfferTimer);el('gbOfferDots').replaceChildren();el('gbLiveOffers').hidden=true;el('gbStaticOffers').hidden=true;el('gbOfferCards').replaceChildren();}
 function gbPromoCard(b){
  const card=document.createElement('article');card.className='gb-live-card';
  const content=document.createElement('div');const title=document.createElement('h3');title.textContent=b.title;content.append(title);
@@ -1918,7 +1891,7 @@ function gbPromoCard(b){
 }
 function gbResetHero(){clearInterval(gbHeroTimer);el('gbLoginHeroImage').hidden=true;el('gbLoginHeroControls').hidden=true;el('gbLoginArt').classList.remove('gb-has-hero');}
 function gbRenderHero(snapshot){gbResetHero();const rows=promoRows(snapshot).filter(b=>b.placement==='hero'&&typeof b.imageUrl==='string'&&b.imageUrl.startsWith('https://'));if(!rows.length)return;let i=0;const img=el('gbLoginHeroImage');const show=()=>{img.hidden=true;el('gbLoginArt').classList.remove('gb-has-hero');img.alt=rows[i].title;img.onload=()=>{img.hidden=false;el('gbLoginArt').classList.add('gb-has-hero');};img.onerror=()=>{img.hidden=true;el('gbLoginArt').classList.remove('gb-has-hero');};img.src=rows[i].imageUrl;};const move=d=>{i=(i+d+rows.length)%rows.length;show();};el('gbHeroPrev').onclick=()=>move(-1);el('gbHeroNext').onclick=()=>move(1);el('gbLoginHeroControls').hidden=rows.length<2;show();if(rows.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches)gbHeroTimer=setInterval(()=>move(1),6000);}
-function gbListenPromos(user){if(gbPromoStop)gbPromoStop();if(gbHeroStop)gbHeroStop();gbResetPromos();gbResetHero();const promos=collection(getFirestore(auth.app),'promotions');if(!user){gbHeroStop=onSnapshot(query(promos,where('enabled','==',true),where('placement','==','hero')),gbRenderHero,()=>gbResetHero());return;}gbPromoStop=onSnapshot(query(promos,where('enabled','==',true)),snapshot=>{gbResetPromos();const offers=promoRows(snapshot).filter(b=>!b.placement||b.placement==='offer');if(offers.length){el('gbOfferCards').append(...offers.map(gbPromoCard));el('gbLiveOffers').hidden=false;}},()=>gbResetPromos());}
+function gbListenPromos(user){if(gbPromoStop)gbPromoStop();if(gbHeroStop)gbHeroStop();gbResetPromos();gbResetHero();const promos=collection(getFirestore(auth.app),'promotions');if(!user){gbHeroStop=onSnapshot(query(promos,where('enabled','==',true),where('placement','==','hero')),gbRenderHero,()=>gbResetHero());return;}gbPromoStop=onSnapshot(query(promos,where('enabled','==',true)),snapshot=>{gbResetPromos();const offers=promoRows(snapshot).filter(b=>!b.placement||b.placement==='offer');if(offers.length){el('gbOfferCards').append(...offers.map(gbPromoCard));el('gbLiveOffers').hidden=false;const track=el('gbOfferCards');const dots=el('gbOfferDots');let current=0;const go=i=>{current=i;track.scrollTo({left:track.children[i].offsetLeft-track.children[0].offsetLeft,behavior:'smooth'});Array.from(dots.children).forEach((dot,j)=>dot.setAttribute('aria-current',String(j===i)));};if(offers.length>1){offers.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label','Offer '+(i+1));dot.onclick=()=>go(i);dots.append(dot);});go(0);track.onscroll=()=>{current=Array.from(track.children).reduce((best,c,i)=>Math.abs(c.offsetLeft-track.children[0].offsetLeft-track.scrollLeft)<Math.abs(track.children[best].offsetLeft-track.children[0].offsetLeft-track.scrollLeft)?i:best,0);Array.from(dots.children).forEach((dot,j)=>dot.setAttribute('aria-current',String(j===current)));};if(!matchMedia('(prefers-reduced-motion: reduce)').matches)gbOfferTimer=setInterval(()=>{if(!track.matches(':hover')&&!track.contains(document.activeElement))go((current+1)%offers.length);},6000);}}},()=>gbResetPromos());}
 
 onAuthStateChanged(auth,user=>{
  currentUser=user&&user.phoneNumber?user:null;authReady=true;
