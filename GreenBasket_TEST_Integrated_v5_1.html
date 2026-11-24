@@ -415,7 +415,7 @@ body.gb-auth-checking #gbAuthBoot{display:flex!important}
 @media(prefers-reduced-motion:reduce){#gbAuthBoot .gb-boot-spinner{animation:none}}
 
 #gbPromoTop{padding-top:18px;padding-bottom:0}#gbPromoTop:has(#gbLiveOffers[hidden]){display:none}#gbLiveOffers{margin:0}#gbOfferCards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:12px;margin:0}#gbOfferCards::-webkit-scrollbar{display:none}#gbOfferCards .gb-live-card{flex:0 0 100%;scroll-snap-align:start;min-width:0;min-height:clamp(145px,19vw,260px);background:linear-gradient(110deg,#e8f5c9,#fff2b4);color:#154522;border-radius:20px;display:flex;align-items:center;justify-content:center}#gbOfferCards .gb-live-card.gb-has-art{display:block;background:#eef5e7}#gbOfferCards .gb-live-card img{display:block;width:100%;height:clamp(145px,19vw,260px);aspect-ratio:auto;object-fit:contain}#gbOfferCards .gb-live-card.gb-has-art>div{display:flex;align-items:center;justify-content:center;gap:12px;padding:6px;flex-wrap:wrap}#gbOfferCards .gb-live-card h3{font-size:clamp(20px,3vw,36px)}#gbOfferDots button{width:10px;height:10px;padding:0;border:0;border-radius:50%;background:#b8cbb7}#gbOfferDots button[aria-current=true]{background:#0c5f1d}#categories{padding-top:20px}.deliver{display:none!important}@media(max-width:860px){.cats .cat{flex:0 0 100px;padding:7px;background:#f1f6eb}.cats .cat img{display:block;width:84px;height:68px;object-fit:contain}.cats .cat b{font-size:11px}#gbPromoTop{padding-top:12px}#gbOfferCards .gb-live-card img{height:150px}#gbOfferCards .gb-live-card{min-height:150px}#gbOfferCards .gb-live-card.gb-has-art>div{padding:4px}.gb-live-card .btn{font-size:12px}}
-</style>
+.gb-fav{position:absolute;right:16px;top:16px;background:white;border-radius:50%;width:36px;height:36px;color:#14532d;font-size:24px;box-shadow:0 2px 8px #0002}.gb-count{display:flex;align-items:center;gap:12px}.gb-count button{padding:6px 12px;border:1px solid #cbdac6;border-radius:8px;color:#14532d} </style>
 <style>
 #gbLoginOverlay{position:fixed;inset:0;z-index:200;background:rgba(5,30,12,.72);display:none;align-items:center;justify-content:center;padding:14px}
 #gbLoginOverlay.open{display:flex}
@@ -831,7 +831,7 @@ function lineEstimate(i){
   const p=findProduct(i.name);
   if(!p||!p.price||!p.pn) return null;
   const a=qtyAmount(i.qty,p.pn);
-  return a==null?null:Math.round(a*p.price);
+  return a==null?null:Math.round(a*p.price)*(i.count||1);
 }
 
 /* ===== Google Sheet (CSV) reading ===== */
@@ -900,7 +900,7 @@ function loadCart(){
     note=typeof d.note==="string"?d.note.slice(0,200):"";
   }catch(e){ cart=[]; note=""; }
 }
-function saveCart(){ try{ localStorage.setItem(CART_KEY,JSON.stringify({items:cart,note})); }catch(e){} }
+function saveCart(){ /* Cart changes are committed through authenticated transactions. */ }
 
 /* ===== WhatsApp (wa.me opens the app on mobile and WhatsApp Web on desktop) ===== */
 const waLink = t => "https://wa.me/"+GREENBASKET_WHATSAPP_NUMBER+"?text="+encodeURIComponent(t);
@@ -924,31 +924,12 @@ function updateWaLinks(){
 /* ===== Cart actions ===== */
 function announce(t){ const l=$("#live"); l.textContent=""; setTimeout(()=>l.textContent=t,30); }
 
-function addToCart(name){
-  const p=findProduct(name); if(!p||!p.available) return;
-  const qty=chosen[name]||p.options[p.def];
-  const it=cart.find(i=>i.name===name);
-  if(it) it.qty=qty; else cart.push({name,qty});
-  saveCart(); renderCart(); syncCard(name);
-  const card=cardEl(name);
-  if(card){ const b=card.querySelector("[data-add]"); b.classList.add("done"); b.querySelector(".bl").textContent="Added ✓";
-    setTimeout(()=>{ b.classList.remove("done"); syncCard(name); },1200); }
-  const cb=$("#cartBtn"); cb.classList.remove("bump"); void cb.offsetWidth; cb.classList.add("bump");
-  announce(name+", "+qty+", added to cart");
-}
-function removeItem(name){
-  cart=cart.filter(i=>i.name!==name); saveCart(); renderCart(); syncCard(name);
-  announce(name+" removed from cart");
-}
-function setQty(name,qty){
-  const it=cart.find(i=>i.name===name); if(!it) return;
-  it.qty=qty; chosen[name]=qty; saveCart(); renderCart(); syncCard(name);
-}
-function clearCart(){
-  cart=[]; note=""; $("#cnote").value=""; saveCart(); renderCart(); syncAll();
-  announce("Cart cleared");
-}
-
+function addToCart(name){const p=findProduct(name);if(!p||!p.available)return;const qty=chosen[name]||p.options[p.def];window.gbCartChange?.('add',name+'::'+qty);}
+function removeItem(key){window.gbCartChange?.('remove',key);}
+function setQty(key,qty){window.gbCartChange?.('move',key,qty);}
+function clearCart(){window.gbCartChange?.('clear');note='';$('#cnote').value='';}
+function gbCartKeyWeb(i){return i.name+'::'+i.qty;}
+let gbFavorites=new Set(),gbFavoritesOnly=false;
 /* ===== Rendering ===== */
 const cardEl = name => [...document.querySelectorAll(".card")].find(c=>c.dataset.name===name);
 function syncCard(name){
@@ -956,7 +937,7 @@ function syncCard(name){
   const it=cart.find(i=>i.name===name);
   const inc=card.querySelector(".inc"), bl=card.querySelector(".bl"), sel=card.querySelector("select");
   if(inc){ inc.hidden=!it; if(it) inc.textContent="In cart: "+it.qty; }
-  if(bl&&!card.querySelector(".done")) bl.textContent=it?"Update cart":"Add to cart";
+  if(bl&&!card.querySelector(".done")) bl.textContent=it?"Add another":"Add to cart";
   if(sel&&it){ sel.value=it.qty; chosen[name]=it.qty; }
 }
 function syncAll(){ PRODUCTS.forEach(p=>syncCard(p.name)); }
@@ -971,7 +952,7 @@ function renderCats(){
 }
 function renderGrid(){
   const term=gbSearchText.trim().toLocaleLowerCase();
-  const list=PRODUCTS.filter(p=>(active==="All"||p.cat===active) && (!gbAvailableOnly||p.available) && (!term||[p.name,p.cat,p.desc||""].some(v=>String(v).toLocaleLowerCase().includes(term))));
+  const list=PRODUCTS.filter(p=>(!gbFavoritesOnly||gbFavorites.has(p.name)) && (active==="All"||p.cat===active) && (!gbAvailableOnly||p.available) && (!term||[p.name,p.cat,p.desc||""].some(v=>String(v).toLocaleLowerCase().includes(term))));
   if(gbSort==="name") list.sort((a,b)=>a.name.localeCompare(b.name));
   if(gbSort==="priceLow") list.sort((a,b)=>(a.price??Infinity)-(b.price??Infinity));
   if(gbSort==="priceHigh") list.sort((a,b)=>(b.price??-Infinity)-(a.price??-Infinity));
@@ -982,19 +963,19 @@ function renderGrid(){
     const opts=p.options.map(o=>`<option value="${esc(o)}"${o===cur?" selected":""}>${esc(o)}</option>`).join("");
     return `<article class="card" data-name="${esc(p.name)}"${p.desc?` title="${esc(p.desc)}"`:""}>
      <div class="im"><img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" width="432" height="272"></div>
-     <h3>${esc(p.name)}</h3>
+     <button type="button" class="gb-fav" data-fav="${esc(p.name)}" aria-label="Toggle favourite" aria-pressed="${gbFavorites.has(p.name)}">${gbFavorites.has(p.name)?"♥":"♡"}</button><h3>${esc(p.name)}</h3>
      ${p.available?priceHtml(p):""}
      <div class="av ${p.available?'':'out'}">${p.available?'Available':'Currently unavailable'}</div>
      ${p.available?`
      <label class="qty"><span>Qty</span><select data-q="${esc(p.name)}" aria-label="Quantity for ${esc(p.name)}">${opts}</select></label>
      <span class="inc"${it?"":" hidden"}>In cart: ${esc(it?it.qty:"")}</span>
-     <button class="btn" type="button" data-add="${esc(p.name)}">${CARTI}<span class="bl">${it?"Update cart":"Add to cart"}</span></button>`
+     <button class="btn" type="button" data-add="${esc(p.name)}">${CARTI}<span class="bl">${it?"Add another":"Add to cart"}</span></button>`
      :`<a class="btn" href="${waLink(askMsg(p.name))}" target="_blank" rel="noopener">${WAI}Ask Support</a>`}
     </article>`;
   }).join("") : '<p class="empty">No matching products found. Try another search or reset filters.</p>';
 }
 function renderCart(){
-  const n=cart.length;
+  const n=cart.reduce((s,i)=>s+(i.count||1),0);
   const badge=$("#cn"); badge.textContent=n; badge.hidden=!n;
   $("#cartBtn").setAttribute("aria-label", n?`Open cart, ${n} item${n>1?"s":""}`:"Open cart");
   $("#ctitle").textContent="Your cart"+(n?` (${n})`:"");
@@ -1008,9 +989,9 @@ function renderCart(){
     return `<div class="ci">
       ${p?`<img src="${esc(p.img)}" alt="">`:`<span></span>`}
       <div><b>${esc(i.name)}</b>
-       <select data-cq="${esc(i.name)}" aria-label="Quantity for ${esc(i.name)}">${opts.map(o=>`<option value="${esc(o)}"${o===i.qty?" selected":""}>${esc(o)}</option>`).join("")}</select>
-       ${est}</div>
-      <button class="rm" type="button" data-rm="${esc(i.name)}" aria-label="Remove ${esc(i.name)}">✕</button>
+       <select data-cq="${esc(gbCartKeyWeb(i))}" aria-label="Quantity for ${esc(i.name)}">${opts.map(o=>`<option value="${esc(o)}"${o===i.qty?" selected":""}>${esc(o)}</option>`).join("")}</select>
+       ${est}<div class="gb-count"><button type="button" data-dec="${esc(gbCartKeyWeb(i))}">−</button><b>${i.count||1}</b><button type="button" data-inc="${esc(gbCartKeyWeb(i))}">+</button></div></div>
+      <button class="rm" type="button" data-rm="${esc(gbCartKeyWeb(i))}" aria-label="Remove ${esc(i.name)}">✕</button>
     </div>`;
   }).join("");
 
@@ -1044,6 +1025,9 @@ function closeCart(){
 /* ===== Events ===== */
 document.addEventListener("click",e=>{
   const t=e.target; let el;
+  if((el=t.closest("[data-fav]"))){window.gbToggleFavorite?.(el.dataset.fav);return;}
+  if((el=t.closest("[data-inc],[data-dec]"))){window.gbCartChange?.(el.hasAttribute("data-inc")?"add":"dec",el.dataset.inc||el.dataset.dec);return;}
+  if(t.closest("#gbFavFilter")){gbFavoritesOnly=!gbFavoritesOnly;$("#gbFavFilter").setAttribute("aria-pressed",String(gbFavoritesOnly));renderGrid();return;}
   if((el=t.closest("[data-add]"))){ addToCart(el.dataset.add); return; }
   if((el=t.closest("[data-rm]"))){ removeItem(el.dataset.rm); return; }
   if((el=t.closest("[data-cat]"))){ e.preventDefault(); active=(el.dataset.cat===active)?"All":el.dataset.cat; renderCats(); renderGrid(); $("#shop").scrollIntoView({behavior:"smooth"}); return; }
@@ -1151,6 +1135,7 @@ function syncVerifiedCheckoutPhone(){
   input.readOnly=true;
 }
 async function checkoutOpen(){
+  if(!window.gbCartReady || cart.some(i=>(i.count||1)!==1) || new Set(cart.map(i=>i.name)).size!==cart.length){alert("Checkout is unavailable for multiple packs or variants during synchronization testing.");return;}
   if(!window.gbCheckoutVerifiedUser || !window.gbCheckoutVerifiedUser.phoneNumber){
     if(typeof window.gbRequireCheckoutLogin==='function') window.gbRequireCheckoutLogin();
     else alert('Firebase login is loading. Please try again.');
@@ -1602,6 +1587,7 @@ function showPendingCheckout(order,totals){
   }
 }
 async function submitCheckoutOrder(){
+  if(!window.gbCartReady || cart.some(i=>(i.count||1)!==1) || new Set(cart.map(i=>i.name)).size!==cart.length){alert("Cart requires checkout compatibility testing.");return;}
   if(CHECKOUT_DEMO_MODE || !window.gbCheckoutVerifiedUser)return;
   if(checkoutPending){
     showPendingCheckout(checkoutPending.order,checkoutPending.totals);
@@ -1815,14 +1801,14 @@ document.getElementById('gbApplyCoupon').addEventListener('click', async () => {
 $('#placeOrder').onclick=CHECKOUT_DEMO_MODE ? null : submitCheckoutOrder;
 
 /* ===== Start ===== */
-loadCart(); $("#cnote").value=note; renderCart();
+renderCart();
+const favButton=document.createElement("button");favButton.id="gbFavFilter";favButton.type="button";favButton.className="btn btn-o btn-sm";favButton.textContent="♡ My favourites";favButton.setAttribute("aria-pressed","false");$("#grid").before(favButton);
 $("#grid").innerHTML='<p class="empty">Loading fresh produce…</p>';
 loadProducts().then(list=>{
   PRODUCTS=list;
   CATS=CATEGORIES.filter(c=>list.some(p=>p.cat===c.name));
   list.forEach(p=>{ if(!CATS.some(c=>c.name===p.cat)) CATS.push({name:p.cat,img:p.img}); });
-  cart=cart.filter(i=>{ const p=findProduct(i.name); return p&&p.available; });   /* drop items removed from the sheet */
-  saveCart(); renderAll();
+  renderAll();
 });
 </script>
 <script>
@@ -1860,7 +1846,7 @@ import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-
 import {getAuth,RecaptchaVerifier,signInWithPhoneNumber,onAuthStateChanged,signOut,setPersistence,inMemoryPersistence,EmailAuthProvider,linkWithCredential,signInWithEmailAndPassword,updatePassword,updateProfile} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js';
 
 
-import {getFirestore,collection,query,where,onSnapshot,getDocs,doc,setDoc,writeBatch} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js';
+import {getFirestore,collection,query,where,onSnapshot,getDocs,doc,setDoc,writeBatch,runTransaction,arrayUnion,arrayRemove,getDoc} from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js';
 const config = {
   apiKey: "AIzaSyCO44jbPyRtHEviHlKscT5zAYDeKudu3pQ",
   authDomain: "green-basket-f404f.firebaseapp.com",
@@ -1923,9 +1909,21 @@ function applySavedAddress(id){const a=checkoutAddresses.find(x=>x.id===id);cons
 el('gbSavedAddress').onchange=e=>applySavedAddress(e.target.value);
 window.gbLoadCheckoutAddresses=async()=>{const u=auth.currentUser;if(!u)return;const select=el('gbSavedAddress');select.replaceChildren(new Option('Enter manually',''));checkoutAddresses=[];el('gbAddressStatus').textContent='Loading saved addresses…';try{const snap=await getDocs(addressRef(u));if(!sameUser(u)||!el('checkout').classList.contains('show'))return;checkoutAddresses=snap.docs.map(x=>({...x.data(),id:x.id}));for(const a of checkoutAddresses)select.add(new Option((a.label||'Address')+' — '+[a.house,a.city].filter(Boolean).join(', '),a.id));const preferred=checkoutAddresses.find(a=>a.isDefault);if(preferred){select.value=preferred.id;applySavedAddress(preferred.id);}else if(!el('checkoutForm').elements.name.value)el('checkoutForm').elements.name.value=u.displayName||'';el('gbAddressStatus').textContent=checkoutAddresses.length?'Choose a saved address or enter manually.':'Add saved addresses from My profile.';}catch(e){el('gbAddressStatus').textContent='Saved addresses unavailable. Enter manually.';}};
 
+let gbCartStop,gbFavStop,gbSyncRevision=0;
+function gbBindShopping(u){
+ const rev=++gbSyncRevision;gbCartStop?.();gbFavStop?.();window.gbCartReady=false;cart=[];note='';el('cnote').value='';gbFavorites.clear();gbFavoritesOnly=false;renderCart();renderGrid();
+ if(!u)return;
+ const db=getFirestore(auth.app),base=collection(db,'users',u.uid,'cart'),cr=doc(base,'current'),fr=doc(db,'users',u.uid,'favorites','current');
+ const valid=()=>rev===gbSyncRevision&&auth.currentUser?.uid===u.uid;
+ gbCartStop=onSnapshot(cr,s=>{if(!valid())return;cart=Object.entries(s.data()?.items||{}).filter(([k,v])=>Number.isSafeInteger(v)&&v>0).map(([k,count])=>{const i=k.lastIndexOf('::');return {name:i<0?k:k.slice(0,i),qty:i<0?(findProduct(k)?.options[findProduct(k)?.def]||''):k.slice(i+2),count};});window.gbCartReady=!s.metadata.fromCache;renderCart();renderGrid();},e=>{window.gbCartReady=false;announce('Cart sync unavailable');});
+ gbFavStop=onSnapshot(fr,s=>{if(valid()){gbFavorites=new Set((s.data()?.items||[]).filter(x=>typeof x==='string'));renderGrid();}},()=>announce('Favourites unavailable'));
+ window.gbToggleFavorite=async name=>{if(!valid())return;try{await setDoc(fr,{items:gbFavorites.has(name)?arrayRemove(name):arrayUnion(name)},{merge:true});}catch(e){announce('Could not save favourite');}};
+ window.gbCartChange=async(action,key,qty)=>{if(!valid()||!window.gbCartReady){alert('Please wait for cart synchronization.');return;}try{await runTransaction(db,async tx=>{const s=await tx.get(cr);if(!valid())throw Error('Account changed');const items=Object.assign(Object.create(null),s.data()?.items||{});if(action==='clear'){for(const k of Object.keys(items))delete items[k];}else if(action==='remove'){delete items[key];}else if(action==='dec'){if((items[key]||0)>1)items[key]--;else delete items[key];}else if(action==='add'){const j=key.lastIndexOf('::'),p=findProduct(key.slice(0,j));if(!p?.available||!p.options.includes(key.slice(j+2)))throw Error('Unavailable product');items[key]=(items[key]||0)+1;}else if(action==='move'){const j=key.lastIndexOf('::'),p=findProduct(key.slice(0,j));if(!p?.options.includes(qty))throw Error('Invalid quantity');const next=p.name+'::'+qty;if(next!==key&&items[key]){items[next]=(items[next]||0)+items[key];delete items[key];}}if(s.exists())tx.update(cr,{items});else tx.set(cr,{items});});}catch(e){alert('Cart could not be updated. Please retry.');}};
+}
 onAuthStateChanged(auth,user=>{
  currentUser=user&&user.phoneNumber?user:null;authReady=true;
  bindProfile(currentUser);
+ gbBindShopping(currentUser);
  gbListenPromos(currentUser);
  document.body.classList.remove('gb-auth-checking');
  window.gbCheckoutVerifiedUser=currentUser;
