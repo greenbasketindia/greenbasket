@@ -807,25 +807,21 @@ function parsePrice(s){
   return (isFinite(n)&&n>0)?n:null;
 }
 function normUnit(s){
-  const u=(s||"").toLowerCase().trim();
-  if(/^(kg|kilo)/.test(u)) return "kg";
-  if(/^dozen/.test(u)) return "dozen";
-  if(/^(piece|pc)/.test(u)) return "piece";
-  if(/^bunch/.test(u)) return "bunch";
-  if(/^basket/.test(u)) return "basket";
-  return "";
+  const u=String(s||"").toLowerCase().trim();
+  const groups={kg:/^(kg|kgs|kilo|kilos|kilogram|kilograms)$/,g:/^(g|gm|gms|gram|grams)$/,dozen:/^dozens?$/,piece:/^(piece|pieces|pc|pcs)$/,bunch:/^bunch(es)?$/,basket:/^baskets?$/,box:/^box(es)?$/,pack:/^packs?$/,packet:/^packets?$/,loaf:/^(loaf|loaves)$/,l:/^(l|litre|litres|liter|liters)$/,ml:/^ml$/};
+  return Object.keys(groups).find(k=>groups[k].test(u))||"";
 }
-/* how many price-units is a chosen quantity? e.g. "500 g" at a per-kg price -> 0.5 */
 function qtyAmount(qty,pn){
-  const m=/^\s*([\d.]+)\s*([a-zA-Z]+)/.exec(qty); if(!m) return null;
-  const n=parseFloat(m[1]), u=m[2].toLowerCase(); if(!isFinite(n)) return null;
-  const k=/^(kg|kgs|kilo|kilos)$/.test(u)?"kg":/^(g|gm|gms|gram|grams)$/.test(u)?"g":/^dozen/.test(u)?"dozen":/^(piece|pieces|pc|pcs)$/.test(u)?"piece":/^bunch/.test(u)?"bunch":/^basket/.test(u)?"basket":"";
-  if(!k) return null;
-  if(pn==="kg")     return k==="kg"?n:k==="g"?n/1000:null;
-  if(pn==="dozen")  return k==="dozen"?n:k==="piece"?n/12:null;
-  if(pn==="piece")  return k==="piece"?n:k==="dozen"?n*12:null;
-  if(pn==="bunch")  return k==="bunch"?n:null;
-  if(pn==="basket") return k==="basket"?n:null;
+  const m=/^\s*(\d+(?:\.\d+)?)\s*([a-zA-Z]+)\s*$/.exec(qty); if(!m) return null;
+  const n=Number(m[1]), k=normUnit(m[2]);
+  if(!Number.isFinite(n)||n<=0||!k||!pn) return null;
+  if(k===pn) return n;
+  if(pn==="kg"&&k==="g") return n/1000;
+  if(pn==="g"&&k==="kg") return n*1000;
+  if(pn==="dozen"&&k==="piece") return n/12;
+  if(pn==="piece"&&k==="dozen") return n*12;
+  if(pn==="l"&&k==="ml") return n/1000;
+  if(pn==="ml"&&k==="l") return n*1000;
   return null;
 }
 function lineEstimate(i){
