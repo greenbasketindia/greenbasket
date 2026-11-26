@@ -613,7 +613,7 @@ body.gb-auth-pending .gb-auth-content{
 
 <section id="shop"><div class="wrap">
  <div class="sh"><div><h2>Fresh picks of the day</h2><p>Choose a quantity, add to cart and complete your order using website checkout. Review your order total before submitting.</p></div>
-  <div class="r"><span>Order today for <b>tomorrow morning</b></span></div></div>
+  <div class="r"><span>Check your <b>expected delivery at checkout</b></span></div></div>
  <p id="gbSearchCount" class="gb-searchcount" aria-live="polite"></p>
  <div class="grid" id="grid"></div>
 </div></section>
@@ -623,7 +623,7 @@ body.gb-auth-pending .gb-auth-content{
  <div class="whyg">
   <div><svg class="ic"><use href="#i-sprout"/></svg><b>Farm Fresh</b>Sourced from local farms</div>
   <div><svg class="ic"><use href="#i-shield"/></svg><b>Carefully Checked</b>Sorted &amp; packed with care</div>
-  <div><svg class="ic"><use href="#i-truck"/></svg><b>Next-Morning Delivery</b>Order today, fresh tomorrow</div>
+  <div><svg class="ic"><use href="#i-truck"/></svg><b>Fresh Delivery</b>Delivery date shown at checkout</div>
   <div><svg class="ic"><use href="#i-chat"/></svg><b>We're a message away</b>Ask us anything on WhatsApp</div>
  </div>
  <div class="whybox"><b>Order in a minute</b><small>Easy online checkout</small><a class="btn btn-g btn-sm" href="#shop"><svg class="ic"><use href="#i-cart"/></svg>Shop now</a></div>
@@ -1096,6 +1096,12 @@ async function gbRefreshDeliverySettingsTEST() {
       }
       settings[key] = amount;
     }
+    const cutoff = document.fields.sameDayCutoff?.stringValue;
+    if (typeof cutoff !== 'string' || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(cutoff)) {
+      throw new Error('Missing or invalid same-day delivery cutoff');
+    }
+    settings.sameDayCutoff = cutoff;
+    if (window.gbCheckoutVerifiedUser?.uid !== user.uid) throw new Error('Customer session changed');
     gbDeliverySettingsTEST = Object.freeze(settings);
     renderCart();
     return true;
@@ -1123,10 +1129,13 @@ function checkoutTotals(){
   return { subtotal, delivery, total };
 }
 
-function checkoutDeliveryDate(){
-  const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',hourCycle:'h23'}).formatToParts(new Date());
-  const f=k=>Number(parts.find(p=>p.type===k).value);
-  const d=new Date(Date.UTC(f('year'),f('month')-1,f('day')+(f('hour')>=23?2:1)));
+function checkoutDeliveryDate(now = new Date(), cutoff = gbDeliverySettingsTEST?.sameDayCutoff){
+  if (typeof cutoff !== 'string' || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(cutoff)) return 'Unavailable';
+  const parts = new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',hourCycle:'h23'}).formatToParts(now);
+  const f = k => Number(parts.find(p=>p.type===k).value);
+  const [h,m] = cutoff.split(':').map(Number);
+  const nextDay = f('hour')*60+f('minute') >= h*60+m;
+  const d = new Date(Date.UTC(f('year'),f('month')-1,f('day')+(nextDay?1:0)));
   return new Intl.DateTimeFormat('en-IN',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}).format(d);
 }
 function syncVerifiedCheckoutPhone(){
@@ -1155,12 +1164,15 @@ document.getElementById('checkout').classList.remove('confirmed');
   if(!totals){alert('Checkout unavailable: delivery settings or prices could not be loaded. Please try again later.');return;}
   closeCart();
   syncVerifiedCheckoutPhone();
-  $('#checkoutSummary').innerHTML=`<div><span>Subtotal (estimate)</span><b>${money(totals.subtotal)}</b></div><div><span>Delivery</span><b>${totals.delivery?money(totals.delivery):'FREE'}</b></div><div><strong>Total (estimate)</strong><strong>${money(totals.total)}</strong></div><div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div><small>Minimum order ₹${gbDeliverySettingsTEST.minimumOrder}. Delivery ₹${gbDeliverySettingsTEST.deliveryCharge} below ₹${gbDeliverySettingsTEST.freeDeliveryAbove}; FREE at ₹${gbDeliverySettingsTEST.freeDeliveryAbove} or more. Cutoff 11 PM IST. Final amount/date must be verified by server.</small>`;
+  $('#checkoutSummary').innerHTML=`<div><span>Subtotal (estimate)</span><b>${money(totals.subtotal)}</b></div><div><span>Delivery</span><b>${totals.delivery?money(totals.delivery):'FREE'}</b></div><div><strong>Total (estimate)</strong><strong>${money(totals.total)}</strong></div><div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div><small>Minimum order ₹${gbDeliverySettingsTEST.minimumOrder}. Delivery ₹${gbDeliverySettingsTEST.deliveryCharge} below ₹${gbDeliverySettingsTEST.freeDeliveryAbove}; FREE at ₹${gbDeliverySettingsTEST.freeDeliveryAbove} or more. Same-day cutoff ${gbDeliverySettingsTEST.sameDayCutoff} IST. Final amount/date must be verified by server.</small>`;
   gbRenderCouponPreviewTEST();
   $('#checkoutOv').classList.add('show');$('#checkout').classList.add('show');$('#checkout').setAttribute('aria-hidden','false');document.body.classList.add('lock');
   recoverPendingCheckout();
   if(window.gbLoadCheckoutAddresses && !checkoutPending) await window.gbLoadCheckoutAddresses();
 }
+setInterval(() => {
+  if (!document.hidden && $('#checkout').classList.contains('show') && !checkoutPending && gbDeliverySettingsTEST) gbRenderCouponPreviewTEST();
+}, 15000);
 function checkoutClose(){ $('#checkoutOv').classList.remove('show');$('#checkout').classList.remove('show');$('#checkout').setAttribute('aria-hidden','true');document.body.classList.remove('lock'); }
 function makeRequestId(){
   const b=new Uint8Array(16);crypto.getRandomValues(b);
@@ -1613,6 +1625,7 @@ async function submitCheckoutOrder(){
     return;
   }
   const totals=checkoutTotals();if(!totals){alert('Prices unavailable. Please contact us.');return;}
+  gbRenderCouponPreviewTEST();
   
   // TEST checkout must have validated settings before any order submission.
   if (!gbDeliverySettingsTEST) {
@@ -1727,7 +1740,7 @@ function gbRenderCouponPreviewTEST() {
     (active ? `<div><span>Coupon (${gbCouponPreviewTEST.code})</span><b style="color:#08783c">−${money(discount)}</b></div>` : '') +
     `<div><strong>Total (estimate)</strong><strong>${money(payable)}</strong></div>` +
     `<div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div>` +
-    `<small>Minimum order ₹${gbDeliverySettingsTEST.minimumOrder}. Delivery ₹${gbDeliverySettingsTEST.deliveryCharge} below ₹${gbDeliverySettingsTEST.freeDeliveryAbove}; FREE at ₹${gbDeliverySettingsTEST.freeDeliveryAbove} or more. Cutoff 11 PM IST. Final amount/date must be verified by server.</small>`;
+    `<small>Minimum order ₹${gbDeliverySettingsTEST.minimumOrder}. Delivery ₹${gbDeliverySettingsTEST.deliveryCharge} below ₹${gbDeliverySettingsTEST.freeDeliveryAbove}; FREE at ₹${gbDeliverySettingsTEST.freeDeliveryAbove} or more. Same-day cutoff ${gbDeliverySettingsTEST.sameDayCutoff} IST. Final amount/date must be verified by server.</small>`;
   if (!gbCouponPreviewTEST) {
     panel.hidden = true;
     panel.textContent = '';
