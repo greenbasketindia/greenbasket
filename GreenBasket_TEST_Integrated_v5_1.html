@@ -7,7 +7,7 @@
 <meta name="description" content="Shop fresh fruits and vegetables online in Hanumangarh. Add to cart, check out securely and track your order.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0c5f1d">
-<link rel="canonical" href="https://greenbasketindia.github.io/greenbasket/">
+<link rel="canonical" href="https://greenbasket4u.com/">
 
 <!-- Open Graph (WhatsApp, Facebook, Telegram link previews) -->
 <meta property="og:type" content="website">
@@ -15,8 +15,8 @@
 <meta property="og:locale" content="en_IN">
 <meta property="og:title" content="GreenBasket | Order Today, Fresh Tomorrow">
 <meta property="og:description" content="Shop fresh fruits and vegetables in Hanumangarh with easy website checkout and order tracking.">
-<meta property="og:url" content="https://greenbasketindia.github.io/greenbasket/">
-<meta property="og:image" content="https://greenbasketindia.github.io/greenbasket/images/images/og-cover.jpg">
+<meta property="og:url" content="https://greenbasket4u.com/">
+<meta property="og:image" content="https://greenbasket4u.com/images/images/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="GreenBasket: Order Today, Fresh Tomorrow. A basket of fresh fruits and vegetables.">
@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GreenBasket | Order Today, Fresh Tomorrow">
 <meta name="twitter:description" content="Shop fresh fruits and vegetables online in Hanumangarh with secure checkout.">
-<meta name="twitter:image" content="https://greenbasketindia.github.io/greenbasket/images/images/og-cover.jpg">
+<meta name="twitter:image" content="https://greenbasket4u.com/images/images/og-cover.jpg">
 
 <!-- Structured data for Google -->
 <script type="application/ld+json">
@@ -34,8 +34,8 @@
   "@type": "GroceryStore",
   "name": "GreenBasket",
   "description": "Fresh fruits and vegetables in Hanumangarh, ordered through our website.",
-  "url": "https://greenbasketindia.github.io/greenbasket/",
-  "image": "https://greenbasketindia.github.io/greenbasket/images/images/og-cover.jpg",
+  "url": "https://greenbasket4u.com/",
+  "image": "https://greenbasket4u.com/images/images/og-cover.jpg",
   "areaServed": { "@type": "City", "name": "Hanumangarh" }
 }
 </script>
@@ -532,18 +532,18 @@ body.gb-auth-pending .gb-auth-content{
    <div id="gbLoginMessage" role="status" aria-live="polite"></div>
    <p class="gb-auth-create">New to Green Basket? <button id="gbCreateAccountPreview" type="button" class="gb-text-link">Create New Account</button></p>
    <button id="gbCancelLogin" class="gbCancel" type="button" hidden>Back to cart</button>
-   <p class="gb-auth-test">Preview environment: use configured fictional numbers and OTPs only.</p>   </div>
+   <p class="gb-auth-test">Early access preview — authorized trial accounts only. Use your assigned mobile number and verification code.</p>   </div>
    <div id="gbSignupView" hidden>
      <div class="gb-signup-head"><h2 id="gbSignupHeading">Create New Account</h2><p>Join Green Basket for fresh fruits, vegetables and groceries at your doorstep.</p></div>
      <div class="gb-signup-field"><label for="gbSignupName">Full Name</label><input id="gbSignupName" autocomplete="name" placeholder="Enter your full name" maxlength="80"></div>
-     <div class="gb-signup-field"><label for="gbSignupPhone">Mobile Number</label><div class="gb-signup-phone"><input id="gbSignupPhone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit mobile number"><button type="button" id="gbSignupGetOtp" title="Send Firebase TEST OTP">Get OTP</button></div></div>
+     <div class="gb-signup-field"><label for="gbSignupPhone">Mobile Number</label><div class="gb-signup-phone"><input id="gbSignupPhone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit mobile number"><button type="button" id="gbSignupGetOtp" title="Request verification code">Get OTP</button></div></div>
      <div id="gbSignupRecaptcha" style="margin:12px 0"></div><div class="gb-signup-field"><label for="gbSignupOtp">Enter OTP</label><input id="gbSignupOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit verification code" disabled></div><button id="gbSignupVerifyOtp" type="button" disabled>Verify Mobile OTP</button><p id="gbSignupStatus" class="gb-signup-status" role="status" aria-live="polite"></p>
      <div class="gb-signup-field"><label for="gbSignupPassword">Create Password</label><input id="gbSignupPassword" type="password" autocomplete="new-password" placeholder="Minimum 8 characters" minlength="8" disabled></div>
      <div class="gb-signup-field"><label for="gbSignupConfirm">Confirm Password</label><input id="gbSignupConfirm" type="password" autocomplete="new-password" placeholder="Confirm your password" disabled></div>
      <p class="gb-signup-help">Verify your mobile OTP before setting a password. Passwords are handled by Firebase Authentication, not Google Sheets.</p>
      <button id="gbSignupSubmit" class="gb-signup-submit" type="button" disabled>Create Account</button>
      <p class="gb-signup-back">Already have an account? <button id="gbBackToSignin" type="button" class="gb-text-link">Sign In</button></p>
-     <p class="gb-auth-test">Preview environment: use configured fictional numbers only. Do not register real customers.</p>
+     <p class="gb-auth-test">Early access preview — use assigned trial numbers only. Customer registration is not open yet.</p>
    </div>
 
   </div>
@@ -698,7 +698,7 @@ body.gb-auth-pending .gb-auth-content{
   <div class="gb-coupon-panel" aria-label="Apply coupon">
    <label for="gbCouponCode">Have a coupon code?</label>
    <div class="gb-coupon-row"><input id="gbCouponCode" type="text" maxlength="32" placeholder="Enter coupon code" autocomplete="off" spellcheck="false"><button id="gbApplyCoupon" type="button">Apply</button></div>
-   <p id="gbCouponPreviewTotalsTEST" hidden style="font-size:12px;font-weight:600;color:#14532d"></p><p id="gbCouponMessage" role="status" aria-live="polite">Check coupon eligibility with Firebase. Preview only; checkout discounts are not enabled.</p>
+   <p id="gbCouponPreviewTotalsTEST" hidden style="font-size:12px;font-weight:600;color:#14532d"></p><p id="gbCouponMessage" role="status" aria-live="polite">Enter a coupon code to check eligibility. Final discounts are confirmed at checkout.</p>
   </div>
   <div class="summary" id="checkoutSummary"></div>
   <strong>Payment method</strong>
@@ -1136,7 +1136,7 @@ function syncVerifiedCheckoutPhone(){
   input.readOnly=true;
 }
 async function checkoutOpen(){
-  if(!window.gbCartReady || cart.some(i=>(i.count||1)!==1) || new Set(cart.map(i=>i.name)).size!==cart.length){alert("Checkout is unavailable for multiple packs or variants during synchronization testing.");return;}
+  if(!window.gbCartReady || cart.some(i=>(i.count||1)!==1) || new Set(cart.map(i=>i.name)).size!==cart.length){alert("Checkout currently supports one pack per product. Please adjust your cart.");return;}
   if(!window.gbCheckoutVerifiedUser || !window.gbCheckoutVerifiedUser.phoneNumber){
     if(typeof window.gbRequireCheckoutLogin==='function') window.gbRequireCheckoutLogin();
     else alert('Firebase login is loading. Please try again.');
@@ -1144,7 +1144,7 @@ async function checkoutOpen(){
   }
   // Always fetch live Firestore settings before opening checkout.
   if (!(await gbRefreshDeliverySettingsTEST())) {
-    alert('TEST checkout blocked: live Firebase delivery settings unavailable. Please sign in and try again.');
+    alert('Checkout unavailable: delivery settings could not be loaded. Please sign in and try again.');
     return;
   }
 
@@ -1152,7 +1152,7 @@ document.getElementById('checkout').classList.remove('confirmed');
 
   $('#checkoutStatus').style.color='#8a4900';
   const totals=checkoutTotals();
-  if(!totals){alert('TEST checkout unavailable: delivery settings or prices could not be loaded. Please try again later.');return;}
+  if(!totals){alert('Checkout unavailable: delivery settings or prices could not be loaded. Please try again later.');return;}
   closeCart();
   syncVerifiedCheckoutPhone();
   $('#checkoutSummary').innerHTML=`<div><span>Subtotal (estimate)</span><b>${money(totals.subtotal)}</b></div><div><span>Delivery</span><b>${totals.delivery?money(totals.delivery):'FREE'}</b></div><div><strong>Total (estimate)</strong><strong>${money(totals.total)}</strong></div><div><span>Expected delivery</span><b>${checkoutDeliveryDate()}</b></div><small>Minimum order ₹${gbDeliverySettingsTEST.minimumOrder}. Delivery ₹${gbDeliverySettingsTEST.deliveryCharge} below ₹${gbDeliverySettingsTEST.freeDeliveryAbove}; FREE at ₹${gbDeliverySettingsTEST.freeDeliveryAbove} or more. Cutoff 11 PM IST. Final amount/date must be verified by server.</small>`;
@@ -1173,7 +1173,7 @@ $('#csend').addEventListener('click',e=>{e.preventDefault();window.gbRequireChec
 $('#checkoutClose').onclick=checkoutClose;$('#checkoutOv').onclick=checkoutClose;
 $('#checkoutForm').addEventListener('change',()=>{const upi=$('#checkoutForm').elements.payment.value==='UPI';$('#upiDetails').hidden=!upi;$('#checkoutForm').elements.utr.required=upi;});
 /* TEST only: nonce-bound, Firebase-authenticated verification via Apps Script HTMLService. */
-window.GB_TEST_BUILD = "receipt-auto-open-2026-11-01-v3";
+window.GB_TEST_BUILD = "V6.0.2-domain-integration-TEST";
 let gbVerificationInProgress = false;
 function verifySavedOrder(requestId) {
   return new Promise(async resolve => {
@@ -1191,7 +1191,7 @@ function verifySavedOrder(requestId) {
     const nonce = Array.from(crypto.getRandomValues(new Uint8Array(16)),
       x => x.toString(16).padStart(2, "0")).join("");
     const frame = document.createElement("iframe");
-    frame.title = "Green Basket TEST order verification";
+    frame.title = "Green Basket order verification";
     frame.hidden = true;
     frame.setAttribute("aria-hidden", "true");
     frame.src = GB_TEST_ORDERS_URL +
@@ -1219,6 +1219,19 @@ function verifySavedOrder(requestId) {
       if (new URL(event.origin).protocol !== "https:" ||
           !hostname.endsWith("-script.googleusercontent.com")) return;
       if (!event.source || event.source === window) return;
+      // Require the sender to belong to this verification iframe's frame tree.
+      // Apps Script may insert a nested cross-origin frame.
+      let sender = event.source;
+      let belongsToFrame = false;
+      try {
+        for (let depth = 0; sender && depth < 12; depth++) {
+          if (sender === frame.contentWindow) { belongsToFrame = true; break; }
+          const parent = sender.parent;
+          if (parent === sender || parent === window) break;
+          sender = parent;
+        }
+      } catch (_) { return; }
+      if (!belongsToFrame || window.gbCheckoutVerifiedUser?.uid !== user.uid) return;
       if (data.type === "GREEN_BASKET_TEST_READY" && !trustedSource) {
         trustedSource = event.source;
         trustedOrigin = event.origin;
@@ -1527,12 +1540,12 @@ async function gbRetrySamePendingTEST(){
   if(btn){btn.disabled=true;btn.textContent='Retrying same request…';}
   try{
     const transport=await gbSendTestOrderTransport(order);
-    $('#checkoutStatus').textContent='TEST request attempted via '+transport+' (GB-'+requestId+'). Save is NOT confirmed; checking securely. Do not send again.';
+    $('#checkoutStatus').textContent='Preview order request attempted via '+transport+' (GB-'+requestId+'). Save is NOT confirmed; checking securely. Do not send again.';
   }catch(e){
-    $('#checkoutStatus').textContent='Network error while retrying GB-'+requestId+'. Save status unknown; check TEST Sheet / My Orders.';
+    $('#checkoutStatus').textContent='Network error while retrying GB-'+requestId+'. Save status unknown; check My Orders or contact support.';
   }finally{
     token=null;
-    if(btn){btn.disabled=false;btn.textContent='Retry same TEST request';}
+    if(btn){btn.disabled=false;btn.textContent='Retry existing request';}
   }
   await checkPendingTestOrder();
 }
@@ -1543,7 +1556,7 @@ function gbShowPendingRecoveryTEST(){
     b.id='gbRetryPendingTEST'; b.type='button';
     b.className='btn btn-o';
     b.style.cssText='width:100%;margin-top:10px';
-    b.textContent='Retry same TEST request';
+    b.textContent='Retry existing request';
     b.onclick=gbRetrySamePendingTEST;
     $('#placeOrder').insertAdjacentElement('afterend',b);
   }
@@ -1554,7 +1567,7 @@ function showPendingCheckout(order,totals){
   btn.disabled=false;
   btn.textContent='Check order status again';
   $('#checkoutStatus').style.color='#8a4900';
-  $('#checkoutStatus').textContent='TEST request sent. Check TEST My Orders / TEST Sheet to confirm it was saved. Do NOT submit twice or pay again. Request ID: GB-'+order.requestId;
+  $('#checkoutStatus').textContent='Preview order request sent. Check My Orders or contact support to confirm it was saved. Do NOT submit twice or pay again. Request ID: GB-'+order.requestId;
   $('#checkoutWhatsApp').hidden=true; // Never send an unconfirmed TEST order to business WhatsApp.
   btn.textContent='Check order status again';
   btn.onclick=checkPendingTestOrder;
@@ -1581,14 +1594,14 @@ function showPendingCheckout(order,totals){
     void checkPendingTestOrder();
   }else{
     $('#checkoutStatus').textContent='Your order will be confirmed after successful verification. Please do not submit twice.';$('#checkoutStatus').style.color='#8a4900';
-    const btn=$('#placeOrder');btn.disabled=CHECKOUT_DEMO_MODE;btn.textContent=CHECKOUT_DEMO_MODE ? 'TEST endpoint not configured — submissions disabled' : 'Submit preview order';
+    const btn=$('#placeOrder');btn.disabled=CHECKOUT_DEMO_MODE;btn.textContent=CHECKOUT_DEMO_MODE ? 'Checkout temporarily unavailable' : 'Submit preview order';
     btn.onclick=submitCheckoutOrder;
     const retry=document.getElementById('gbRetryPendingTEST'); if(retry) retry.hidden=true;
     $('#checkoutWhatsApp').hidden=true;
   }
 }
 async function submitCheckoutOrder(){
-  if(!window.gbCartReady || cart.some(i=>(i.count||1)!==1) || new Set(cart.map(i=>i.name)).size!==cart.length){alert("Cart requires checkout compatibility testing.");return;}
+  if(!window.gbCartReady || cart.some(i=>(i.count||1)!==1) || new Set(cart.map(i=>i.name)).size!==cart.length){alert("Please select one pack per product before continuing.");return;}
   if(CHECKOUT_DEMO_MODE || !window.gbCheckoutVerifiedUser)return;
   if(checkoutPending){
     showPendingCheckout(checkoutPending.order,checkoutPending.totals);
@@ -1596,14 +1609,14 @@ async function submitCheckoutOrder(){
   }
   const form=$('#checkoutForm');if(!form.reportValidity())return;
   if (!(await gbRefreshDeliverySettingsTEST())) {
-    alert('TEST order blocked: live Firebase delivery settings unavailable. Please try again.');
+    alert('Order unavailable: delivery settings could not be loaded. Please try again.');
     return;
   }
   const totals=checkoutTotals();if(!totals){alert('Prices unavailable. Please contact us.');return;}
   
   // TEST checkout must have validated settings before any order submission.
   if (!gbDeliverySettingsTEST) {
-    alert('TEST checkout disabled: delivery settings unavailable.');
+    alert('Checkout unavailable: delivery settings could not be loaded.');
     return;
   }
   if (totals.subtotal < gbDeliverySettingsTEST.minimumOrder) {
@@ -1685,14 +1698,14 @@ async function submitCheckoutOrder(){
   }catch(e){}
   try{
     const transport=await gbSendTestOrderTransport(order);
-    $('#checkoutStatus').textContent='TEST request attempted via '+transport+'. Checking saved order; browser cannot confirm a no-cors response.';
+    $('#checkoutStatus').textContent='Preview order request attempted via '+transport+'. Checking saved order; browser cannot confirm a no-cors response.';
     // The existing public GET endpoint intentionally refuses order lookup.
     // A no-cors POST cannot prove an order was saved; never show false confirmation.
     showPendingCheckout(order,totals);
     void checkPendingTestOrder();
   }catch(err){
     showPendingCheckout(order,totals);
-    $('#checkoutStatus').textContent='Browser could not send this TEST order. Save status unknown. Check TEST Sheet / My Orders before retrying. '+String(err?.message||err);
+    $('#checkoutStatus').textContent='Order request could not be confirmed. Check My Orders or contact support before retrying. '+String(err?.message||err);
   }
 }
 // Coupon integration staging: remain OFF until backend deployment and Firebase sync are verified.
@@ -1871,7 +1884,7 @@ window.gbCheckoutVerifiedUser=null;
 window.gbRequireCheckoutLogin=()=>{
  if(!authReady){alert('Checking login session. Please try again.');return}
  if(currentUser&&currentUser.phoneNumber){window.gbCheckoutVerifiedUser=currentUser;checkoutOpen();return}
- waiting=true;el('gbLoginOverlay').classList.add('open');document.body.classList.add('lock');message('Use your Firebase fictional test phone number.');
+ waiting=true;el('gbLoginOverlay').classList.add('open');document.body.classList.add('lock');message('Sign in using your assigned mobile number.');
 };
 
 // Read-only banner integration. Uses existing authenticated Firebase session.
@@ -1940,7 +1953,7 @@ onAuthStateChanged(auth,user=>{
  }else{
    document.body.classList.add('gb-auth-pending');
    el('gbLoginOverlay').classList.add('open');
-   message('Sign in with your configured Firebase TEST phone number.');
+   message('Sign in with your assigned mobile number.');
  }
 });
 el('gbCancelLogin').onclick=()=>{message('Sign in to continue shopping.');};
@@ -1954,7 +1967,7 @@ function setSignupMode(mode){
  el('gbSignupHeading').textContent=mode==='reset'?'Reset Password':'Create New Account';
  signupSubmit.textContent=mode==='reset'?'Reset Password':'Create Account';
  el('gbSignupName').closest('.gb-signup-field').hidden=mode==='reset';
- signupStatus(mode==='reset'?'Verify your phone with Firebase TEST OTP to reset your password.':'Verify your mobile with Firebase TEST OTP.');
+ signupStatus(mode==='reset'?'Verify your mobile number to reset your password.':'Verify your mobile number to continue.');
 }
 window.gbSignupSetMode=setSignupMode;
 el('gbForgotPasswordPreview').onclick=()=>{
@@ -1984,7 +1997,7 @@ el('gbBackToSignin').onclick=()=>{
  el('gbSignupView').hidden=true;
  el('gbSigninView').hidden=false;
  el('gbLoginTitle').textContent='Sign In';
- message('Sign in using your configured Firebase TEST mobile number.');
+ message('Sign in using your assigned mobile number.');
  el('gbLoginPhone').focus();
 };
 // Isolated signup TEST verification: never changes the storefront's primary login session.
@@ -2014,9 +2027,9 @@ el('gbSignupGetOtp').onclick=async()=>{
   }
   signupConfirmation=await signInWithPhoneNumber(signupAuth,'+91'+phone,signupVerifier);
   signupPhone=phone;el('gbSignupOtp').disabled=false;
-  signupStatus('TEST OTP requested. Enter your Firebase-configured fictional verification code.');
+  signupStatus('Verification code requested. Enter your assigned verification code.');
  }catch(e){
-  signupStatus('Could not request TEST OTP: '+(e.code||e.message));
+  signupStatus('Could not request verification code: '+(e.code||e.message));
   if(signupVerifier){try{signupVerifier.clear()}catch(_){ }signupVerifier=null}
  }finally{signupSetBusy(false)}
 };
@@ -2024,23 +2037,23 @@ el('gbSignupPhone').addEventListener('input',()=>{
  if(signupPhone&&el('gbSignupPhone').value.trim()!==signupPhone){
   signupConfirmation=null;signupVerified=false;el('gbSignupOtp').disabled=true;
    el('gbSignupPassword').disabled=true;el('gbSignupConfirm').disabled=true;signupSubmit.disabled=true;
-  signupStatus('Number changed. Request a new TEST OTP.');signupSetBusy(false)
+  signupStatus('Number changed. Request a new verification code.');signupSetBusy(false)
  }
 });
 el('gbSignupVerifyOtp').onclick=async()=>{
  if(!signupConfirmation||signupVerified)return;
  const code=el('gbSignupOtp').value.trim();
- if(!/^\d{6}$/.test(code)){signupStatus('Enter the 6-digit TEST OTP.');return}
+ if(!/^\d{6}$/.test(code)){signupStatus('Enter the 6-digit verification code.');return}
  signupSetBusy(true);
  try{
   const result=await signupConfirmation.confirm(code);
   if(result.user.phoneNumber!=='+91'+signupPhone)throw new Error('Verified phone mismatch');
   signupVerified=true;signupConfirmation=null;
   el('gbSignupOtp').disabled=true;
-  signupStatus('Mobile verified in Firebase TEST. Set a password (at least 8 characters).');
+  signupStatus('Mobile verified. Set a password (at least 8 characters).');
   el('gbSignupPassword').disabled=false;el('gbSignupConfirm').disabled=false;signupSubmit.disabled=false;
   // Keep the verified phone session on the isolated secondary Auth instance until submit.
- }catch(e){signupStatus('TEST OTP verification failed: '+(e.code||e.message))}
+ }catch(e){signupStatus('Verification failed: '+(e.code||e.message))}
  finally{signupSetBusy(false)}
 };
 signupSubmit.onclick=async()=>{
@@ -2067,7 +2080,7 @@ signupSubmit.onclick=async()=>{
   el('gbSignupPassword').disabled=true;el('gbSignupConfirm').disabled=true;
   el('gbSignupView').hidden=true;el('gbSigninView').hidden=false;
   el('gbLoginPhone').value=phone;el('gbPasswordPreview').value='';
-  message(signupMode==='create'?'TEST account created. Sign in using your mobile and password.':'Password reset. Sign in using your new password.');
+  message(signupMode==='create'?'Account created successfully. Sign in using your mobile and password.':'Password reset. Sign in using your new password.');
  }catch(e){signupStatus('Could not save password: '+(e.code||e.message))}
  finally{signupSetBusy(false);signupSubmit.disabled=!signupVerified}
 };
@@ -2094,7 +2107,7 @@ el('gbSendOtp').onclick = async () => {
     confirmation = await signInWithPhoneNumber(auth, '+91' + phone, verifier);
 
     el('gbOtpStep').hidden = false;
-    message('OTP requested. Enter the configured Firebase test code.');
+    message('Verification code requested. Enter your assigned code.');
 
   } catch (e) {
     message('Could not send OTP: ' + (e.code || e.message));
