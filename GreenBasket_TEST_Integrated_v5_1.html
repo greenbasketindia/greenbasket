@@ -1145,7 +1145,7 @@ function syncVerifiedCheckoutPhone(){
   input.readOnly=true;
 }
 async function checkoutOpen(){
-  if(!window.gbCartReady || cart.some(i=>(i.count||1)!==1) || new Set(cart.map(i=>i.name)).size!==cart.length){alert("Checkout currently supports one pack per product. Please adjust your cart.");return;}
+  if(!window.gbCartReady){alert("Cart is loading. Please try again.");return;}
   if(!window.gbCheckoutVerifiedUser || !window.gbCheckoutVerifiedUser.phoneNumber){
     if(typeof window.gbRequireCheckoutLogin==='function') window.gbRequireCheckoutLogin();
     else alert('Firebase login is loading. Please try again.');
@@ -1603,7 +1603,7 @@ function showPendingCheckout(order,totals){
   }
 }
 async function submitCheckoutOrder(){
-  if(!window.gbCartReady || cart.some(i=>(i.count||1)!==1) || new Set(cart.map(i=>i.name)).size!==cart.length){alert("Please select one pack per product before continuing.");return;}
+  if(!window.gbCartReady){alert("Cart is loading. Please try again.");return;}
   if(CHECKOUT_DEMO_MODE || !window.gbCheckoutVerifiedUser)return;
   if(checkoutPending){
     showPendingCheckout(checkoutPending.order,checkoutPending.totals);
