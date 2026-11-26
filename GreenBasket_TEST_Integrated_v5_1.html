@@ -1675,7 +1675,7 @@ async function submitCheckoutOrder(){
   let idToken;
   try{idToken=await verifiedUser.getIdToken(true)}
   catch(e){$('#checkoutStatus').textContent='Firebase session expired. Sign in again.';return}
-  const order={idToken,requestId:makeRequestId(),name:String(fd.get('name')).trim(),mobile:String(fd.get('mobile')).trim(),address:String(fd.get('address')).trim(),landmark:String(fd.get('landmark')).trim(),pin:String(fd.get('pin')).trim(),note,payment:String(fd.get('payment')),utr:String(fd.get('utr')||'').trim(),website:String(fd.get('website')||''),items:cart.map(i=>({name:i.name,qty:i.qty}))};
+  const order={idToken,requestId:makeRequestId(),name:String(fd.get('name')).trim(),mobile:String(fd.get('mobile')).trim(),address:String(fd.get('address')).trim(),landmark:String(fd.get('landmark')).trim(),pin:String(fd.get('pin')).trim(),note,payment:String(fd.get('payment')),utr:String(fd.get('utr')||'').trim(),website:String(fd.get('website')||''),items:cart.map(i=>({name:i.name,qty:i.qty,count:i.count||1}))};
   if(order.website)return;
   if (GB_TEST_COUPON_ORDER_SUBMISSION_ENABLED && gbCouponPreviewTEST) {
     if (gbCouponPreviewTEST.subtotal !== totals.subtotal) {
@@ -1684,6 +1684,7 @@ async function submitCheckoutOrder(){
     }
     order.couponCode = gbCouponPreviewTEST.code;
   }
+  order.expectedTotal = Math.round((totals.total - (order.couponCode ? gbCouponPreviewTEST.discount : 0))*100)/100;
   const btn=$('#placeOrder');btn.disabled=true;btn.textContent='Sending…';
   $('#checkoutWhatsApp').hidden=true;
   $('#checkoutStatus').style.color='#8a4900';
