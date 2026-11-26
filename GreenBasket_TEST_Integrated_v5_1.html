@@ -775,7 +775,7 @@ document.addEventListener("error", e => { const i=e.target; if(i.tagName==="IMG"
 
 const WAI = '<svg class="ic f"><use href="#i-wa"/></svg>';
 const CARTI = '<svg class="ic"><use href="#i-cart"/></svg>';
-const money = n => "₹" + n.toLocaleString("en-IN",{maximumFractionDigits:2});
+const money = n => "₹" + n.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
 
 /* ===== Quantity options ===== */
 function qtyFromUnit(unit){
@@ -828,7 +828,7 @@ function lineEstimate(i){
   const p=findProduct(i.name);
   if(!p||!p.available||!p.price||!p.pn||!p.options.includes(i.qty)) return null;
   const a=qtyAmount(i.qty,p.pn);
-  return a==null?null:Math.round(a*p.price)*(i.count||1);
+  return a==null?null:Math.round(a*p.price*100)*(i.count||1)/100;
 }
 
 /* ===== Google Sheet (CSV) reading ===== */
@@ -941,7 +941,7 @@ function syncCard(name){
 }
 function syncAll(){ PRODUCTS.forEach(p=>syncCard(p.name)); }
 
-function gbPackPrice(p,qty){const a=qtyAmount(qty,p.pn);return p.price&&a>0?Math.round(a*p.price):null;}
+function gbPackPrice(p,qty){const a=qtyAmount(qty,p.pn);return p.price&&a>0?Math.round(a*p.price*100)/100:null;}
 function priceHtml(p,qty){
  const price=gbPackPrice(p,qty), a=qtyAmount(qty,p.pn);
  if(!price)return '<div class="pr none">Price unavailable</div>';
@@ -1219,7 +1219,7 @@ function verifySavedOrder(requestId) {
       window.removeEventListener("message", onMessage);
       frame.remove();
       idToken = null;
-      resolve(Boolean(ok));
+      resolve(ok || false);
     }
     function onMessage(event) {
       const data = event.data;
@@ -1255,7 +1255,7 @@ function verifySavedOrder(requestId) {
       if (data.type === "GREEN_BASKET_VERIFY_RESULT" &&
           event.source === trustedSource && event.origin === trustedOrigin &&
           data.requestId === requestId) {
-        finish(data.verified === true);
+        finish(data.verified === true ? {receipt:data.receipt || null} : false);
       }
     }
     window.addEventListener("message", onMessage);
@@ -1269,9 +1269,10 @@ async function verifyWithRetries(requestId) {
   try {
     for (let attempt = 0; attempt < 4; attempt++) {
       if (!checkoutPending || checkoutPending.order?.requestId !== requestId) return false;
-      if (await verifySavedOrder(requestId)) {
+      const verified = await verifySavedOrder(requestId);
+      if (verified) {
         if (checkoutPending?.order?.requestId === requestId) {
-          showVerifiedCheckout(requestId);
+          showVerifiedCheckout(requestId, verified.receipt);
           return true;
         }
         return false;
@@ -1298,7 +1299,7 @@ function showCheckoutWhatsApp(order,totals){
 }
 
   
-function showVerifiedCheckout(requestId){
+function showVerifiedCheckout(requestId, receipt){
   // Called only after a successful authenticated order verification.
   // Keep the receipt visible even when verification completes after closing checkout.
   closeCart();
@@ -1353,23 +1354,12 @@ function showVerifiedCheckout(requestId){
   }
 
   addReceiptRow('Order ID', 'GB-' + requestId);
-  addReceiptRow('Payment', order?.payment === 'COD'
-    ? 'Cash on Delivery' : order?.payment === 'UPI'
-      ? 'UPI (payment verification pending)' : 'Not available');
-  addReceiptRow('Delivery Date', 'To be confirmed in My Orders');
-  // Receipt uses the coupon snapshot captured when this exact TEST request was sent.
-  // Authenticated verification confirms the order exists, but does not return its final total.
-  const receiptDiscount = Number(checkoutPending?.coupon?.discount || 0);
-  const receiptCode = checkoutPending?.coupon?.code || '';
-  const receiptBaseTotal = Number(totals?.total);
-  const validBase = totals && Number.isFinite(receiptBaseTotal) && receiptBaseTotal >= 0;
-  const validDiscount = receiptCode && Number.isFinite(receiptDiscount) && receiptDiscount > 0;
-  const appliedDiscount = validDiscount ? receiptDiscount : 0;
-  const receiptTotal = validBase
-    ? Math.max(0, Math.round((receiptBaseTotal - appliedDiscount) * 100) / 100)
-    : null;
-
-  // This is a checkout snapshot, not the authoritative backend total.
+  const valid = receipt && [receipt.subtotal,receipt.delivery,receipt.total,receipt.discount].every(n=>typeof n==='number' && Number.isFinite(n) && n>=0) && Math.round(receipt.subtotal*100)+Math.round(receipt.delivery*100)-Math.round(receipt.discount*100)===Math.round(receipt.total*100) && receipt.discount<=receipt.subtotal && /^\d{2}-\d{2}-\d{4}$/.test(receipt.deliveryDate) && ['COD','UPI'].includes(receipt.payment);
+  addReceiptRow('Payment', valid ? (receipt.payment==='COD'?'Cash on Delivery':'UPI (payment verification pending)') : 'See My Orders');
+  addReceiptRow('Delivery Date', valid ? receipt.deliveryDate : 'To be confirmed in My Orders');
+  const receiptCode = valid ? String(receipt.couponCode||'') : '';
+  const appliedDiscount = valid ? receipt.discount : 0;
+  const receiptTotal = valid ? receipt.total : null;
   const paymentSummary = document.createElement('div');
   paymentSummary.style.cssText =
     'margin:16px 0 4px;padding:12px;background:#fff;border:1px solid #c9dfc8;' +
@@ -1394,12 +1384,12 @@ function showVerifiedCheckout(requestId){
     paymentSummary.appendChild(row);
   }
 
-  addPaymentLine('Total Payment (Before Discount)',
-    validBase ? '₹' + receiptBaseTotal.toFixed(2) : 'Not available', 'base');
-  addPaymentLine(validDiscount ? 'Coupon Discount (' + receiptCode + ')' : 'Coupon Discount',
-    '−₹' + appliedDiscount.toFixed(2), 'discount');
-  addPaymentLine('Total Payable Amount (Estimate)',
-    receiptTotal !== null ? '₹' + receiptTotal.toFixed(2) : 'Not available', 'payable');
+  if (valid) {
+    addPaymentLine('Subtotal', money(receipt.subtotal), 'base');
+    addPaymentLine('Delivery', money(receipt.delivery), 'base');
+    addPaymentLine(receiptCode ? 'Coupon Discount ('+receiptCode+')' : 'Coupon Discount', '−'+money(appliedDiscount), 'discount');
+  }
+  addPaymentLine('Total Payable Amount (Verified)', valid ? money(receiptTotal) : 'See My Orders', 'payable');
   status.appendChild(paymentSummary);
 
   const note = document.createElement('p');
