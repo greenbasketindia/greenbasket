@@ -20,3 +20,4 @@ $('confirm').onclick=async()=>{if(!confirmation||loading)return;const g=generati
 $('refresh').onclick=refresh;$('logout').onclick=async()=>{reset();try{await signOut(auth);}catch(e){say('Sign out failed. Try again.',true);}};
 onAuthStateChanged(auth,u=>{reset();confirmation=null;$('code').value='';$('verify').classList.add('hidden');$('login').classList.toggle('hidden',!!u);$('account').classList.toggle('hidden',!u);$('intro').textContent=u?'Track your orders and delivery.':'Verify your mobile number to view your orders.';$('phone').textContent=u?'Verified: '+(u.phoneNumber||''):'';say('');if(u)refresh();});
 </script></body></html>
+ 
