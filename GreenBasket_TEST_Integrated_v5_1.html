@@ -511,9 +511,10 @@ body.gb-auth-pending .gb-auth-content{
 </style>
 <style>
 .gb-auth-art{position:relative;overflow:hidden}.gb-auth-art>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#e8f3dc}.gb-has-hero .gb-auth-brand,.gb-has-hero .gb-auth-tag{visibility:hidden}#gbLoginHeroControls{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:12px}#gbLoginBox #gbLoginHeroControls button{width:42px;margin:0;background:#fff;color:#0c5f1d;padding:6px;font-size:22px}.gb-live-card{display:block;padding:18px;min-height:0}.gb-live-card:before{display:none}.gb-live-card img{position:static;width:100%;height:auto;aspect-ratio: 2.4;object-fit:contain;background:#e8f3dc}.gb-live-card.gb-has-art{padding:0;background:#e8f3dc}.gb-live-card.gb-has-art>div{padding:10px}.gb-live-card.gb-has-art h3{display:none}.gb-live-card.gb-has-art p{color:#0c5f1d}.gb-live-card.gb-has-art a{margin:0}.gb-searchbar{margin-top:0}.gb-mobile-nav{display:none}
-@media(max-width:860px){body{background:#f5f8f1;padding-bottom:66px}.top,.strip,.why,.info,.feats,.about,footer,.fab{display:none!important}.gb-mobile-nav{position:fixed;bottom:0;left:0;right:0;z-index:75;background:#fff;border-top:1px solid #dce9da;display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));font-size:11px;color:#0c5f1d}.gb-mobile-nav a,.gb-mobile-nav button{display:grid;justify-items:center;gap:3px}.gb-mobile-nav .ic{font-size:22px}#bar{bottom:58px}.cats .cat{flex:0 0 auto;padding:8px 14px;box-shadow:none;border-radius:9px}.cats .cat img{display:none}.cats .arr{display:none}#categories{padding-top:18px}#categories .sh .btn,#categories .sh p{display:none}#gbOfferCards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px}#gbOfferCards .gb-live-card{flex:0 0 100%;scroll-snap-align:start}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gb-auth-art{background-position:center}body.gb-auth-pending .gb-auth-art{min-height:220px!important;flex-basis:220px!important}}
-</style></head>
-<body class="gb-auth-pending gb-auth-checking">
+@media(max-width:860px){body{background:#f5f8f1;padding-bottom:66px}.top,.strip,.why,.info,.feats,.about,.fab{display:none!important}.gb-mobile-nav{position:fixed;bottom:0;left:0;right:0;z-index:75;background:#fff;border-top:1px solid #dce9da;display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));font-size:11px;color:#0c5f1d}.gb-mobile-nav a,.gb-mobile-nav button{display:grid;justify-items:center;gap:3px}.gb-mobile-nav .ic{font-size:22px}#bar{bottom:58px}.cats .cat{flex:0 0 auto;padding:8px 14px;box-shadow:none;border-radius:9px}.cats .cat img{display:none}.cats .arr{display:none}#categories{padding-top:18px}#categories .sh .btn,#categories .sh p{display:none}#gbOfferCards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px}#gbOfferCards .gb-live-card{flex:0 0 100%;scroll-snap-align:start}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gb-auth-art{background-position:center}body.gb-auth-pending .gb-auth-art{min-height:220px!important;flex-basis:220px!important}}
+</style><meta name="description" content="Browse fresh fruits and vegetables in Hanumangarh, Rajasthan. Green Basket online storefront preview."><meta name="robots" content="noindex,nofollow"><link rel="canonical" href="https://greenbasket4u.com/">
+</head>
+<body class="gb-auth-pending gb-auth-checking"><div role="status" style="padding:10px;text-align:center;background:#fff3cd;color:#392c00">Store preview — online ordering is not open yet.</div>
 <div id="gbAuthBoot" role="status" aria-live="polite"><div class="gb-boot-mark">GREEN BASKET</div><div class="gb-boot-spinner" aria-hidden="true"></div><div>Opening your shopping experience…</div></div>
 <div id="gbTestRibbon"><span id="gbSessionState">| Checking login…</span> </div>
 <div id="gbLoginOverlay" role="dialog" aria-modal="true" aria-labelledby="gbLoginTitle">
@@ -530,6 +531,19 @@ body.gb-auth-pending .gb-auth-content{
    <button id="gbPasswordLogin" type="button">Sign In with Password</button><div id="gbRecaptcha"></div><button id="gbSendOtp" type="button">Continue with Mobile OTP</button>
    <div id="gbOtpStep" hidden><label for="gbLoginOtp">6-digit verification code</label><input id="gbLoginOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Enter OTP"><button id="gbVerifyOtp" type="button">Verify OTP &amp; Sign In</button></div>
    <div id="gbLoginMessage" role="status" aria-live="polite"></div>
+     
+<div style="text-align:center;font-size:12px;line-height:1.8;margin-top:16px;color:#17663b;">
+  <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
+  &nbsp;|&nbsp;
+  <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+  <br>
+  <a href="refund.html" target="_blank" rel="noopener">Refund Policy</a>
+  &nbsp;|&nbsp;
+  <a href="shipping.html" target="_blank" rel="noopener">Delivery Policy</a>
+  <br>
+  <a href="contact.html" target="_blank" rel="noopener">Contact Us</a>
+</div>
+
    <p class="gb-auth-create">New to Green Basket? <button id="gbCreateAccountPreview" type="button" class="gb-text-link">Create New Account</button></p>
    <button id="gbCancelLogin" class="gbCancel" type="button" hidden>Back to cart</button>
    <p class="gb-auth-test">Early access preview — authorized trial accounts only. Use your assigned mobile number and verification code.</p>   </div>
@@ -656,14 +670,55 @@ body.gb-auth-pending .gb-auth-content{
 </div>
 </main>
 
-<footer id="contact"><div class="wrap">
- <div><h4>GreenBasket</h4>Order Today, Fresh Tomorrow.<br>Fresh fruits &amp; vegetables, ordered online.</div>
- <div><h4>Company</h4><a href="about.html">About Us</a><a href="help.html">Help &amp; Support</a></div>
- <div><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a></div>
- <div><h4>Contact</h4><a data-wa="general" href="#">Contact on WhatsApp</a><span>Service area: Hanumangarh, Rajasthan</span></div>
- <div class="copy">© <span id="yr"></span> GreenBasket India. All rights reserved.</div>
-</div></footer>
 
+<footer id="contact">
+  <div class="wrap">
+
+    <div>
+      <h4>GREENBASKET4U</h4>
+      Order Today, Fresh Tomorrow.<br>
+      Fresh fruits, vegetables &amp; groceries.
+    </div>
+
+    <div>
+      <h4>Company</h4>
+      <a href="about.html">About Us</a>
+      <a href="help.html">Help &amp; Support</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+
+    <div>
+      <h4>Legal &amp; Policies</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="refund.html">Refund &amp; Replacement Policy</a>
+      <a href="shipping.html">Shipping &amp; Delivery Policy</a>
+    </div>
+
+    <div>
+      <h4>Contact Us</h4>
+      <a href="tel:+919772921229">+91 9772921229</a>
+      <a href="mailto:greenbaskethmh@gmail.com">
+        greenbaskethmh@gmail.com
+      </a>
+      <a href="https://wa.me/919772921229"
+         target="_blank" rel="noopener noreferrer">
+        Contact on WhatsApp
+      </a>
+      <span>
+        Opposite Khola Gaushala,<br>  
+        Hanumangarh Town, Rajasthan<br>
+        PIN - 335513, India
+      </span>
+    </div>
+
+    <div class="copy">
+      &copy; <span id="yr"></span> GREENBASKET4U.
+      All rights reserved.
+    </div>
+
+  </div>
+</footer>
 <a class="fab" data-wa="general" href="#" aria-label="Chat with customer support on WhatsApp"><svg class="ic f"><use href="#i-wa"/></svg></a>
 
 <div id="bar"><span class="t" id="bt"></span><button class="btn btn-g btn-sm" id="bview" type="button"><svg class="ic"><use href="#i-cart"/></svg>View cart</button></div>
@@ -738,7 +793,7 @@ const CART_KEY = "gb_cart_v1";
 const CHECKOUT_REQUEST_KEY = "gb_test_checkout_pending_v51";
   // Paste ONLY your newly deployed TEST Apps Script /exec URL here.
 const GB_TEST_ORDERS_URL = "https://script.google.com/macros/s/AKfycbyULj3I2ImCkZEPqe86moVJ2057bXn9nrYjEJT7O24-Gjn2vtA-78prBjva5imjFFc3/exec";
-const CHECKOUT_DEMO_MODE = !/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(GB_TEST_ORDERS_URL);
+const CHECKOUT_DEMO_MODE = true || !/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(GB_TEST_ORDERS_URL);
 
 /* Category cards. New categories found in the sheet are added automatically. */
 const CATEGORIES = [
