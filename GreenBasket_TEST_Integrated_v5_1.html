@@ -793,8 +793,7 @@ const CART_KEY = "gb_cart_v1";
 const CHECKOUT_REQUEST_KEY = "gb_test_checkout_pending_v51";
   // Paste ONLY your newly deployed TEST Apps Script /exec URL here.
 const GB_TEST_ORDERS_URL = "https://script.google.com/macros/s/AKfycbyULj3I2ImCkZEPqe86moVJ2057bXn9nrYjEJT7O24-Gjn2vtA-78prBjva5imjFFc3/exec";
-const CHECKOUT_DEMO_MODE = true || !/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(GB_TEST_ORDERS_URL);
-
+const CHECKOUT_DEMO_MODE = !/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(GB_TEST_ORDERS_URL);
 /* Category cards. New categories found in the sheet are added automatically. */
 const CATEGORIES = [
   {name:"Vegetables",img:"images/images/cat-vegetables.jpg"},{name:"Fruits",img:"images/images/cat-fruits.jpg"},
